@@ -58,7 +58,7 @@ describe("An expression initialized with nothing", function() {
 
 describe("An expression initialized with an invalid variable", function() {
     it("should throw InvalidArgument",function(){
-        expect(function(){new Expression([1,2,3]);}).toThrow("Invalid Argument (1,2,3): Argument must be of type String, Integer, Fraction or Term.");
+        expect(function(){new Expression([1,2,3]);}).toThrow(new TypeError("Invalid Argument (1,2,3): Argument must be of type String, Integer, Fraction or Term."));
     });
 });
 
@@ -131,7 +131,7 @@ describe("Expression addition", function() {
     });
 
     it("should not allow adding floats", function() {
-        expect(function(){x.add(0.25);}).toThrow("Invalid Argument (0.25): Summand must be of type String, Expression, Term, Fraction or Integer.");
+        expect(function(){x.add(0.25);}).toThrow(new TypeError("Invalid Argument (0.25): Summand must be of type String, Expression, Term, Fraction or Integer."));
     });
 
     it("should allow adding variables passed in as strings - same var", function() {
@@ -220,7 +220,7 @@ describe("Expression subtraction", function() {
     });
 
     it("should not allow subtracting floats", function() {
-        expect(function(){x.subtract(0.25);}).toThrow("Invalid Argument (0.25): Argument must be of type String, Integer, Fraction or Term.");
+        expect(function(){x.subtract(0.25);}).toThrow(new TypeError("Invalid Argument (0.25): Argument must be of type String, Integer, Fraction or Term."));
     });
 
     it("should allow subtracting variables passed in as strings - same var", function() {
@@ -265,7 +265,7 @@ describe("Expression multiplication", function() {
     });
 
     it("should not allow multiplying by floats", function() {
-        expect(function(){x.multiply(0.25);}).toThrow("Invalid Argument (0.25): Multiplicand must be of type String, Expression, Term, Fraction or Integer.");
+        expect(function(){x.multiply(0.25);}).toThrow(new TypeError("Invalid Argument (0.25): Multiplicand must be of type String, Expression, Term, Fraction or Integer."));
     });
 
     it("should allow multiplying by another expression", function() {
@@ -360,17 +360,17 @@ describe("Expression division", function() {
     it("should not allow division of a multinominal denomenator", function() {
       var multi = new Expression("x").add(3);
 
-      expect(function(){x.divide(multi);}).toThrow("Invalid Argument ((x)/(x + 3)): Only monomial expressions can be divided.");
+      expect(function(){x.divide(multi);}).toThrow(new TypeError("Invalid Argument ((x)/(x + 3)): Only monomial expressions can be divided."));
     });
 
     it("should not allow division of a multinominal numenator", function() {
       var multi = new Expression("x").add(3);
 
-      expect(function(){multi.divide(x);}).toThrow("Invalid Argument ((x + 3)/(x)): Only monomial expressions can be divided.");
+      expect(function(){multi.divide(x);}).toThrow(new TypeError("Invalid Argument ((x + 3)/(x)): Only monomial expressions can be divided."));
     });
 
     it("should throw an exception if dividing by zero", function() {
-        expect(function(){x.divide(0);}).toThrow("Divide By Zero");
+        expect(function(){x.divide(0);}).toThrow(new EvalError("Divide By Zero"));
     });
 
     it("should allow for unsimplified terms and constants", function() {
@@ -530,7 +530,7 @@ describe("Expression evaluation with one variable - linear", function() {
     });
 
     it("should not allow evaluating at floats", function() {
-        expect(function(){x.eval({'x': 1.2});}).toThrow("Invalid Argument (1.2): Can only evaluate Expressions or Fractions.");
+        expect(function(){x.eval({'x': 1.2});}).toThrow(new TypeError("Invalid Argument (1.2): Can only evaluate Expressions or Fractions."));
     });
 });
 
@@ -748,7 +748,7 @@ describe("Raising expressions to powers", function() {
     });
 
     it("should not allow floats", function() {
-        expect(function(){x.pow(0.25);}).toThrow("Invalid Argument (0.25): Exponent must be of type Integer.");
+        expect(function(){x.pow(0.25);}).toThrow(new TypeError("Invalid Argument (0.25): Exponent must be of type Integer."));
     });
 });
 

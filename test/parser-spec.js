@@ -21,7 +21,7 @@ describe("Input validity", function() {
 
     it("does not accept variable names with numbers", function(){
         var input = "2+4x";
-        expect(p.parse(input)).toNotEqual(new Expression("4x").add(2));
+        expect(p.parse(input)).not.toEqual(new Expression("4x").add(2));
     });
 
     it("does not accept operators without operands", function(){

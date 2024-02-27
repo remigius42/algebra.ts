@@ -3,7 +3,7 @@
 $(info version is $(PACKAGE_VERSION))
 
 test:
-	./node_modules/.bin/jasmine-node test
+	npx jasmine --config="jasmine.json"
 
 bundle:
 	./node_modules/.bin/browserify algebra.js --standalone algebra > build/algebra-$(PACKAGE_VERSION).js
@@ -16,7 +16,7 @@ sync: minify
 	cp build/*.min.js javascripts
 
 coveralls:
-	./node_modules/.bin/istanbul cover ./node_modules/.bin/jasmine-node --captureExceptions test && \
+	npx nyc --reporter=lcovonly --reporter=text --reporter=text-summary jasmine --config=jasmine.json  && \
 	cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
 
 lint:

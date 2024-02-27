@@ -32,7 +32,7 @@ describe("A linear equation with one variable", function() {
     });
 
     it("should throw an exception when solving for a variable that isn't there", function() {
-        expect(function(){eq.solveFor("y");}).toThrow("Invalid Argument (y): Variable does not exist in the equation.");
+        expect(function(){eq.solveFor("y");}).toThrow(new TypeError("Invalid Argument (y): Variable does not exist in the equation."));
     });
 
     it("should get the right answer", function() {
@@ -63,7 +63,7 @@ describe("An equation with multiple variables", function() {
     });
 
     it("should throw an exception when solving for a variable that isn't there", function() {
-        expect(function(){eq.solveFor("y");}).toThrow("Invalid Argument (y): Variable does not exist in the equation.");
+        expect(function(){eq.solveFor("y");}).toThrow(new TypeError("Invalid Argument (y): Variable does not exist in the equation."));
     });
 
     it("should get the right answer", function() {
@@ -206,15 +206,15 @@ describe("An invalid equation", function() {
     var x = new Expression("x");
 
     it("should throw an exception with a float on the lhs", function() {
-        expect(function(){new Equation(0.25, x);}).toThrow("Invalid Argument (0.25): Left-hand side must be of type Expression.");
+        expect(function(){new Equation(0.25, x);}).toThrow(new TypeError("Invalid Argument (0.25): Left-hand side must be of type Expression."));
     });
 
     it("should throw an exception with a float on the rhs", function() {
-        expect(function(){new Equation(x, 0.25);}).toThrow("Invalid Argument (0.25): Right-hand side must be of type Expression, Fraction or Integer.");
+        expect(function(){new Equation(x, 0.25);}).toThrow(new TypeError("Invalid Argument (0.25): Right-hand side must be of type Expression, Fraction or Integer."));
     });
 
     it("should throw an exception if neither args are expressions", function() {
-        expect(function(){new Equation(1, 2);}).toThrow("Invalid Argument (1): Left-hand side must be of type Expression.");
+        expect(function(){new Equation(1, 2);}).toThrow(new TypeError("Invalid Argument (1): Left-hand side must be of type Expression."));
     });
 });
 
@@ -262,7 +262,7 @@ describe("Solving linear equations with no / infinite solution", function() {
         var x = new Expression("x");
         var eq = new Equation(x, x.add(2)); // x = x + 2
 
-        expect(function(){eq.solveFor("x");}).toThrow("No Solution");
+        expect(function(){eq.solveFor("x");}).toThrow(new EvalError("No Solution"));
     });
 
     it("should return 1 when there's infinite solutions", function() {
@@ -375,7 +375,7 @@ describe("Solving a cubic equation", function() {
         var x = new Expression("x").pow(3);
         var eq = new Equation(x, x.add(2)); // x^3 = x^3 + 2
 
-        expect(function(){eq.solveFor("x");}).toThrow("No Solution");
+        expect(function(){eq.solveFor("x");}).toThrow(new EvalError("No Solution"));
     });
 });
 
