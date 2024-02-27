@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nicolewhite/algebra.js.git"
+    "url": "https://github.com/remigius42/algebra.ts.git"
   },
   "files": [
     "algebra.js",
@@ -31,9 +31,12 @@
     "latex"
   ],
   "author": "Nicole White",
+  "contributors": [
+    "Andreas Remigius Schmidt"
+  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nicolewhite/algebra.js/issues"
+    "url": "https://github.com/remigius42/algebra.ts/issues"
   },
   "homepage": "http://algebra.js.org"
 }

@@ -1,9 +1,6 @@
 # algebra.js 
 
-[![Build Status](https://travis-ci.org/nicolewhite/algebra.js.svg?branch=master)](https://travis-ci.org/nicolewhite/algebra.js)
-[![Coverage Status](https://coveralls.io/repos/nicolewhite/algebra.js/badge.svg?branch=master)](https://coveralls.io/r/nicolewhite/algebra.js?branch=master)
-[![npm version](https://badge.fury.io/js/algebra.js.svg)](http://badge.fury.io/js/algebra.js)
-[![Join the chat at https://gitter.im/nicolewhite/algebra.js](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nicolewhite/algebra.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Coverage Status](https://coveralls.io/repos/remigius42/algebra.ts/badge.svg?branch=main)](https://coveralls.io/r/remigius42/algebra.ts?branch=main)
 
 ## Quick Start
 
@@ -58,8 +55,8 @@ Download [algebra.min.js](http://algebra.js.org/javascripts/algebra-0.2.6.min.js
 ### Latest Development Release
 
 ```
-git clone https://github.com/nicolewhite/algebra.js.git
-cd algebra.js
+git clone https://github.com/remigius42/algebra.ts.git
+cd algebra.ts
 ```
 
 #### In Node

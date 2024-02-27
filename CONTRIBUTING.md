@@ -16,13 +16,13 @@ Fork the repository with the "Fork" button on GitHub.
 Clone your fork.
 
 ```
-$ git clone https://github.com/yourusername/algebra.js.git
+$ git clone https://github.com/yourusername/algebra.ts.git
 ```
 
 ## Install Dependencies
 
 ```
-$ cd algebra.js
+$ cd algebra.ts
 $ npm install
 ```
 
@@ -44,7 +44,7 @@ This will run the Jasmine tests and a lint check. Any errors from `npm test` sho
 
 ### New Features
 
-If you're adding something completely new, it's probably best if you first [create an issue](https://github.com/nicolewhite/algebra.js/issues) to describe the feature you want to add so that it can be discussed. 
+If you're adding something completely new, it's probably best if you first [create an issue](https://github.com/remigius42/algebra.ts/issues) to describe the feature you want to add so that it can be discussed. 
 
 ### Bug Fixes
 
@@ -64,7 +64,7 @@ You can then edit the project page in `index.md`.
 ## Commit Your Changes
 
 Commit your changes with a descriptive commit message. Ideally, include an example of what you fixed or added.
-[This](https://github.com/nicolewhite/algebra.js/commit/3d9b1dbab5d984a270db536378f09519d5df5c8c) is a good example.
+[This](https://github.com/remigius42/algebra.ts/commit/3d9b1dbab5d984a270db536378f09519d5df5c8c) is a good example.
 
 ```
 $ git commit
