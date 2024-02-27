@@ -36,7 +36,7 @@ console.log("x = " + x.toString());
 x = 7/2
 ```
 
-[Read the full documentation at the project site](http://algebra.js.org).
+[Read the full documentation at the project site](https://remigius42.github.io/algebra.ts/).
 
 ## Install
 

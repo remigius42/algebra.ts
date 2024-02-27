@@ -53,7 +53,7 @@ If the bug you're fixing closes an open issue, be sure to include either [in a c
 
 ### Project Page
 
-The documentation for this project is maintained at http://algebra.js.org. You can edit this page by checking out the `gh-pages` branch.
+The documentation for this project is maintained at <https://remigius42.github.io/algebra.ts/>. You can edit this page by checking out the `gh-pages` branch.
 
 ```
 $ git checkout gh-pages
