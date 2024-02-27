@@ -38,6 +38,11 @@ jobs:
         with:
           name: algebra-${{ steps.package-version.outputs.current-version }}.ts
           path: "build/algebra-${{ steps.package-version.outputs.current-version }}.*"
+      - name: Test summary
+        if: always()
+        uses: test-summary/action@v2.3
+        with:
+          paths: .jasmine-results/junitresults.xml
   security_scan:
     name: security scan
     runs-on: ubuntu-latest

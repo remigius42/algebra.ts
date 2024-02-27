@@ -5,7 +5,7 @@
   "main": "algebra.js",
   "scripts": {
     "build": "npm run minify",
-    "test": "jasmine --config='jasmine.json'",
+    "test": "./bin/jasmine.js",
     "coveralls": "nyc --reporter=lcovonly --reporter=text --reporter=text-summary jasmine --config=jasmine.json  && cat ./coverage/lcov.info | npx coveralls && rm -rf ./coverage",
     "lint": "jshint algebra.js src/*.js test/*.js",
     "bundle": "browserify algebra.js --standalone algebra > build/algebra-${npm_package_version}.js",
@@ -24,6 +24,7 @@
     "browserify": "^17.0.0",
     "coveralls": "^2.11.2",
     "jasmine": "^5.1.0",
+    "jasmine-reporters": "^2.5.2",
     "jshint": "^2.13.6",
     "nyc": "^15.1.0",
     "uglify-js": "^3.17.4"
