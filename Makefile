@@ -6,7 +6,7 @@ test:
 	npx jasmine --config="jasmine.json"
 
 bundle:
-	./node_modules/.bin/browserify algebra.js --standalone algebra > build/algebra-$(PACKAGE_VERSION).js
+	npx browserify algebra.js --standalone algebra > build/algebra-$(PACKAGE_VERSION).js
 
 minify: bundle
 	npx uglifyjs --mangle --beautify ascii_only=true,beautify=false build/algebra-$(PACKAGE_VERSION).js > build/algebra-$(PACKAGE_VERSION).min.js
@@ -17,7 +17,7 @@ sync: minify
 
 coveralls:
 	npx nyc --reporter=lcovonly --reporter=text --reporter=text-summary jasmine --config=jasmine.json  && \
-	cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+	cat ./coverage/lcov.info | npx coveralls && rm -rf ./coverage
 
 lint:
-	./node_modules/jshint/bin/jshint algebra.js src/*.js test/*.js
+	npx jshint algebra.js src/*.js test/*.js
