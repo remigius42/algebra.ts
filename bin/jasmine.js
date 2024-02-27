@@ -9,7 +9,7 @@ jasmine.loadConfigFile("jasmine.json")
 
 const junitReporter = new reporters.JUnitXmlReporter({
   savePath: path.resolve(__dirname, "../.jasmine-results/"),
-  consolidateAll: true,
+  consolidateAll: true
 })
 jasmine.addReporter(junitReporter)
 

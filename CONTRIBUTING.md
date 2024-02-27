@@ -2,8 +2,8 @@
 
 ## Dependencies
 
-* [git](https://git-scm.com/downloads)
-* [node](https://nodejs.org/download/)
+- [git](https://git-scm.com/downloads)
+- [node](https://nodejs.org/download/)
 
 ## Fork the Repository
 
@@ -44,7 +44,7 @@ This will run the Jasmine tests and a lint check. Any errors from `npm test` sho
 
 ### New Features
 
-If you're adding something completely new, it's probably best if you first [create an issue](https://github.com/remigius42/algebra.ts/issues) to describe the feature you want to add so that it can be discussed. 
+If you're adding something completely new, it's probably best if you first [create an issue](https://github.com/remigius42/algebra.ts/issues) to describe the feature you want to add so that it can be discussed.
 
 ### Bug Fixes
 

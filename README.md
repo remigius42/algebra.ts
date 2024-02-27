@@ -1,15 +1,15 @@
-# algebra.js 
+# algebra.js
 
 [![Coverage Status](https://coveralls.io/repos/remigius42/algebra.ts/badge.svg?branch=main)](https://coveralls.io/r/remigius42/algebra.ts?branch=main)
 
 ## Quick Start
 
 ```js
-var expr = new Expression("x");
-expr = expr.subtract(3);
-expr = expr.add("x");
+var expr = new Expression("x")
+expr = expr.subtract(3)
+expr = expr.add("x")
 
-console.log(expr.toString());
+console.log(expr.toString())
 ```
 
 ```
@@ -17,9 +17,9 @@ console.log(expr.toString());
 ```
 
 ```js
-var eq = new Equation(expr, 4);
+var eq = new Equation(expr, 4)
 
-console.log(eq.toString());
+console.log(eq.toString())
 ```
 
 ```
@@ -27,9 +27,9 @@ console.log(eq.toString());
 ```
 
 ```js
-var x = eq.solveFor("x");
+var x = eq.solveFor("x")
 
-console.log("x = " + x.toString());
+console.log("x = " + x.toString())
 ```
 
 ```
@@ -62,7 +62,7 @@ cd algebra.ts
 #### In Node
 
 ```js
-var algebra = require("./algebra");
+var algebra = require("./algebra")
 ```
 
 #### In the Browser
