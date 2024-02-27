@@ -9,7 +9,7 @@ bundle:
 	./node_modules/.bin/browserify algebra.js --standalone algebra > build/algebra-$(PACKAGE_VERSION).js
 
 minify: bundle
-	npx uglify-js --mangle --beautify ascii_only=true,beautify=false build/algebra-$(PACKAGE_VERSION).js > build/algebra-$(PACKAGE_VERSION).min.js
+	npx uglifyjs --mangle --beautify ascii_only=true,beautify=false build/algebra-$(PACKAGE_VERSION).js > build/algebra-$(PACKAGE_VERSION).min.js
 
 sync: minify
 	git checkout gh-pages
