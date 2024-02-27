@@ -20,7 +20,7 @@
     "jasmine": "^5.1.0",
     "jshint": "^2.8.0",
     "nyc": "^15.1.0",
-    "uglifyjs": "^2.4.10"
+    "uglify-js": "^3.17.4"
   },
   "keywords": [
     "algebra",
