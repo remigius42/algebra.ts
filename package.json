@@ -4,7 +4,13 @@
   "description": "Build, display, and solve algebraic equations.",
   "main": "algebra.js",
   "scripts": {
-    "test": "make lint test"
+    "build": "npm run minify",
+    "test": "jasmine --config='jasmine.json'",
+    "coveralls": "nyc --reporter=lcovonly --reporter=text --reporter=text-summary jasmine --config=jasmine.json  && cat ./coverage/lcov.info | npx coveralls && rm -rf ./coverage",
+    "lint": "jshint algebra.js src/*.js test/*.js",
+    "bundle": "browserify algebra.js --standalone algebra > build/algebra-${npm_package_version}.js",
+    "minify": "npm run bundle && uglifyjs --mangle --beautify ascii_only=true,beautify=false build/algebra-${npm_package_version}.js > build/algebra-${npm_package_version}.min.js",
+    "sync": "npm run minify && git checkout gh-pages && cp build/*.min.js javascripts"
   },
   "repository": {
     "type": "git",

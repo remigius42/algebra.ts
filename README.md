@@ -70,11 +70,11 @@ var algebra = require("./algebra");
 The following will build `algebra.js` in the `build` directory.
 
 ```
-make bundle
+npm run bundle
 ```
 
 The following will build `algebra.min.js` in the `build` directory.
 
 ```
-make minify
+npm run minify
 ```
