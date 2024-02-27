@@ -1,8 +1,10 @@
 {
-  "indent": 4,
+  "indent": 2,
   "shadow": true,
   "jasmine": true,
   "strict": false,
   "node": true,
-  "esversion": 6
+  "esversion": 6,
+  "asi": true,
+  "laxbreak": true
 }

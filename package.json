@@ -27,6 +27,7 @@
     "jasmine-reporters": "^2.5.2",
     "jshint": "^2.13.6",
     "nyc": "^15.1.0",
+    "prettier": "3.2.5",
     "uglify-js": "^3.17.4"
   },
   "keywords": [
