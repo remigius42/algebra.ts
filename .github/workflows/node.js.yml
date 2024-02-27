@@ -1,0 +1,60 @@
+name: "Node.js CI"
+on:
+  push:
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: "npm"
+      - name: Check for Git conflict markers
+        run: git diff --check
+      - name: Install NPM packages
+        run: npm ci
+      - name: Audit NPM package signatures # protects against attacks via a registry mirror or proxy (https://docs.npmjs.com/about-registry-signatures)
+        run: npm audit signatures
+      - name: Lint (jshint)
+        run: npm run lint
+      - name: Test (Jasmine)
+        run: npm run test
+      - name: Coverage (Istanbul to Coveralls)
+        env:
+            COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+        run: npm run coveralls
+      - name: Build
+        run: npm run build
+      - name: get-npm-version
+        if: ${{ github.ref_type == 'tag' }}
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
+      - name: Upload build artifact for Git tags
+        if: ${{ github.ref_type == 'tag' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: algebra-${{ steps.package-version.outputs.current-version }}.ts
+          path: "build/algebra-${{ steps.package-version.outputs.current-version }}.*"
+  security_scan:
+    name: security scan
+    runs-on: ubuntu-latest
+    needs: build
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: "npm"
+      - name: Install project production dependencies
+        run: npm install --omit=dev --ignore-scripts # `--ignore-scripts` is needed because normally the dev dependencies are installed including Husky but they are omitted for the security scan and `scripts.prepare` in `package.json` runs `husky install`.
+      - name: Run security scan with Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: fs
+          scanners: vuln,secret,config
+          format: table
+          exit-code: 1
