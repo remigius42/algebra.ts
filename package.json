@@ -10,7 +10,8 @@
     "lint": "jshint algebra.js src/*.js test/*.js",
     "bundle": "browserify algebra.js --standalone algebra > build/algebra-${npm_package_version}.js",
     "minify": "npm run bundle && uglifyjs --mangle --beautify ascii_only=true,beautify=false build/algebra-${npm_package_version}.js > build/algebra-${npm_package_version}.min.js",
-    "sync": "npm run minify && git checkout gh-pages && cp build/*.min.js javascripts"
+    "sync": "npm run minify && git checkout gh-pages && cp build/*.min.js javascripts",
+    "version": "conventional-changelog --preset conventionalcommits --infile CHANGELOG.md --same-file --append && prettier --write CHANGELOG.md && git add CHANGELOG.md"
   },
   "repository": {
     "type": "git",
