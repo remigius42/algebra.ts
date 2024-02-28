@@ -24,6 +24,8 @@ jobs:
         run: npx commitlint --from initial_algebra.ts --to HEAD # don't check commits from before the fork
       - name: Check formatting (Prettier)
         run: npx prettier --check .
+      - name: Lint Markdown (markdownlint)
+        run: npx markdownlint-cli2 '**/*.md' '#node_modules'
       - name: Lint (jshint)
         run: npm run lint
       - name: Test (Jasmine)

@@ -15,15 +15,15 @@ Fork the repository with the "Fork" button on GitHub.
 
 Clone your fork.
 
-```
-$ git clone https://github.com/yourusername/algebra.ts.git
+```sh
+git clone https://github.com/yourusername/algebra.ts.git
 ```
 
 ## Install Dependencies
 
-```
-$ cd algebra.ts
-$ npm install
+```sh
+cd algebra.ts
+npm install
 ```
 
 This will create a `node_modules` directory in the current working directory.
@@ -42,8 +42,8 @@ Tests are written in [Jasmine](http://jasmine.github.io/edge/introduction.html).
 
 ## Run Tests
 
-```
-$ npm test
+```sh
+npm test
 ```
 
 This will run the Jasmine tests and a lint check. Any errors from `npm test` should be addressed before making a pull request.
@@ -63,8 +63,8 @@ If the bug you're fixing closes an open issue, be sure to include either [in a c
 
 The documentation for this project is maintained at <https://remigius42.github.io/algebra.ts/>. You can edit this page by checking out the `gh-pages` branch.
 
-```
-$ git checkout gh-pages
+```sh
+git checkout gh-pages
 ```
 
 You can then edit the project page in `index.md`.
@@ -74,16 +74,16 @@ You can then edit the project page in `index.md`.
 Commit your changes with a descriptive commit message. Ideally, include an example of what you fixed or added.
 [This](https://github.com/remigius42/algebra.ts/commit/3d9b1dbab5d984a270db536378f09519d5df5c8c) is a good example.
 
-```
-$ git commit
+```sh
+git commit
 ```
 
 ## Push Your Changes
 
 Push your changes to your fork.
 
-```
-$ git push
+```sh
+git push
 ```
 
 ## Pull Request

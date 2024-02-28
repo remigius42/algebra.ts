@@ -5,56 +5,35 @@
 ## Quick Start
 
 ```js
-var expr = new Expression("x")
+const expr = new Expression("x")
 expr = expr.subtract(3)
 expr = expr.add("x")
+console.log(expr.toString()) // 2x - 3
 
-console.log(expr.toString())
-```
+const eq = new Equation(expr, 4)
+console.log(eq.toString()) // 2x - 3 = 4
 
-```
-2x - 3
-```
-
-```js
-var eq = new Equation(expr, 4)
-
-console.log(eq.toString())
-```
-
-```
-2x - 3 = 4
-```
-
-```js
-var x = eq.solveFor("x")
-
-console.log("x = " + x.toString())
-```
-
-```
-x = 7/2
+const x = eq.solveFor("x")
+console.log("x = " + x.toString()) // x = 7/2
 ```
 
 [Read the full documentation at the project site](https://remigius42.github.io/algebra.ts/).
 
 ## Install
 
-### Stable Release
+### Stable Release in Node.js
 
-#### In Node
-
-```
+```sh
 npm install algebra.js
 ```
 
-#### In the Browser
+### Stable Release in the Browser
 
 Download [algebra.min.js](http://algebra.js.org/javascripts/algebra-0.2.6.min.js).
 
 ### Latest Development Release
 
-```
+```sh
 git clone https://github.com/remigius42/algebra.ts.git
 cd algebra.ts
 ```
@@ -69,12 +48,12 @@ var algebra = require("./algebra")
 
 The following will build `algebra.js` in the `build` directory.
 
-```
+```sh
 npm run bundle
 ```
 
 The following will build `algebra.min.js` in the `build` directory.
 
-```
+```sh
 npm run minify
 ```
