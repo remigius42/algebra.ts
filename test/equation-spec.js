@@ -274,7 +274,7 @@ describe("Checking the type of an equation", function () {
 })
 
 describe("Solving for variables that can't be isolated", function () {
-  it("should return undefined if the variable is crossproducts with other vars", function () {
+  it("should return undefined if the variable is a cross product with other vars", function () {
     var expr = new Expression("x").multiply("y")
     var eq = new Equation(expr, 2) // xy = 2
     var answer = eq.solveFor("x")

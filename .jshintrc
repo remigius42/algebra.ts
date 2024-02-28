@@ -1,3 +1,5 @@
+/* spellchecker:ignore esversion, laxbreak */
+
 {
   "indent": 2,
   "shadow": true,

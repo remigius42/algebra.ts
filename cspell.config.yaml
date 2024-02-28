@@ -1,0 +1,20 @@
+$schema: https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json
+version: "0.2"
+ignorePaths:
+  - "node_modules"
+  - "/.git"
+  - "/.gitignore"
+  - "/.husky"
+  - "/.jasmine-results"
+  - "/.markdownlint.yaml"
+  - "/.nyc_output"
+  - "/.prettierrc.yaml"
+  - "/build"
+  - "/cspell.project-words.txt"
+dictionaryDefinitions:
+  - name: project-words
+    path: "./cspell.project-words.txt"
+    addWords: true
+dictionaries: ["project-words"]
+ignoreWords: []
+flagWords: []

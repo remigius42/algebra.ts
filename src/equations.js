@@ -213,11 +213,11 @@ Equation.prototype.solveFor = function (variable) {
           var root1 = S + U - b / (3 * a)
           /* Round off the roots if the difference between absolute value of ceil and number is < e-15*/
           if (root1 < 0) {
-            var Croot1 = Math.floor(root1)
-            if (root1 - Croot1 < 1e-15) root1 = Croot1
+            var cRoot1 = Math.floor(root1)
+            if (root1 - cRoot1 < 1e-15) root1 = cRoot1
           } else if (root1 > 0) {
-            var Croot1 = Math.ceil(root1)
-            if (Croot1 - root1 < 1e-15) root1 = Croot1
+            var cRoot1 = Math.ceil(root1)
+            if (cRoot1 - root1 < 1e-15) root1 = cRoot1
           }
 
           return [root1]
@@ -237,27 +237,27 @@ Equation.prototype.solveFor = function (variable) {
 
           /* Round off the roots if the difference between absolute value of ceil and number is < e-15*/
           if (root1 < 0) {
-            var Croot1 = Math.floor(root1)
-            if (root1 - Croot1 < 1e-15) root1 = Croot1
+            var cRoot1 = Math.floor(root1)
+            if (root1 - cRoot1 < 1e-15) root1 = cRoot1
           } else if (root1 > 0) {
-            var Croot1 = Math.ceil(root1)
-            if (Croot1 - root1 < 1e-15) root1 = Croot1
+            var cRoot1 = Math.ceil(root1)
+            if (cRoot1 - root1 < 1e-15) root1 = cRoot1
           }
 
           if (root2 < 0) {
-            var Croot2 = Math.floor(root2)
-            if (root2 - Croot2 < 1e-15) root2 = Croot2
+            var cRoot2 = Math.floor(root2)
+            if (root2 - cRoot2 < 1e-15) root2 = cRoot2
           } else if (root2 > 0) {
-            var Croot2 = Math.ceil(root2)
-            if (Croot2 - root2 < 1e-15) root2 = Croot2
+            var cRoot2 = Math.ceil(root2)
+            if (cRoot2 - root2 < 1e-15) root2 = cRoot2
           }
 
           if (root1 < 0) {
-            var Croot3 = Math.floor(root3)
-            if (root3 - Croot3 < 1e-15) root3 = Croot3
+            var cRoot3 = Math.floor(root3)
+            if (root3 - cRoot3 < 1e-15) root3 = cRoot3
           } else if (root3 > 0) {
-            var Croot3 = Math.ceil(root3)
-            if (Croot3 - root3 < 1e-15) root3 = Croot3
+            var cRoot3 = Math.ceil(root3)
+            if (cRoot3 - root3 < 1e-15) root3 = cRoot3
           }
 
           var roots = [root1, root2, root3]

@@ -271,7 +271,7 @@ describe("Fraction subtraction", function () {
 describe("Fraction multiplication", function () {
   var x = new Fraction(1, 2)
 
-  it("should allow multplication of other fractions", function () {
+  it("should allow multiplication of other fractions", function () {
     var y = new Fraction(1, 2)
     var answer = x.multiply(y)
 
@@ -469,7 +469,7 @@ describe("Fraction simplification", function () {
     expect(frac.toString()).toEqual("4/16")
   })
 
-  it("stays unsimplified when asking for the absolute value", function () {
+  it("stays non-simplified when asking for the absolute value", function () {
     var frac = new Fraction(-2, 4)
     frac = frac.abs()
 

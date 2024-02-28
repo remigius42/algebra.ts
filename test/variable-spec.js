@@ -4,7 +4,7 @@ var Fraction = require("../src/fractions")
 describe("A variable", function () {
   const x = new Variable("x")
 
-  it("is initalized with a variable name", function () {
+  it("is initialized with a variable name", function () {
     expect(x.variable).toEqual("x")
   })
 
@@ -17,7 +17,7 @@ describe("A variable", function () {
       new Variable(5)
     }).toThrow(
       new TypeError(
-        "Invalid Argument (5): Variable initalizer must be of type String."
+        "Invalid Argument (5): Variable initializer must be of type String."
       )
     )
   })
@@ -27,7 +27,7 @@ describe("A variable", function () {
       new Variable(5.1)
     }).toThrow(
       new TypeError(
-        "Invalid Argument (5.1): Variable initalizer must be of type String."
+        "Invalid Argument (5.1): Variable initializer must be of type String."
       )
     )
   })

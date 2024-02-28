@@ -1,3 +1,5 @@
+/* spellchecker:ignore varepsilon, vartheta, varrho, varphi */
+
 function gcd(x, y) {
   while (y) {
     var temp = x

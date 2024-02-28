@@ -1,3 +1,5 @@
+# spellchecker:ignore: aquasecurity, junitresults, martinbeentjes, nvmrc, vuln
+
 name: "Node.js CI"
 on:
   push:
@@ -22,6 +24,8 @@ jobs:
         run: npm audit signatures
       - name: Check commit messages (commitlint)
         run: npx commitlint --from initial_algebra.ts --to HEAD # don't check commits from before the fork
+      - name: Check spelling (CSpell)
+        run: npx cspell --dot .
       - name: Check formatting (Prettier)
         run: npx prettier --check .
       - name: Lint Markdown (markdownlint)

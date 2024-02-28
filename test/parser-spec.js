@@ -146,14 +146,14 @@ describe("Parenthesis", function () {
     expect(p.parse(input)).toEqual(new Expression("x").add(4).multiply(2))
   })
 
-  it("should throw an errow if there is an extra opening parenthesis", function () {
+  it("should throw an error if there is an extra opening parenthesis", function () {
     var input = "2-(4*x"
     expect(function () {
       p.parse(input)
     }).toThrow(new Error("Unbalanced Parenthesis"))
   })
 
-  it("should throw an errow if there is an extra closing parenthesis", function () {
+  it("should throw an error if there is an extra closing parenthesis", function () {
     var input = "2+4*x)"
     expect(function () {
       p.parse(input)

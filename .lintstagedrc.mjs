@@ -1,9 +1,16 @@
 const LINT_STAGED_CONFIG = {
-  "**/*": files =>
-    mapFilesToInvocations(
-      "prettier --no-error-on-unmatched-pattern --ignore-unknown --list-different",
-      files
-    ),
+  "**/*": [
+    files =>
+      mapFilesToInvocations(
+        "prettier --no-error-on-unmatched-pattern --ignore-unknown --list-different",
+        files
+      ),
+    files =>
+      mapFilesToInvocations(
+        "cspell --dot --no-must-find-files --no-progress",
+        files
+      )
+  ],
   "**/*.{js}": [
     files => mapFilesToInvocations("jshint", files),
     () => "jasmine --config=jasmine.json --fail-fast" // run all tests, since Jasmine doesn't support `--find-related-tests` like Jest

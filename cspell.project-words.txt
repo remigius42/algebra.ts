@@ -1,0 +1,14 @@
+Andreas
+coef
+coefs
+commitlint
+conventionalcommits
+infile
+javascripts
+lcov
+lcovonly
+markdownlint
+multinomial
+numer
+Remigius
+uglifyjs

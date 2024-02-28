@@ -9,11 +9,11 @@ describe("An expression initialized with an alphabetic variable name", function 
     expect(x).toBeDefined()
   })
 
-  it("is initalized with an empty array of constants", function () {
+  it("is initialized with an empty array of constants", function () {
     expect(x.constants.length).toEqual(0)
   })
 
-  it("is initalized with one term", function () {
+  it("is initialized with one term", function () {
     expect(x.terms.length).toEqual(1)
   })
 })
@@ -47,11 +47,11 @@ describe("An expression initialized with nothing", function () {
     expect(x).toBeDefined()
   })
 
-  it("is initalized with an empty array of constants", function () {
+  it("is initialized with an empty array of constants", function () {
     expect(x.constants.length).toEqual(0)
   })
 
-  it("is initalized with zero terms", function () {
+  it("is initialized with zero terms", function () {
     expect(x.terms.length).toEqual(0)
   })
 })
@@ -80,9 +80,9 @@ describe("Expression addition", function () {
   })
 
   it("should properly combine the constant of two expressions", function () {
-    var newx = x.add(3) // x + 3
-    var newy = y.add(new Fraction(1, 4)) // y + 1/4
-    var answer = newx.add(newy) // x + 3 + y + 1/4 => x + y + 13/4
+    var newX = x.add(3) // x + 3
+    var newY = y.add(new Fraction(1, 4)) // y + 1/4
+    var answer = newX.add(newY) // x + 3 + y + 1/4 => x + y + 13/4
 
     expect(answer.toString()).toEqual("x + y + 13/4")
   })
@@ -105,7 +105,7 @@ describe("Expression addition", function () {
     expect(answer.toString()).toEqual("2x^2 + y + 2")
   })
 
-  it("should properly combine the terms of two expressions - crossproducts", function () {
+  it("should properly combine the terms of two expressions - cross products", function () {
     var expr1 = x.multiply(y) // xy
     var expr2 = y.multiply(x).add(x).add(2) // yx + x + 2
 
@@ -157,13 +157,13 @@ describe("Expression addition", function () {
     expect(answer.toString()).toEqual("x + y + 3")
   })
 
-  it("should return unsimplified terms if simplify=false", function () {
+  it("should return non-simplified terms if simplify=false", function () {
     var answer = x.add(3).add("x", false)
 
     expect(answer.toString()).toEqual("x + x + 3")
   })
 
-  it("should return unsimplified constants if simplify=false", function () {
+  it("should return non-simplified constants if simplify=false", function () {
     var answer = x.add(3).add(3, false)
 
     expect(answer.toString()).toEqual("x + 3 + 3")
@@ -182,10 +182,10 @@ describe("Expression subtraction", function () {
   })
 
   it("should properly combine the constant of two expressions - linear", function () {
-    var newx = x.subtract(3) // x - 3
-    var newy = y.subtract(new Fraction(1, 4)) // y - 1/4
+    var newX = x.subtract(3) // x - 3
+    var newY = y.subtract(new Fraction(1, 4)) // y - 1/4
 
-    var answer = newx.subtract(newy) // x - 3 - y - (-1/4) => x - y - 12/4 + 1/4 => x - y - 11/4
+    var answer = newX.subtract(newY) // x - 3 - y - (-1/4) => x - y - 12/4 + 1/4 => x - y - 11/4
 
     expect(answer.toString()).toEqual("x - y - 11/4")
   })
@@ -200,7 +200,7 @@ describe("Expression subtraction", function () {
     expect(answer.toString()).toEqual("-y - 2")
   })
 
-  it("should properly combine the terms of two expressions - crossproducts", function () {
+  it("should properly combine the terms of two expressions - cross products", function () {
     var expr1 = x.multiply(y) // xy
     var expr2 = y.multiply(x).add(x).add(2) // yx + x + 2
 
@@ -252,13 +252,13 @@ describe("Expression subtraction", function () {
     expect(answer.toString()).toEqual("x - y + 3")
   })
 
-  it("should return unsimplified terms if simplify=false", function () {
+  it("should return non-simplified terms if simplify=false", function () {
     var answer = x.subtract(3).subtract(x, false)
 
     expect(answer.toString()).toEqual("x - x - 3")
   })
 
-  it("should return unsimplified constants if simplify=false", function () {
+  it("should return non-simplified constants if simplify=false", function () {
     var answer = x.subtract(3).subtract(3, false)
 
     expect(answer.toString()).toEqual("x - 3 - 3")
@@ -335,21 +335,21 @@ describe("Expression multiplication", function () {
     expect(answer.toString()).toEqual("xy")
   })
 
-  it("should allow for unsimplified terms - single var", function () {
+  it("should allow for non-simplified terms - single var", function () {
     var answer = x.multiply(x)
     answer = answer.multiply(x, false) // x^2x
 
     expect(answer.toString()).toEqual("x^2x")
   })
 
-  it("should allow for unsimplified terms - var and constant", function () {
+  it("should allow for non-simplified terms - var and constant", function () {
     var answer = x.add(x, false) // x + x
     answer = answer.multiply(5, false) // 5x + 5x
 
     expect(answer.toString()).toEqual("5x + 5x")
   })
 
-  it("should allow for unsimplified terms - multiple vars and constant", function () {
+  it("should allow for non-simplified terms - multiple vars and constant", function () {
     var answer = x.add(y) // x + y
     answer = answer.multiply(2) // 2x + 2y
     answer = answer.add(5) // 2x + 2y + 5
@@ -380,7 +380,7 @@ describe("Expression division", function () {
     expect(x.divide(y).toString()).toEqual("xy^-1")
   })
 
-  it("should not allow division of a multinominal denomenator", function () {
+  it("should not allow division of a multinomial denominator", function () {
     var multi = new Expression("x").add(3)
 
     expect(function () {
@@ -392,7 +392,7 @@ describe("Expression division", function () {
     )
   })
 
-  it("should not allow division of a multinominal numenator", function () {
+  it("should not allow division of a multinomial numerator", function () {
     var multi = new Expression("x").add(3)
 
     expect(function () {
@@ -410,7 +410,7 @@ describe("Expression division", function () {
     }).toThrow(new EvalError("Divide By Zero"))
   })
 
-  it("should allow for unsimplified terms and constants", function () {
+  it("should allow for non-simplified terms and constants", function () {
     var exp1 = new Expression("x").multiply(2) // 2x
     var exp2 = new Expression("x").multiply(4) // 4x
 
@@ -519,7 +519,7 @@ describe("Expression printing to tex", function () {
     expect(x.toTex()).toEqual("0")
   })
 
-  it("prints unsimplified expressions correctly", function () {
+  it("prints non-simplified expressions correctly", function () {
     var exp = new Expression("x").add("x", false)
     exp = exp.multiply(new Fraction(3, 4), false) // 3/4x + 3/4x
     exp = exp.add(2, false)
@@ -651,7 +651,7 @@ describe("Expression evaluation with multiple variables - nonlinear", function (
   })
 })
 
-describe("Expression evaluation with multiple variables - crossproducts", function () {
+describe("Expression evaluation with multiple variables - cross products", function () {
   var x = new Expression("x")
   var y = new Expression("y")
 
@@ -706,7 +706,7 @@ describe("Expression evaluation with other expressions", function () {
   })
 })
 
-describe("Expression evaluation with unsimplified expressions", function () {
+describe("Expression evaluation with non-simplified expressions", function () {
   it("works with multiple of the same variable", function () {
     var exp = new Expression("x").add("x", false) // x + x
     var answer = exp.eval({ x: 2 }, false)
@@ -787,7 +787,7 @@ describe("Raising expressions to powers", function () {
     expect(answer.toString()).toEqual("x^3 + 6x^2 + 12x + 8")
   })
 
-  it("should allow unsimplified expression", function () {
+  it("should allow non-simplified expression", function () {
     var answer = x.pow(2, false)
 
     expect(answer.toString()).toEqual("xx + 2x + 2x + 2 * 2")
@@ -853,7 +853,7 @@ describe("Expression simplification", function () {
     expect(sim.toString()).toEqual("2x + 6")
   })
 
-  it("should combine unsimplified terms with multiple coefficients", function () {
+  it("should combine non-simplified terms with multiple coefficients", function () {
     var answer = new Expression("x").add("y") // x + y
     answer = answer.multiply(2) // 2x + 2y
     answer = answer.add(5) // 2x + 2y + 5
@@ -889,8 +889,8 @@ describe("Expression simplification", function () {
 
   it("should properly simplify expressions where terms show up >= 2 times", function () {
     var exp = new Expression("x").add("y").add(3)
-    var unsimplified = exp.pow(3, false)
-    var simplified = unsimplified.simplify()
+    var nonSimplified = exp.pow(3, false)
+    var simplified = nonSimplified.simplify()
 
     expect(simplified.toString()).toEqual(
       "x^3 + y^3 + 3x^2y + 3y^2x + 9x^2 + 9y^2 + 18xy + 27x + 27y + 27"
@@ -900,8 +900,8 @@ describe("Expression simplification", function () {
 
 describe("Expression summation", function () {
   it("should sum over expressions with one variable", function () {
-    var xplus3 = new Expression("x").add(3)
-    var ans = xplus3.summation(new Expression("x"), 3, 6)
+    var xPlus3 = new Expression("x").add(3)
+    var ans = xPlus3.summation(new Expression("x"), 3, 6)
     expect(ans.toString()).toEqual("30")
   })
 

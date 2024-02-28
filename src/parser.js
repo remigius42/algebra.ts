@@ -91,12 +91,12 @@ Parser.prototype.match = function (keyword) {
         this.current_token.type === "OPERATOR" &&
         this.current_token.value === "EQUALS"
       )
-    case "lparen":
+    case "l_paren":
       return (
         this.current_token.type === "PAREN" &&
         this.current_token.value === "L_PAREN"
       )
-    case "rparen":
+    case "r_paren":
       return (
         this.current_token.type === "PAREN" &&
         this.current_token.value === "R_PAREN"
@@ -144,18 +144,18 @@ Parser.prototype.parseExpr = function () {
 Parser.prototype.parseExprRest = function (term) {
   if (this.match("plus")) {
     this.update()
-    var plusterm = this.parseTerm()
-    if (term === undefined || plusterm === undefined)
+    var plusTerm = this.parseTerm()
+    if (term === undefined || plusTerm === undefined)
       throw new SyntaxError("Missing operand")
-    return this.parseExprRest(term.add(plusterm))
+    return this.parseExprRest(term.add(plusTerm))
   } else if (this.match("minus")) {
     this.update()
-    var minusterm = this.parseTerm()
+    var minusTerm = this.parseTerm()
     //This case is entered when a negative number is parsed e.g. x = -4
     if (term === undefined) {
-      return this.parseExprRest(minusterm.multiply(-1))
+      return this.parseExprRest(minusTerm.multiply(-1))
     } else {
-      return this.parseExprRest(term.subtract(minusterm))
+      return this.parseExprRest(term.subtract(minusTerm))
     }
   } else {
     return term
@@ -170,27 +170,27 @@ Parser.prototype.parseTerm = function () {
 Parser.prototype.parseTermRest = function (factor) {
   if (this.match("multiply")) {
     this.update()
-    var mulfactor = this.parseFactor()
-    return factor.multiply(this.parseTermRest(mulfactor))
+    var mulFactor = this.parseFactor()
+    return factor.multiply(this.parseTermRest(mulFactor))
   } else if (this.match("power")) {
     this.update()
-    var powfactor = this.parseFactor()
+    var powFactor = this.parseFactor()
     //WORKAROUND: algebra.js only allows integers and fractions for raising
-    return this.parseTermRest(factor.pow(parseInt(powfactor.toString())))
+    return this.parseTermRest(factor.pow(parseInt(powFactor.toString())))
   } else if (this.match("divide")) {
     this.update()
-    var devfactor = this.parseFactor()
+    var divFactor = this.parseFactor()
     //WORKAROUND: algebra.js only allows integers and fractions for division
-    return this.parseTermRest(factor.divide(this.convertToFraction(devfactor)))
+    return this.parseTermRest(factor.divide(this.convertToFraction(divFactor)))
   } else if (this.match("epsilon")) {
     return factor
   } else {
     //a missing operator between terms is treated like a multiplier
-    var mulfactor2 = this.parseFactor()
-    if (mulfactor2 === undefined) {
+    var mulFactor2 = this.parseFactor()
+    if (mulFactor2 === undefined) {
       return factor
     } else {
-      return factor.multiply(this.parseTermRest(mulfactor2))
+      return factor.multiply(this.parseTermRest(mulFactor2))
     }
   }
 }
@@ -220,10 +220,10 @@ Parser.prototype.parseFactor = function () {
     var id = new Expression(this.current_token.value)
     this.update()
     return id
-  } else if (this.match("lparen")) {
+  } else if (this.match("l_paren")) {
     this.update()
     var expr = this.parseExpr()
-    if (this.match("rparen")) {
+    if (this.match("r_paren")) {
       this.update()
       return expr
     } else {

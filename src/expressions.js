@@ -200,7 +200,7 @@ Expression.prototype.divide = function (a, simplify) {
 
     //Check if both terms are monomial
     if (numTotal === 1 && denomTotal === 1) {
-      //Devide coefficients
+      //Divide coefficients
       var numCoef = num.terms[0].coefficients[0]
       var denomCoef = denom.terms[0].coefficients[0]
 
@@ -222,11 +222,11 @@ Expression.prototype.divide = function (a, simplify) {
         }
       }
 
-      //Invers all degrees of remaining variables
+      //Invert all degrees of remaining variables
       for (var i = 0; i < denom.terms[0].variables.length; i++) {
         denom.terms[0].variables[i].degree *= -1
       }
-      //Multiply the inversed variables to the numenator
+      //Multiply the inverted variables to the numerator
       num = num.multiply(denom, simplify)
 
       return num
@@ -778,7 +778,7 @@ Term.prototype.toString = function (options) {
 Term.prototype.toTex = function (dict) {
   var dict = dict === undefined ? {} : dict
   dict.multiplication = !("multiplication" in dict)
-    ? "cdot"
+    ? "cdot" // spellchecker:ignore cdot
     : dict.multiplication
 
   var op = " \\" + dict.multiplication + " "
@@ -816,7 +816,7 @@ var Variable = function (variable) {
     throw new TypeError(
       "Invalid Argument (" +
         variable.toString() +
-        "): Variable initalizer must be of type String."
+        "): Variable initializer must be of type String."
     )
   }
 }

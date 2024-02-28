@@ -172,7 +172,7 @@ describe("Term multiplication", function () {
     )
   })
 
-  it("allows unsimplified coefficients", function () {
+  it("allows non-simplified coefficients", function () {
     var x = new Variable("x")
     var t = new Term(x)
 
@@ -182,7 +182,7 @@ describe("Term multiplication", function () {
     expect(t.toString()).toEqual("3 * 5x")
   })
 
-  it("allows unsimplified variables", function () {
+  it("allows non-simplified variables", function () {
     var x = new Variable("x")
     var t1 = new Term(x)
     var t2 = new Term(x)
@@ -223,7 +223,7 @@ describe("Term division", function () {
     )
   })
 
-  it("allows unsimplified terms", function () {
+  it("allows non-simplified terms", function () {
     var x = new Variable("x")
     var t = new Term(x)
 
@@ -253,7 +253,7 @@ describe("Term simplification", function () {
 
     t = t.multiply(new Term(x), false)
     t = t.multiply(new Term(y), false)
-    t = t.multiply(new Term(x), false) // xxyx
+    t = t.multiply(new Term(x), false) // x * x * y * x
 
     t.combineVars()
 
@@ -318,7 +318,8 @@ describe("Term evaluation", function () {
 })
 
 describe("Term printing to TeX", function () {
-  it("works with unsimplified coefficients and uses cdot by default", function () {
+  it("works with non-simplified coefficients and uses cdot by default", function () {
+    // spellchecker:ignore cdot
     var x = new Variable("x")
     var t = new Term(x)
 
