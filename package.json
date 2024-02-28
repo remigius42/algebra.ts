@@ -11,7 +11,8 @@
     "bundle": "browserify algebra.js --standalone algebra > build/algebra-${npm_package_version}.js",
     "minify": "npm run bundle && uglifyjs --mangle --beautify ascii_only=true,beautify=false build/algebra-${npm_package_version}.js > build/algebra-${npm_package_version}.min.js",
     "sync": "npm run minify && git checkout gh-pages && cp build/*.min.js javascripts",
-    "version": "conventional-changelog --preset conventionalcommits --infile CHANGELOG.md --same-file --append && prettier --write CHANGELOG.md && git add CHANGELOG.md"
+    "version": "conventional-changelog --preset conventionalcommits --infile CHANGELOG.md --same-file --append && prettier --write CHANGELOG.md && git add CHANGELOG.md",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
     "browserify": "^17.0.0",
     "conventional-changelog-cli": "^4.1.0",
     "coveralls": "^2.11.2",
+    "husky": "^9.0.11",
     "jasmine": "^5.1.0",
     "jasmine-reporters": "^2.5.2",
     "jshint": "^2.13.6",

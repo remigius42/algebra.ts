@@ -28,6 +28,14 @@ $ npm install
 
 This will create a `node_modules` directory in the current working directory.
 
+If you are using a GUI for Git, please make sure that the Git
+configuration `core.hooksPath` is supported.
+
+Otherwise you might be able to workaround this issue via
+`rm -rf .git/hooks && ln -s ../.husky .git/hooks`
+(see a related [Husky issue comment](https://github.com/typicode/husky/issues/875#issue-809587895)
+for further details).
+
 ## Add Tests
 
 Tests are written in [Jasmine](http://jasmine.github.io/edge/introduction.html). The test files are located in the `test` directory. If your tests fit into one of the current test file categories, just go ahead and add them there. Otherwise, you can create a new test file. It has to end in `-spec.js`.
