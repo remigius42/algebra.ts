@@ -12,7 +12,6 @@ const LINT_STAGED_CONFIG = {
       )
   ],
   "**/*.js": [
-    files => mapFilesToInvocations("jshint", files),
     files => {
       return mapFilesToInvocations(
         "eslint --max-warnings=0 --no-warn-ignored",

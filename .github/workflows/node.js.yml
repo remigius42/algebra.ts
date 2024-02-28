@@ -30,8 +30,6 @@ jobs:
         run: npx prettier --check .
       - name: Lint Markdown (markdownlint)
         run: npx markdownlint-cli2 '**/*.md' '#node_modules'
-      - name: Lint JavaScript (jshint)
-        run: npx jshint algebra.js src/*.js test/*.js
       - name: Lint JavaScript (ESLint)
         run: npx eslint --max-warnings=0 .
       - name: Test (Jasmine)
