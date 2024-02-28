@@ -22,6 +22,8 @@ jobs:
         run: npm audit signatures
       - name: Check commit messages (commitlint)
         run: npx commitlint --from initial_algebra.ts --to HEAD # don't check commits from before the fork
+      - name: Check formatting (Prettier)
+        run: npx prettier --check .
       - name: Lint (jshint)
         run: npm run lint
       - name: Test (Jasmine)
