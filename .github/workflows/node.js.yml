@@ -8,6 +8,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Otherwise the commitlint checks would fail for `--from initial` since by default only the last commit is fetched
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
@@ -18,6 +20,8 @@ jobs:
         run: npm ci
       - name: Audit NPM package signatures # protects against attacks via a registry mirror or proxy (https://docs.npmjs.com/about-registry-signatures)
         run: npm audit signatures
+      - name: Check commit messages (commitlint)
+        run: npx commitlint --from initial_algebra.ts --to HEAD # don't check commits from before the fork
       - name: Lint (jshint)
         run: npm run lint
       - name: Test (Jasmine)

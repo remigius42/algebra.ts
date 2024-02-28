@@ -23,6 +23,8 @@
     "src/"
   ],
   "devDependencies": {
+    "@commitlint/cli": "^19.0.2",
+    "@commitlint/config-conventional": "^19.0.0",
     "browserify": "^17.0.0",
     "conventional-changelog-cli": "^4.1.0",
     "coveralls": "^2.11.2",
