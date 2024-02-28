@@ -39,12 +39,12 @@ Equation.prototype.solveFor = function (variable) {
 
   // If the equation is linear and the variable in question can be isolated through arithmetic, solve.
   if (this._isLinear() || this._variableCanBeIsolated(variable)) {
-    var solvingFor = new Term(new Variable(variable))
-    var newLhs = new Expression()
-    var newRhs = new Expression()
+    const solvingFor = new Term(new Variable(variable))
+    let newLhs = new Expression()
+    let newRhs = new Expression()
 
-    for (var i = 0; i < this.rhs.terms.length; i++) {
-      var term = this.rhs.terms[i]
+    for (let i = 0; i < this.rhs.terms.length; i++) {
+      let term = this.rhs.terms[i]
 
       if (term.canBeCombinedWith(solvingFor)) {
         newLhs = newLhs.subtract(term)
@@ -53,8 +53,8 @@ Equation.prototype.solveFor = function (variable) {
       }
     }
 
-    for (var i = 0; i < this.lhs.terms.length; i++) {
-      var term = this.lhs.terms[i]
+    for (let i = 0; i < this.lhs.terms.length; i++) {
+      let term = this.lhs.terms[i]
 
       if (term.canBeCombinedWith(solvingFor)) {
         newLhs = newLhs.add(term)
@@ -99,11 +99,11 @@ Equation.prototype.solveFor = function (variable) {
 
       // Otherwise, check degree and solve.
     } else if (this._isQuadratic(variable)) {
-      var coefs = newLhs._quadraticCoefficients()
+      let coefs = newLhs._quadraticCoefficients()
 
-      var a = coefs.a
-      var b = coefs.b
-      var c = coefs.c
+      let a = coefs.a
+      let b = coefs.b
+      let c = coefs.c
 
       // Calculate the discriminant, b^2 - 4ac.
       var discriminant = b.pow(2).subtract(a.multiply(c).multiply(4))
@@ -118,16 +118,16 @@ Equation.prototype.solveFor = function (variable) {
           // (-b - √discriminant) / 2a
           // (-b + √discriminant) / 2a
         } else {
-          var squareRootDiscriminant
+          let squareRootDiscriminant
 
           // If the answers will be rational, return reduced Fraction objects.
           if (discriminant._squareRootIsRational()) {
             squareRootDiscriminant = discriminant.pow(0.5)
-            var root1 = b
+            let root1 = b
               .multiply(-1)
               .subtract(squareRootDiscriminant)
               .divide(a.multiply(2))
-            var root2 = b
+            let root2 = b
               .multiply(-1)
               .add(squareRootDiscriminant)
               .divide(a.multiply(2))
@@ -138,8 +138,8 @@ Equation.prototype.solveFor = function (variable) {
             a = a.valueOf()
             b = b.valueOf()
 
-            var root1 = (-b - squareRootDiscriminant) / (2 * a)
-            var root2 = (-b + squareRootDiscriminant) / (2 * a)
+            let root1 = (-b - squareRootDiscriminant) / (2 * a)
+            let root2 = (-b + squareRootDiscriminant) / (2 * a)
             return [root1, root2]
           }
         }
@@ -148,12 +148,12 @@ Equation.prototype.solveFor = function (variable) {
         return []
       }
     } else if (this._isCubic(variable)) {
-      var coefs = newLhs._cubicCoefficients()
+      let coefs = newLhs._cubicCoefficients()
 
-      var a = coefs.a
-      var b = coefs.b
-      var c = coefs.c
-      var d = coefs.d
+      let a = coefs.a
+      let b = coefs.b
+      let c = coefs.c
+      let d = coefs.d
 
       // Calculate D and D0.
       var D = a.multiply(b).multiply(c).multiply(d).multiply(18)
@@ -169,19 +169,19 @@ Equation.prototype.solveFor = function (variable) {
       if (D.valueOf() === 0) {
         // If D = D0 = 0, there is one distinct real root, -b / 3a.
         if (D0.valueOf() === 0) {
-          var root1 = b.multiply(-1).divide(a.multiply(3))
+          let root1 = b.multiply(-1).divide(a.multiply(3))
 
           return [root1.reduce()]
           // Otherwise, if D0 != 0, there are two distinct real roots.
           // 9ad - bc / 2D0
           // 4abc - 9a^2d - b^3 / aD0
         } else {
-          var root1 = a.multiply(b).multiply(c).multiply(4)
+          let root1 = a.multiply(b).multiply(c).multiply(4)
           root1 = root1.subtract(a.pow(2).multiply(d).multiply(9))
           root1 = root1.subtract(b.pow(3))
           root1 = root1.divide(a.multiply(D0))
 
-          var root2 = a
+          let root2 = a
             .multiply(d)
             .multiply(9)
             .subtract(b.multiply(c))
@@ -210,13 +210,13 @@ Equation.prototype.solveFor = function (variable) {
           var S = Math.cbrt(R)
           var T = -(g / 2) - Math.sqrt(h)
           var U = Math.cbrt(T)
-          var root1 = S + U - b / (3 * a)
+          let root1 = S + U - b / (3 * a)
           /* Round off the roots if the difference between absolute value of ceil and number is < e-15*/
           if (root1 < 0) {
-            var cRoot1 = Math.floor(root1)
+            let cRoot1 = Math.floor(root1)
             if (root1 - cRoot1 < 1e-15) root1 = cRoot1
           } else if (root1 > 0) {
-            var cRoot1 = Math.ceil(root1)
+            let cRoot1 = Math.ceil(root1)
             if (cRoot1 - root1 < 1e-15) root1 = cRoot1
           }
 
@@ -231,32 +231,32 @@ Equation.prototype.solveFor = function (variable) {
           var N = Math.sqrt(3) * Math.sin(k / 3)
           var P = -(b / (3 * a))
 
-          var root1 = 2 * j * Math.cos(k / 3) - b / (3 * a)
-          var root2 = L * (M + N) + P
-          var root3 = L * (M - N) + P
+          let root1 = 2 * j * Math.cos(k / 3) - b / (3 * a)
+          let root2 = L * (M + N) + P
+          let root3 = L * (M - N) + P
 
           /* Round off the roots if the difference between absolute value of ceil and number is < e-15*/
           if (root1 < 0) {
-            var cRoot1 = Math.floor(root1)
+            let cRoot1 = Math.floor(root1)
             if (root1 - cRoot1 < 1e-15) root1 = cRoot1
           } else if (root1 > 0) {
-            var cRoot1 = Math.ceil(root1)
+            let cRoot1 = Math.ceil(root1)
             if (cRoot1 - root1 < 1e-15) root1 = cRoot1
           }
 
           if (root2 < 0) {
-            var cRoot2 = Math.floor(root2)
+            let cRoot2 = Math.floor(root2)
             if (root2 - cRoot2 < 1e-15) root2 = cRoot2
           } else if (root2 > 0) {
-            var cRoot2 = Math.ceil(root2)
+            let cRoot2 = Math.ceil(root2)
             if (cRoot2 - root2 < 1e-15) root2 = cRoot2
           }
 
           if (root1 < 0) {
-            var cRoot3 = Math.floor(root3)
+            let cRoot3 = Math.floor(root3)
             if (root3 - cRoot3 < 1e-15) root3 = cRoot3
           } else if (root3 > 0) {
-            var cRoot3 = Math.ceil(root3)
+            let cRoot3 = Math.ceil(root3)
             if (cRoot3 - root3 < 1e-15) root3 = cRoot3
           }
 

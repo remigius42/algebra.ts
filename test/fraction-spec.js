@@ -356,19 +356,19 @@ describe("Fraction exponentiation", function () {
   var x = new Fraction(1, 2)
 
   it("should return 1/1 if n = 0", function () {
-    answer = x.pow(0)
+    const answer = x.pow(0)
 
     expect(answer.equalTo(new Fraction(1, 1))).toBe(true)
   })
 
   it("should return itself if n = 1", function () {
-    answer = x.pow(1)
+    const answer = x.pow(1)
 
     expect(answer.equalTo(new Fraction(1, 2))).toBe(true)
   })
 
   it("should work with n > 1", function () {
-    answer = x.pow(3)
+    const answer = x.pow(3)
 
     expect(answer.equalTo(new Fraction(1, 8))).toBe(true)
   })
@@ -380,7 +380,7 @@ describe("Fraction exponentiation", function () {
   })
 
   it("should work with n < 0", function () {
-    answer = x.pow(-2)
+    const answer = x.pow(-2)
 
     expect(answer.equalTo(new Fraction(4, 1))).toBe(true)
   })

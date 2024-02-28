@@ -11,8 +11,14 @@ const LINT_STAGED_CONFIG = {
         files
       )
   ],
-  "**/*.{js}": [
+  "**/*.js": [
     files => mapFilesToInvocations("jshint", files),
+    files => {
+      return mapFilesToInvocations(
+        "eslint --max-warnings=0 --no-warn-ignored",
+        files
+      )
+    },
     () => "jasmine --config=jasmine.json --fail-fast" // run all tests, since Jasmine doesn't support `--find-related-tests` like Jest
   ],
   "**/*.md": files => mapFilesToInvocations("markdownlint-cli2", files)

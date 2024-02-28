@@ -70,12 +70,12 @@ Complex.prototype.multiply = function (a) {
     var expr2 = new Expression("i").multiply(a.imaginary).add(a.real)
     var foil = expr1.multiply(expr2)
     var coefs = foil._quadraticCoefficients()
-    var a = coefs.a
-    var b = coefs.b
-    var c = coefs.c
+    var coefA = coefs.a
+    var coefB = coefs.b
+    var coefC = coefs.c
 
-    var real = a.multiply(-1).add(c)
-    return new Complex(real, b)
+    var real = coefA.multiply(-1).add(coefC)
+    return new Complex(real, coefB)
   } else {
     throw new TypeError(
       "Invalid Argument (" +

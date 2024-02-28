@@ -60,7 +60,7 @@ describe("Term addition", function () {
     var t1 = new Term(x)
     var t2 = new Term(x)
 
-    answer = t1.add(t2)
+    const answer = t1.add(t2)
     expect(answer.toString()).toEqual("2x")
   })
 

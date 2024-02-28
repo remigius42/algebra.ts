@@ -295,7 +295,7 @@ describe("Expression multiplication", function () {
     var newX = x.add(y) // x + y
     var newY = y.add(x) // y + x
 
-    answer = newX.multiply(newY) // (x + y) * (y + x) = x^2 + xy + xy + y^2 = x^2 + y^2 + 2xy
+    const answer = newX.multiply(newY) // (x + y) * (y + x) = x^2 + xy + xy + y^2 = x^2 + y^2 + 2xy
     expect(answer.toString()).toEqual("x^2 + y^2 + 2xy")
   })
 
@@ -753,13 +753,13 @@ describe("Expression evaluation with non-simplified expressions", function () {
 describe("Checking for cross products in expressions", function () {
   it("should return true if there are no cross products", function () {
     var expr = new Expression("x").add("y")
-    cross = expr._noCrossProductsWithVariable("x")
+    const cross = expr._noCrossProductsWithVariable("x")
     expect(cross).toBe(true)
   })
 
   it("should return false if there are cross products", function () {
     var expr = new Expression("x").multiply("y").add("x")
-    cross = expr._noCrossProductsWithVariable("x")
+    const cross = expr._noCrossProductsWithVariable("x")
     expect(cross).toBe(false)
   })
 })

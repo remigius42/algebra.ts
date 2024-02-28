@@ -118,21 +118,21 @@ Expression.prototype.multiply = function (a, simplify) {
     var thatExp = a.copy()
     var newTerms = []
 
-    for (var i = 0; i < thisExp.terms.length; i++) {
+    for (let i = 0; i < thisExp.terms.length; i++) {
       var thisTerm = thisExp.terms[i]
 
-      for (var j = 0; j < thatExp.terms.length; j++) {
+      for (let j = 0; j < thatExp.terms.length; j++) {
         var thatTerm = thatExp.terms[j]
         newTerms.push(thisTerm.multiply(thatTerm, simplify))
       }
 
-      for (var j = 0; j < thatExp.constants.length; j++) {
+      for (let j = 0; j < thatExp.constants.length; j++) {
         newTerms.push(thisTerm.multiply(thatExp.constants[j], simplify))
       }
     }
 
     for (var i = 0; i < thatExp.terms.length; i++) {
-      var thatTerm = thatExp.terms[i]
+      let thatTerm = thatExp.terms[i]
 
       for (var j = 0; j < thisExp.constants.length; j++) {
         newTerms.push(thatTerm.multiply(thisExp.constants[j], simplify))
@@ -141,10 +141,10 @@ Expression.prototype.multiply = function (a, simplify) {
 
     var newConstants = []
 
-    for (var i = 0; i < thisExp.constants.length; i++) {
+    for (let i = 0; i < thisExp.constants.length; i++) {
       var thisConst = thisExp.constants[i]
 
-      for (var j = 0; j < thatExp.constants.length; j++) {
+      for (let j = 0; j < thatExp.constants.length; j++) {
         var thatConst = thatExp.constants[j]
         var t = new Term()
         t = t.multiply(thatConst, false)
@@ -209,9 +209,9 @@ Expression.prototype.divide = function (a, simplify) {
       denom.terms[0].coefficients[0] = new Fraction(1, 1)
 
       //Cancel variables
-      for (var i = 0; i < num.terms[0].variables.length; i++) {
+      for (let i = 0; i < num.terms[0].variables.length; i++) {
         var numVar = num.terms[0].variables[i]
-        for (var j = 0; j < denom.terms[0].variables.length; j++) {
+        for (let j = 0; j < denom.terms[0].variables.length; j++) {
           var denomVar = denom.terms[0].variables[j]
           //Check for equal variables
           if (numVar.variable === denomVar.variable) {
@@ -223,7 +223,7 @@ Expression.prototype.divide = function (a, simplify) {
       }
 
       //Invert all degrees of remaining variables
-      for (var i = 0; i < denom.terms[0].variables.length; i++) {
+      for (let i = 0; i < denom.terms[0].variables.length; i++) {
         denom.terms[0].variables[i].degree *= -1
       }
       //Multiply the inverted variables to the numerator
@@ -298,7 +298,7 @@ Expression.prototype.summation = function (variable, lower, upper, simplify) {
 Expression.prototype.toString = function (options) {
   var str = ""
 
-  for (var i = 0; i < this.terms.length; i++) {
+  for (let i = 0; i < this.terms.length; i++) {
     var term = this.terms[i]
 
     str +=
@@ -306,7 +306,7 @@ Expression.prototype.toString = function (options) {
       term.toString(options)
   }
 
-  for (var i = 0; i < this.constants.length; i++) {
+  for (let i = 0; i < this.constants.length; i++) {
     var constant = this.constants[i]
 
     str += (constant.valueOf() < 0 ? " - " : " + ") + constant.abs().toString()
@@ -324,14 +324,14 @@ Expression.prototype.toString = function (options) {
 Expression.prototype.toTex = function (dict) {
   var str = ""
 
-  for (var i = 0; i < this.terms.length; i++) {
+  for (let i = 0; i < this.terms.length; i++) {
     var term = this.terms[i]
 
     str +=
       (term.coefficients[0].valueOf() < 0 ? " - " : " + ") + term.toTex(dict)
   }
 
-  for (var i = 0; i < this.constants.length; i++) {
+  for (let i = 0; i < this.constants.length; i++) {
     var constant = this.constants[i]
 
     str += (constant.valueOf() < 0 ? " - " : " + ") + constant.abs().toTex()
@@ -513,7 +513,7 @@ Expression.prototype._cubicCoefficients = function () {
   return { a: a, b: b, c: c, d: d }
 }
 
-Term = function (variable) {
+const Term = function (variable) {
   if (variable instanceof Variable) {
     this.variables = [variable.copy()]
   } else if (typeof variable === "undefined") {
@@ -653,7 +653,6 @@ Term.prototype.divide = function (a, simplify) {
 
 Term.prototype.eval = function (values, simplify) {
   var copy = this.copy()
-  var keys = Object.keys(values)
   var exp = copy.coefficients.reduce(function (p, c) {
     return p.multiply(c, simplify)
   }, new Expression(1))
@@ -766,7 +765,7 @@ Term.prototype.toString = function (options) {
   str = this.variables.reduce(function (p, c) {
     if (implicit && !!p) {
       var vStr = c.toString()
-      return !!vStr ? p + "*" + vStr : p
+      return vStr ? p + "*" + vStr : p
     } else return p.concat(c.toString())
   }, str)
   str = str.substring(0, 3) === " * " ? str.substring(3, str.length) : str
@@ -776,7 +775,7 @@ Term.prototype.toString = function (options) {
 }
 
 Term.prototype.toTex = function (dict) {
-  var dict = dict === undefined ? {} : dict
+  dict = dict === undefined ? {} : dict
   dict.multiplication = !("multiplication" in dict)
     ? "cdot" // spellchecker:ignore cdot
     : dict.multiplication

@@ -1,5 +1,4 @@
 var Variable = require("../src/expressions").Variable
-var Fraction = require("../src/fractions")
 
 describe("A variable", function () {
   const x = new Variable("x")
