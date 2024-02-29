@@ -1,5 +1,6 @@
 var Fraction = require("../src/fractions")
 var Expression = require("../src/expressions").Expression
+var Equation = require("../src/equations")
 var algebra = require("../algebra")
 
 describe("An expression initialized with an alphabetic variable name", function () {
@@ -400,6 +401,18 @@ describe("Expression division", function () {
     }).toThrow(
       new TypeError(
         "Invalid Argument ((x + 3)/(x)): Only monomial expressions can be divided."
+      )
+    )
+  })
+
+  it("should not allow division with an equation as denominator", function () {
+    const equation = new Equation(new Expression("x"), new Expression("42"))
+
+    expect(function () {
+      x.divide(equation)
+    }).toThrow(
+      new TypeError(
+        "Invalid Argument (x = 42): Divisor must be of type Fraction or Integer."
       )
     )
   })
