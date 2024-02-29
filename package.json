@@ -4,13 +4,11 @@
   "description": "Build, display, and solve algebraic equations.",
   "main": "algebra.js",
   "scripts": {
-    "build": "npm run minify",
+    "build": "rollup --config rollup.config.mjs",
     "test": "./bin/jasmine.js",
     "coveralls": "nyc --reporter=lcovonly --reporter=text --reporter=text-summary jasmine --config=jasmine.json  && cat ./coverage/lcov.info | npx coveralls && rm -rf ./coverage",
     "lint": "eslint --no-warn-ignored .",
-    "bundle": "browserify algebra.js --standalone algebra > build/algebra-${npm_package_version}.js",
-    "minify": "npm run bundle && uglifyjs --mangle --beautify ascii_only=true,beautify=false build/algebra-${npm_package_version}.js > build/algebra-${npm_package_version}.min.js",
-    "sync": "npm run minify && git checkout gh-pages && cp build/*.min.js javascripts",
+    "sync": "npm run build && git checkout gh-pages && cp build/*.min.js javascripts",
     "version": "conventional-changelog --preset conventionalcommits --infile CHANGELOG.md --same-file --append && prettier --write CHANGELOG.md && git add CHANGELOG.md",
     "prepare": "husky"
   },
@@ -25,7 +23,8 @@
   "devDependencies": {
     "@commitlint/cli": "^19.0.2",
     "@commitlint/config-conventional": "^19.0.0",
-    "browserify": "^17.0.0",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-terser": "^0.4.4",
     "conventional-changelog-cli": "^4.1.0",
     "coveralls": "^2.11.2",
     "cspell-cli": "^8.4.0",
@@ -39,7 +38,7 @@
     "markdownlint-cli2": "^0.12.1",
     "nyc": "^15.1.0",
     "prettier": "3.2.5",
-    "uglify-js": "^3.17.4"
+    "rollup": "^4.12.0"
   },
   "keywords": [
     "algebra",

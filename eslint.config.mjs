@@ -8,7 +8,7 @@ export default [
     ignores: ["build/*"]
   },
   {
-    ignores: [".lintstagedrc.mjs", "eslint.config.mjs"] // ignore these ES modules until `sourceType` in `package.json` is changed to `module` since it leads to parsing errors otherwise
+    ignores: [".lintstagedrc.mjs", "eslint.config.mjs", "rollup.config.mjs"] // ignore these ES modules until `sourceType` in `package.json` is changed to `module` since it leads to parsing errors otherwise
   },
   js.configs.recommended,
   eslintConfigPrettier,
