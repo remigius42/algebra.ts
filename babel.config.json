@@ -1,0 +1,13 @@
+/* spellchecker:ignore corejs */
+
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "usage",
+        "corejs": "3.36"
+      }
+    ]
+  ]
+}
