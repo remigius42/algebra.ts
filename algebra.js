@@ -1,15 +1,15 @@
-var Fraction = require("./src/fractions")
-var Expression = require("./src/expressions").Expression
-var Equation = require("./src/equations")
-var Parser = require("./src/parser")
+import { Equation } from "./src/equations.js"
+import { Expression } from "./src/expressions.js"
+import { Fraction } from "./src/fractions.js"
+import { Parser } from "./src/parser.js"
 
-var parse = function (input) {
+const parse = function (input) {
   var parser = new Parser()
   var result = parser.parse(input)
   return result
 }
 
-var toTex = function (input) {
+const toTex = function (input) {
   if (
     input instanceof Fraction ||
     input instanceof Expression ||
@@ -31,10 +31,7 @@ var toTex = function (input) {
   }
 }
 
-module.exports = {
-  Fraction: Fraction,
-  Expression: Expression,
-  Equation: Equation,
-  parse: parse,
-  toTex: toTex
+export default {
+  parse,
+  toTex
 }

@@ -1,8 +1,8 @@
-var Expression = require("../src/expressions").Expression
-var Equation = require("../src/equations")
-var Fraction = require("../src/fractions")
-var round = require("../src/helper").round
-var algebra = require("../algebra")
+import algebra from "../algebra.js"
+import { Equation } from "../src/equations.js"
+import { Expression } from "../src/expressions.js"
+import { Fraction } from "../src/fractions.js"
+import { round } from "../src/helper.js"
 
 describe("A linear equation with one variable", function () {
   var x1 = new Expression("x").add(4).divide(5) // 1/5x + 4/5

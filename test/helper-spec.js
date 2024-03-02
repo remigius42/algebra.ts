@@ -1,8 +1,5 @@
-var gcd = require("../src/helper").gcd
-var lcm = require("../src/helper").lcm
-var isInt = require("../src/helper").isInt
-var round = require("../src/helper").round
-var algebra = require("../algebra")
+import algebra from "../algebra.js"
+import { gcd, isInt, lcm, round } from "../src/helper.js"
 
 describe("Greatest common divisor", function () {
   it("returns 1 when the arguments are 1 and 1", function () {

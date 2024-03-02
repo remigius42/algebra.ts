@@ -1,6 +1,5 @@
-var Term = require("../src/expressions").Term
-var Variable = require("../src/expressions").Variable
-var Fraction = require("../src/fractions")
+import { Term, Variable } from "../src/expressions.js"
+import { Fraction } from "../src/fractions.js"
 
 describe("Terms", function () {
   var x = new Variable("x")

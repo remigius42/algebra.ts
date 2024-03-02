@@ -1,5 +1,6 @@
 /* spellchecker:ignore lintstagedrc */
 
+import babelParser from "@babel/eslint-parser"
 import js from "@eslint/js"
 import eslintConfigPrettier from "eslint-config-prettier"
 
@@ -7,20 +8,27 @@ export default [
   {
     ignores: ["build/*"]
   },
-  {
-    ignores: [".lintstagedrc.mjs", "eslint.config.mjs", "rollup.config.mjs"] // ignore these ES modules until `sourceType` in `package.json` is changed to `module` since it leads to parsing errors otherwise
-  },
   js.configs.recommended,
   eslintConfigPrettier,
   {
     rules: {
-      "no-console": "error"
-    },
-    languageOptions: {
-      sourceType: "commonjs"
+      "no-console": "error",
+      strict: "error"
     },
     linterOptions: {
       reportUnusedDisableDirectives: true
+    }
+  },
+  {
+    files: ["rollup.config.js"],
+    languageOptions: {
+      parser: babelParser,
+      parserOptions: {
+        requireConfigFile: false,
+        babelOptions: {
+          plugins: ["@babel/plugin-syntax-import-assertions"]
+        }
+      }
     }
   },
   {

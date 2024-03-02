@@ -1,5 +1,3 @@
-"use strict"
-
 /* spellchecker:ignore Bendersky */
 
 /*
@@ -9,7 +7,7 @@
   http://eli.thegreenplace.net/2013/07/16/hand-written-lexer-in-javascript-compared-to-the-regex-based-ones
 */
 
-var Lexer = function () {
+export const Lexer = function () {
   this.pos = 0
   this.buf = null
   this.bufferLength = 0
@@ -151,5 +149,3 @@ Lexer.prototype._skipNonTokens = function () {
     }
   }
 }
-
-module.exports = Lexer

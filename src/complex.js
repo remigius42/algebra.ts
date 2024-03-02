@@ -1,8 +1,8 @@
-var Expression = require("./expressions").Expression
-var isInt = require("./helper").isInt
-var Fraction = require("./fractions")
+import { Expression } from "./expressions.js"
+import { Fraction } from "./fractions.js"
+import { isInt } from "./helper.js"
 
-var Complex = function (real, imaginary) {
+export const Complex = function (real, imaginary) {
   if (real instanceof Fraction && imaginary instanceof Fraction) {
     this.real = real
     this.imaginary = imaginary
@@ -104,5 +104,3 @@ Complex.prototype.divide = function (a) {
     )
   }
 }
-
-module.exports = Complex

@@ -1,7 +1,7 @@
-var Fraction = require("../src/fractions")
-var Expression = require("../src/expressions").Expression
-var Equation = require("../src/equations")
-var algebra = require("../algebra")
+import algebra from "../algebra.js"
+import { Equation } from "../src/equations.js"
+import { Expression } from "../src/expressions.js"
+import { Fraction } from "../src/fractions.js"
 
 describe("An expression initialized with an alphabetic variable name", function () {
   var x = new Expression("x")

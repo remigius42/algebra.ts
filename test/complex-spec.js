@@ -1,5 +1,5 @@
-var Fraction = require("../src/fractions")
-var Complex = require("../src/complex")
+import { Complex } from "../src/complex.js"
+import { Fraction } from "../src/fractions.js"
 
 describe("Complex number initialization", function () {
   it("should be defined when initialized correctly", function () {

@@ -1,8 +1,6 @@
-var isInt = require("./helper").isInt
-var gcd = require("./helper").gcd
-var lcm = require("./helper").lcm
+import { gcd, isInt, lcm } from "./helper.js"
 
-var Fraction = function (a, b) {
+export const Fraction = function (a, b) {
   if (b === 0) {
     throw new EvalError("Divide By Zero")
   } else if (isInt(a) && isInt(b)) {
@@ -238,5 +236,3 @@ Fraction.prototype._cubeRootIsRational = function () {
 
   return isInt(cbrtNumer) && isInt(cbrtDenom)
 }
-
-module.exports = Fraction

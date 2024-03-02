@@ -1,4 +1,4 @@
-var Variable = require("../src/expressions").Variable
+import { Variable } from "../src/expressions.js"
 
 describe("A variable", function () {
   const x = new Variable("x")

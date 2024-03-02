@@ -1,11 +1,9 @@
-"use strict"
+import { Equation } from "./equations.js"
+import { Expression } from "./expressions.js"
+import { Fraction } from "./fractions.js"
+import { Lexer } from "./lexer.js"
 
-var Lexer = require("./lexer"),
-  Expression = require("./expressions").Expression,
-  Fraction = require("./fractions"),
-  Equation = require("./equations")
-
-var Parser = function () {
+export const Parser = function () {
   this.lexer = new Lexer()
   this.current_token = null
 
@@ -252,5 +250,3 @@ Parser.prototype.parseNumber = function () {
     return new Expression(parseInt(float_op * factor)).divide(factor)
   }
 }
-
-module.exports = Parser

@@ -1,6 +1,6 @@
 /* spellchecker:ignore varepsilon, vartheta, varrho, varphi */
 
-function gcd(x, y) {
+export function gcd(x, y) {
   while (y) {
     var temp = x
     x = y
@@ -10,21 +10,21 @@ function gcd(x, y) {
   return x
 }
 
-function lcm(x, y) {
+export function lcm(x, y) {
   return (x * y) / gcd(x, y)
 }
 
-function isInt(thing) {
+export function isInt(thing) {
   return typeof thing == "number" && thing % 1 === 0
 }
 
-function round(decimal, places) {
+export function round(decimal, places) {
   places = typeof places === "undefined" ? 2 : places
   var x = Math.pow(10, places)
   return Math.round(parseFloat(decimal) * x) / x
 }
 
-var GREEK_LETTERS = [
+export const GREEK_LETTERS = [
   "alpha",
   "beta",
   "gamma",
@@ -64,9 +64,3 @@ var GREEK_LETTERS = [
   "omega",
   "Omega"
 ]
-
-exports.gcd = gcd
-exports.lcm = lcm
-exports.isInt = isInt
-exports.round = round
-exports.GREEK_LETTERS = GREEK_LETTERS

@@ -1,5 +1,5 @@
-var Fraction = require("../src/fractions")
-var algebra = require("../algebra")
+import algebra from "../algebra.js"
+import { Fraction } from "../src/fractions.js"
 
 describe("An invalid fraction", function () {
   it("should throw an exception with a denominator of 0", function () {

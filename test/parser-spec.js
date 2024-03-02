@@ -1,10 +1,8 @@
-"use strict"
-
-var Parser = require("../src/parser.js"),
-  algebra = require("../algebra.js"),
-  Expression = algebra.Expression,
-  Fraction = algebra.Fraction,
-  Equation = algebra.Equation
+import algebra from "../algebra.js"
+import { Equation } from "../src/equations.js"
+import { Expression } from "../src/expressions.js"
+import { Fraction } from "../src/fractions.js"
+import { Parser } from "../src/parser.js"
 
 describe("Input validity", function () {
   var p = new Parser()

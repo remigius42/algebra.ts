@@ -34,7 +34,7 @@ jobs:
         run: npx eslint --max-warnings=0 .
       - name: Test (Jasmine)
         run: npm run test
-      - name: Coverage (Istanbul to Coveralls)
+      - name: Coverage (c8 to Coveralls)
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: npm run coveralls

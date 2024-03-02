@@ -1,8 +1,7 @@
-var Fraction = require("./fractions")
-var isInt = require("./helper").isInt
-var GREEK_LETTERS = require("./helper").GREEK_LETTERS
+import { Fraction } from "./fractions.js"
+import { GREEK_LETTERS, isInt } from "./helper.js"
 
-var Expression = function (variable) {
+export const Expression = function (variable) {
   this.constants = []
 
   if (typeof variable === "string") {
@@ -513,7 +512,7 @@ Expression.prototype._cubicCoefficients = function () {
   return { a: a, b: b, c: c, d: d }
 }
 
-const Term = function (variable) {
+export const Term = function (variable) {
   if (variable instanceof Variable) {
     this.variables = [variable.copy()]
   } else if (typeof variable === "undefined") {
@@ -807,7 +806,7 @@ Term.prototype.toTex = function (dict) {
   return str
 }
 
-var Variable = function (variable) {
+export const Variable = function (variable) {
   if (typeof variable === "string") {
     this.variable = variable
     this.degree = 1
@@ -854,10 +853,4 @@ Variable.prototype.toTex = function () {
   } else {
     return variable + "^{" + degree + "}"
   }
-}
-
-module.exports = {
-  Expression: Expression,
-  Term: Term,
-  Variable: Variable
 }

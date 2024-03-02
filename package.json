@@ -3,10 +3,11 @@
   "version": "0.2.8",
   "description": "Build, display, and solve algebraic equations.",
   "main": "algebra.js",
+  "type": "module",
   "scripts": {
-    "build": "rollup --config rollup.config.mjs",
+    "build": "rollup --config rollup.config.js",
     "test": "./bin/jasmine.js",
-    "coveralls": "nyc --reporter=lcovonly --reporter=text --reporter=text-summary jasmine --config=jasmine.json  && cat ./coverage/lcov.info | npx coveralls && rm -rf ./coverage",
+    "coveralls": "c8 npm test && cat ./coverage/lcov.info | npx coveralls && rm -rf ./coverage",
     "lint": "eslint --no-warn-ignored .",
     "sync": "npm run build && git checkout gh-pages && cp build/*.min.js javascripts",
     "version": "conventional-changelog --preset conventionalcommits --infile CHANGELOG.md --same-file --append && prettier --write CHANGELOG.md && git add CHANGELOG.md",
@@ -22,6 +23,8 @@
   ],
   "devDependencies": {
     "@babel/core": "^7.24.0",
+    "@babel/eslint-parser": "^7.23.10",
+    "@babel/plugin-syntax-import-assertions": "^7.23.3",
     "@babel/plugin-transform-modules-umd": "^7.23.3",
     "@babel/preset-env": "^7.24.0",
     "@commitlint/cli": "^19.0.2",
@@ -30,6 +33,7 @@
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
+    "c8": "^9.1.0",
     "conventional-changelog-cli": "^4.1.0",
     "core-js": "^3.36.0",
     "coveralls": "^2.11.2",
@@ -42,7 +46,6 @@
     "lint-staged": "^15.2.2",
     "markdownlint": "^0.33.0",
     "markdownlint-cli2": "^0.12.1",
-    "nyc": "^15.1.0",
     "prettier": "3.2.5",
     "rollup": "^4.12.0"
   },
