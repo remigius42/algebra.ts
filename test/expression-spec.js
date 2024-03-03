@@ -436,6 +436,15 @@ describe("Expression division", function () {
 
     expect(answer.toString()).toEqual("2/2x + 4/2x + 2/2 + 4/2")
   })
+
+  it("should cancel same variable in numerator and denominator", function () {
+    const numerator = new Expression("x").pow(2)
+    const denominator = new Expression("x").pow(3)
+
+    const answer = numerator.divide(denominator)
+
+    expect(answer.toString()).toEqual("x^-1")
+  })
 })
 
 describe("Expression printing to string", function () {
@@ -463,6 +472,12 @@ describe("Expression printing to string", function () {
     x = x.subtract(3)
 
     expect(x.toString()).toEqual("x")
+  })
+
+  it("should print 0 if the expression was initialized with nothing", function () {
+    const expression = new Expression()
+
+    expect(expression.toString()).toEqual("0")
   })
 
   it("should only print the constant if all the other terms have been cancelled out", function () {
