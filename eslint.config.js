@@ -14,6 +14,7 @@ export default [
     rules: {
       "no-console": "error",
       "no-var": "error",
+      "object-shorthand": "error",
       strict: "error"
     },
     linterOptions: {

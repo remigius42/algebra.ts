@@ -434,7 +434,7 @@ export class Expression {
     }
     const c = this.constant()
 
-    return { a: a, b: b, c: c }
+    return { a, b, c }
   }
 
   cubicCoefficients() {
@@ -451,7 +451,7 @@ export class Expression {
     }
 
     const d = this.constant()
-    return { a: a, b: b, c: c, d: d }
+    return { a, b, c, d }
   }
 
   #removeTermsWithCoefficientZero() {
