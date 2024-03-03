@@ -7,145 +7,147 @@
   http://eli.thegreenplace.net/2013/07/16/hand-written-lexer-in-javascript-compared-to-the-regex-based-ones
 */
 
-export const Lexer = function () {
-  this.pos = 0
-  this.buf = null
-  this.bufferLength = 0
+export class Lexer {
+  constructor() {
+    this.pos = 0
+    this.buf = null
+    this.bufferLength = 0
 
-  // Operator table, mapping operator -> token name
-  this.operatorTable = {
-    "+": "PLUS",
-    "-": "MINUS",
-    "*": "MULTIPLY",
-    "/": "DIVIDE",
-    "^": "POWER",
-    "(": "L_PAREN",
-    ")": "R_PAREN",
-    "=": "EQUALS"
-  }
-}
-
-// Initialize the Lexer's buffer. This resets the lexer's internal
-// state and subsequent tokens will be returned starting with the
-// beginning of the new buffer.
-Lexer.prototype.input = function (buf) {
-  this.pos = 0
-  this.buf = buf
-  this.bufferLength = buf.length
-}
-
-// Get the next token from the current buffer. A token is an object with
-// the following properties:
-// - type: name of the pattern that this token matched (taken from rules).
-// - value: actual string value of the token.
-// - pos: offset in the current buffer where the token starts.
-//
-// If there are no more tokens in the buffer, returns null. In case of
-// an error throws Error.
-Lexer.prototype.token = function () {
-  this._skipNonTokens()
-  if (this.pos >= this.bufferLength) {
-    return null
-  }
-
-  // The char at this.pos is part of a real token. Figure out which.
-  const c = this.buf.charAt(this.pos)
-  // Look it up in the table of operators
-  const op = this.operatorTable[c]
-  if (op !== undefined) {
-    if (op === "L_PAREN" || op === "R_PAREN") {
-      return { type: "PAREN", value: op, pos: this.pos++ }
-    } else {
-      return { type: "OPERATOR", value: op, pos: this.pos++ }
-    }
-  } else {
-    // Not an operator - so it's the beginning of another token.
-    if (Lexer._isAlpha(c)) {
-      return this._process_identifier()
-    } else if (Lexer._isDigit(c)) {
-      return this._process_number()
-    } else {
-      throw new SyntaxError(
-        "Token error at character " + c + " at position " + this.pos
-      )
+    // Operator table, mapping operator -> token name
+    this.operatorTable = {
+      "+": "PLUS",
+      "-": "MINUS",
+      "*": "MULTIPLY",
+      "/": "DIVIDE",
+      "^": "POWER",
+      "(": "L_PAREN",
+      ")": "R_PAREN",
+      "=": "EQUALS"
     }
   }
-}
 
-Lexer._isDigit = function (c) {
-  return c >= "0" && c <= "9"
-}
-
-Lexer._isAlpha = function (c) {
-  return (c >= "a" && c <= "z") || (c >= "A" && c <= "Z")
-}
-
-Lexer._isAlphaNum = function (c) {
-  return (
-    (c >= "a" && c <= "z") || (c >= "A" && c <= "Z") || (c >= "0" && c <= "9")
-  )
-}
-
-Lexer.prototype._process_digits = function (position) {
-  let endPosition = position
-  while (
-    endPosition < this.bufferLength &&
-    Lexer._isDigit(this.buf.charAt(endPosition))
-  ) {
-    endPosition++
+  // Initialize the Lexer's buffer. This resets the lexer's internal
+  // state and subsequent tokens will be returned starting with the
+  // beginning of the new buffer.
+  input(buf) {
+    this.pos = 0
+    this.buf = buf
+    this.bufferLength = buf.length
   }
-  return endPosition
-}
 
-Lexer.prototype._process_number = function () {
-  //Read characters until a non-digit character appears
-  let endPosition = this._process_digits(this.pos)
-  //If it's a decimal point, continue to read digits
-  if (this.buf.charAt(endPosition) === ".") {
-    endPosition = this._process_digits(endPosition + 1)
+  // Get the next token from the current buffer. A token is an object with
+  // the following properties:
+  // - type: name of the pattern that this token matched (taken from rules).
+  // - value: actual string value of the token.
+  // - pos: offset in the current buffer where the token starts.
+  //
+  // If there are no more tokens in the buffer, returns null. In case of
+  // an error throws Error.
+  token() {
+    this.#skipNonTokens()
+    if (this.pos >= this.bufferLength) {
+      return null
+    }
+
+    // The char at this.pos is part of a real token. Figure out which.
+    const c = this.buf.charAt(this.pos)
+    // Look it up in the table of operators
+    const op = this.operatorTable[c]
+    if (op !== undefined) {
+      if (op === "L_PAREN" || op === "R_PAREN") {
+        return { type: "PAREN", value: op, pos: this.pos++ }
+      } else {
+        return { type: "OPERATOR", value: op, pos: this.pos++ }
+      }
+    } else {
+      // Not an operator - so it's the beginning of another token.
+      if (Lexer.#isAlpha(c)) {
+        return this.#process_identifier()
+      } else if (Lexer.#isDigit(c)) {
+        return this.#process_number()
+      } else {
+        throw new SyntaxError(
+          "Token error at character " + c + " at position " + this.pos
+        )
+      }
+    }
   }
-  //Check if the last read character is a decimal point.
-  //If it is, ignore it and proceed
-  if (this.buf.charAt(endPosition - 1) === ".") {
-    throw new SyntaxError(
-      "Decimal point without decimal digits at position " + (endPosition - 1)
+
+  static #isDigit(c) {
+    return c >= "0" && c <= "9"
+  }
+
+  static #isAlpha(c) {
+    return (c >= "a" && c <= "z") || (c >= "A" && c <= "Z")
+  }
+
+  static #isAlphaNum(c) {
+    return (
+      (c >= "a" && c <= "z") || (c >= "A" && c <= "Z") || (c >= "0" && c <= "9")
     )
   }
-  //construct the NUMBER token
-  const tok = {
-    type: "NUMBER",
-    value: this.buf.substring(this.pos, endPosition),
-    pos: this.pos
-  }
-  this.pos = endPosition
-  return tok
-}
 
-Lexer.prototype._process_identifier = function () {
-  let endPosition = this.pos + 1
-  while (
-    endPosition < this.bufferLength &&
-    Lexer._isAlphaNum(this.buf.charAt(endPosition))
-  ) {
-    endPosition++
+  #process_digits(position) {
+    let endPosition = position
+    while (
+      endPosition < this.bufferLength &&
+      Lexer.#isDigit(this.buf.charAt(endPosition))
+    ) {
+      endPosition++
+    }
+    return endPosition
   }
 
-  const tok = {
-    type: "IDENTIFIER",
-    value: this.buf.substring(this.pos, endPosition),
-    pos: this.pos
+  #process_number() {
+    //Read characters until a non-digit character appears
+    let endPosition = this.#process_digits(this.pos)
+    //If it's a decimal point, continue to read digits
+    if (this.buf.charAt(endPosition) === ".") {
+      endPosition = this.#process_digits(endPosition + 1)
+    }
+    //Check if the last read character is a decimal point.
+    //If it is, ignore it and proceed
+    if (this.buf.charAt(endPosition - 1) === ".") {
+      throw new SyntaxError(
+        "Decimal point without decimal digits at position " + (endPosition - 1)
+      )
+    }
+    //construct the NUMBER token
+    const tok = {
+      type: "NUMBER",
+      value: this.buf.substring(this.pos, endPosition),
+      pos: this.pos
+    }
+    this.pos = endPosition
+    return tok
   }
-  this.pos = endPosition
-  return tok
-}
 
-Lexer.prototype._skipNonTokens = function () {
-  while (this.pos < this.bufferLength) {
-    const c = this.buf.charAt(this.pos)
-    if (c == " " || c == "\t" || c == "\r" || c == "\n") {
-      this.pos++
-    } else {
-      break
+  #process_identifier() {
+    let endPosition = this.pos + 1
+    while (
+      endPosition < this.bufferLength &&
+      Lexer.#isAlphaNum(this.buf.charAt(endPosition))
+    ) {
+      endPosition++
+    }
+
+    const tok = {
+      type: "IDENTIFIER",
+      value: this.buf.substring(this.pos, endPosition),
+      pos: this.pos
+    }
+    this.pos = endPosition
+    return tok
+  }
+
+  #skipNonTokens() {
+    while (this.pos < this.bufferLength) {
+      const c = this.buf.charAt(this.pos)
+      if (c == " " || c == "\t" || c == "\r" || c == "\n") {
+        this.pos++
+      } else {
+        break
+      }
     }
   }
 }

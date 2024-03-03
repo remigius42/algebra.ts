@@ -396,39 +396,39 @@ describe("Fraction exponentiation", function () {
 describe("Checking if the square root of a fraction is rational", function () {
   it("should return true if it's 0", function () {
     const frac = new Fraction(0, -7)
-    expect(frac._squareRootIsRational()).toBe(true)
+    expect(frac.squareRootIsRational()).toBe(true)
   })
 
   it("should return true if it's rational", function () {
     const frac = new Fraction(1, 4)
-    expect(frac._squareRootIsRational()).toBe(true)
+    expect(frac.squareRootIsRational()).toBe(true)
   })
 
   it("should return false if it's irrational", function () {
     const frac = new Fraction(2, 4)
-    expect(frac._squareRootIsRational()).toBe(false)
+    expect(frac.squareRootIsRational()).toBe(false)
   })
 })
 
 describe("Checking if the cube root of a fraction is rational", function () {
   it("should return true if it's 0", function () {
     const frac = new Fraction(0, -7)
-    expect(frac._cubeRootIsRational()).toBe(true)
+    expect(frac.cubeRootIsRational()).toBe(true)
   })
 
   it("should return true if it's rational", function () {
     const frac = new Fraction(1, 8)
-    expect(frac._cubeRootIsRational()).toBe(true)
+    expect(frac.cubeRootIsRational()).toBe(true)
   })
 
   it("should return true if it's rational and negative", function () {
     const frac = new Fraction(1, -8)
-    expect(frac._cubeRootIsRational()).toBe(true)
+    expect(frac.cubeRootIsRational()).toBe(true)
   })
 
   it("should return false if it's irrational", function () {
     const frac = new Fraction(2, 4)
-    expect(frac._cubeRootIsRational()).toBe(false)
+    expect(frac.cubeRootIsRational()).toBe(false)
   })
 })
 

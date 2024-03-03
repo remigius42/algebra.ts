@@ -766,13 +766,13 @@ describe("Expression evaluation with non-simplified expressions", function () {
 describe("Checking for cross products in expressions", function () {
   it("should return true if there are no cross products", function () {
     const expr = new Expression("x").add("y")
-    const cross = expr._noCrossProductsWithVariable("x")
+    const cross = expr.noCrossProductsWithVariable("x")
     expect(cross).toBe(true)
   })
 
   it("should return false if there are cross products", function () {
     const expr = new Expression("x").multiply("y").add("x")
-    const cross = expr._noCrossProductsWithVariable("x")
+    const cross = expr.noCrossProductsWithVariable("x")
     expect(cross).toBe(false)
   })
 })
@@ -821,14 +821,14 @@ describe("Expression sorting", function () {
   it("should sort by degree of the term", function () {
     const x2 = new Expression("x").multiply("x")
     const exp = new Expression("x").add(x2) // x + x^2
-    exp._sort()
+    exp.sort()
     expect(exp.toString()).toEqual("x^2 + x")
   })
 
   it("should sort by the number of variables in the term", function () {
     const x2 = new Expression("x").multiply("x")
     const exp = x2.add(x2.multiply("y")) // x^2 + x^2y
-    exp._sort()
+    exp.sort()
     expect(exp.toString()).toEqual("x^2y + x^2")
   })
 })

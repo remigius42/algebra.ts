@@ -259,17 +259,17 @@ describe("Checking the type of an equation", function () {
 
   it("should recognize a linear equation with one variable", function () {
     const eq = new Equation(x, 0)
-    expect(eq._isLinear()).toBe(true)
+    expect(eq.isLinear()).toBe(true)
   })
 
   it("should recognize a linear equation with multiple variables", function () {
     const eq = new Equation(x.add(y), 0)
-    expect(eq._isLinear()).toBe(true)
+    expect(eq.isLinear()).toBe(true)
   })
 
   it("should recognize a quadratic equation", function () {
     const eq = new Equation(x.multiply(x).add(x).add(1), 0)
-    expect(eq._isQuadratic("x")).toBe(true)
+    expect(eq.isQuadratic("x")).toBe(true)
   })
 })
 
