@@ -394,6 +394,58 @@ describe("Solving a cubic equation", function () {
     expect(answers.toString()).toEqual("2,3,4")
   })
 
+  it("rounds of roots when there are three real positive roots with values within 10E15 to next integer", function () {
+    const n1 = new Expression("x").subtract(new Fraction(2 * 10e15 + 1, 10e15)) // x - 2 + 10e-15
+    const n2 = new Expression("x").subtract(new Fraction(3 * 10e15 + 1, 10e15)) // x - 3 + 10e-15
+    const n3 = new Expression("x").subtract(new Fraction(4 * 10e15 + 1, 10e15)) // x - 4 + 10e-15
+
+    let cubic = n1.multiply(n2).multiply(n3)
+    cubic = new Equation(cubic, 0)
+    const answers = cubic.solveFor("x")
+
+    expect(answers.toString()).toEqual("2,3,4")
+  })
+
+  it("does not round of roots when there are three real positive roots with values > 10E15 to next integer", function () {
+    const n1 = new Expression("x").subtract(new Fraction(2 * 10e14 + 2, 10e14)) // x - 2 + 2*10e-14
+    const n2 = new Expression("x").subtract(new Fraction(3 * 10e14 + 2, 10e14)) // x - 3 + 2*10e-14
+    const n3 = new Expression("x").subtract(new Fraction(4 * 10e14 + 3, 10e14)) // x - 4 + 3*10e-14
+
+    let cubic = n1.multiply(n2).multiply(n3)
+    cubic = new Equation(cubic, 0)
+    const answers = cubic.solveFor("x")
+
+    expect(answers.toString()).toEqual(
+      "2.0000000000000107,2.999999999999981,4.000000000000015"
+    )
+  })
+
+  it("rounds of roots when there are three real negative roots with values within 10E15 to next integer", function () {
+    const n1 = new Expression("x").add(new Fraction(2 * 10e15 + 1, 10e15)) // x + 2 + 10e-15
+    const n2 = new Expression("x").add(new Fraction(3 * 10e15 + 1, 10e15)) // x + 3 + 10e-15
+    const n3 = new Expression("x").add(new Fraction(4 * 10e15 + 1, 10e15)) // x + 4 + 10e-15
+
+    let cubic = n1.multiply(n2).multiply(n3)
+    cubic = new Equation(cubic, 0)
+    const answers = cubic.solveFor("x")
+
+    expect(answers.toString()).toEqual("-4,-3,-2")
+  })
+
+  it("does not round of roots when there are three real negative roots with values > 10E15 to next integer", function () {
+    const n1 = new Expression("x").add(new Fraction(2 * 10e14 + 2, 10e14)) // x + 2 + 2*10e-14
+    const n2 = new Expression("x").add(new Fraction(3 * 10e14 + 2, 10e14)) // x + 3 + 2*10e-14
+    const n3 = new Expression("x").add(new Fraction(4 * 10e14 + 3, 10e14)) // x + 4 + 3*10e-14
+
+    let cubic = n1.multiply(n2).multiply(n3)
+    cubic = new Equation(cubic, 0)
+    const answers = cubic.solveFor("x")
+
+    expect(answers.toString()).toEqual(
+      "-4.000000000000015,-2.9999999999999813,-2.0000000000000107"
+    )
+  })
+
   it("toTex works", function () {
     const n1 = new Expression("x").add("x").add(2) // 2x + 2
     const n2 = new Expression("x").add(3) // x + 3
