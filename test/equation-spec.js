@@ -338,6 +338,15 @@ describe("Solving a cubic equation", function () {
     expect(answers.toString()).toEqual("3.46621207433047")
   })
 
+  it("works when there's one distinct real root less than zero - discriminant > 0", function () {
+    const expression = new Expression("x").pow(3)
+    const cubicEquation = new Equation(expression, -8)
+
+    const answers = cubicEquation.solveFor("x")
+
+    expect(answers.toString()).toEqual("-2")
+  })
+
   it("works when there's two distinct real roots - discriminant = 0", function () {
     let expr = new Expression("x").pow(3)
     expr = expr.subtract(new Expression("x").multiply(3))
@@ -349,7 +358,7 @@ describe("Solving a cubic equation", function () {
     expect(answers.toString()).toEqual("-2,1")
   })
 
-  it("works when there are three real roots, discriminant > 0", function () {
+  it("works when there are three real roots, discriminant > 0, negative roots", function () {
     const n1 = new Expression("x").add(2) // x + 2
     const n2 = new Expression("x").add(3) // x + 3
     const n3 = new Expression("x").add(4) // x + 4
@@ -371,6 +380,18 @@ describe("Solving a cubic equation", function () {
     const answers = cubic.solveFor("x")
 
     expect(answers.toString()).toEqual("-4,-3,-1")
+  })
+
+  it("works when there are three real roots, discriminant > 0, positive roots", function () {
+    const n1 = new Expression("x").subtract(2) // x - 2
+    const n2 = new Expression("x").subtract(3) // x - 3
+    const n3 = new Expression("x").subtract(4) // x - 4
+
+    let cubic = n1.multiply(n2).multiply(n3)
+    cubic = new Equation(cubic, 0)
+    const answers = cubic.solveFor("x")
+
+    expect(answers.toString()).toEqual("2,3,4")
   })
 
   it("toTex works", function () {
