@@ -22,9 +22,9 @@ Fraction.prototype.copy = function () {
 }
 
 Fraction.prototype.reduce = function () {
-  var copy = this.copy()
+  const copy = this.copy()
 
-  var g = gcd(copy.numer, copy.denom)
+  const g = gcd(copy.numer, copy.denom)
   copy.numer = copy.numer / g
   copy.denom = copy.denom / g
 
@@ -38,8 +38,8 @@ Fraction.prototype.reduce = function () {
 
 Fraction.prototype.equalTo = function (fraction) {
   if (fraction instanceof Fraction) {
-    var thisReduced = this.reduce()
-    var thatReduced = fraction.reduce()
+    const thisReduced = this.reduce()
+    const thatReduced = fraction.reduce()
     return (
       thisReduced.numer === thatReduced.numer &&
       thisReduced.denom === thatReduced.denom
@@ -52,7 +52,7 @@ Fraction.prototype.equalTo = function (fraction) {
 Fraction.prototype.add = function (f, simplify) {
   simplify = simplify === undefined ? true : simplify
 
-  var a, b
+  let a, b
 
   if (f instanceof Fraction) {
     a = f.numer
@@ -68,14 +68,14 @@ Fraction.prototype.add = function (f, simplify) {
     )
   }
 
-  var copy = this.copy()
+  const copy = this.copy()
 
   if (this.denom == b) {
     copy.numer += a
   } else {
-    var m = lcm(copy.denom, b)
-    var thisM = m / copy.denom
-    var otherM = m / b
+    const m = lcm(copy.denom, b)
+    const thisM = m / copy.denom
+    const otherM = m / b
 
     copy.numer *= thisM
     copy.denom *= thisM
@@ -91,7 +91,7 @@ Fraction.prototype.add = function (f, simplify) {
 Fraction.prototype.subtract = function (f, simplify) {
   simplify = simplify === undefined ? true : simplify
 
-  var copy = this.copy()
+  const copy = this.copy()
 
   if (f instanceof Fraction) {
     return copy.add(new Fraction(-f.numer, f.denom), simplify)
@@ -109,7 +109,7 @@ Fraction.prototype.subtract = function (f, simplify) {
 Fraction.prototype.multiply = function (f, simplify) {
   simplify = simplify === undefined ? true : simplify
 
-  var a, b
+  let a, b
 
   if (f instanceof Fraction) {
     a = f.numer
@@ -128,7 +128,7 @@ Fraction.prototype.multiply = function (f, simplify) {
     )
   }
 
-  var copy = this.copy()
+  const copy = this.copy()
 
   copy.numer *= a
   copy.denom *= b
@@ -143,7 +143,7 @@ Fraction.prototype.divide = function (f, simplify) {
     throw new EvalError("Divide By Zero")
   }
 
-  var copy = this.copy()
+  const copy = this.copy()
 
   if (f instanceof Fraction) {
     return copy.multiply(new Fraction(f.denom, f.numer), simplify)
@@ -161,7 +161,7 @@ Fraction.prototype.divide = function (f, simplify) {
 Fraction.prototype.pow = function (n, simplify) {
   simplify = simplify === undefined ? true : simplify
 
-  var copy = this.copy()
+  let copy = this.copy()
 
   if (n >= 0) {
     copy.numer = Math.pow(copy.numer, n)
@@ -170,7 +170,7 @@ Fraction.prototype.pow = function (n, simplify) {
     copy = copy.pow(Math.abs(n))
 
     //Switch numerator and denominator
-    var tmp = copy.numer
+    const tmp = copy.numer
     copy.numer = copy.denom
     copy.denom = tmp
   }
@@ -179,7 +179,7 @@ Fraction.prototype.pow = function (n, simplify) {
 }
 
 Fraction.prototype.abs = function () {
-  var copy = this.copy()
+  const copy = this.copy()
 
   copy.numer = Math.abs(copy.numer)
   copy.denom = Math.abs(copy.denom)
@@ -220,8 +220,8 @@ Fraction.prototype._squareRootIsRational = function () {
     return true
   }
 
-  var sqrtNumer = Math.sqrt(this.numer)
-  var sqrtDenom = Math.sqrt(this.denom)
+  const sqrtNumer = Math.sqrt(this.numer)
+  const sqrtDenom = Math.sqrt(this.denom)
 
   return isInt(sqrtNumer) && isInt(sqrtDenom)
 }
@@ -231,8 +231,8 @@ Fraction.prototype._cubeRootIsRational = function () {
     return true
   }
 
-  var cbrtNumer = Math.cbrt(this.numer)
-  var cbrtDenom = Math.cbrt(this.denom)
+  const cbrtNumer = Math.cbrt(this.numer)
+  const cbrtDenom = Math.cbrt(this.denom)
 
   return isInt(cbrtNumer) && isInt(cbrtDenom)
 }

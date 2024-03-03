@@ -4,8 +4,8 @@ import { Fraction } from "./src/fractions.js"
 import { Parser } from "./src/parser.js"
 
 const parse = function (input) {
-  var parser = new Parser()
-  var result = parser.parse(input)
+  const parser = new Parser()
+  const result = parser.parse(input)
   return result
 }
 
@@ -18,7 +18,7 @@ const toTex = function (input) {
     return input.toTex()
   } else if (input instanceof Array) {
     return input
-      .map(function (e) {
+      .map(e => {
         if (e instanceof Fraction) {
           return e.toTex()
         } else {

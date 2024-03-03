@@ -40,7 +40,7 @@ describe("An invalid fraction", function () {
 })
 
 describe("A valid, positive fraction", function () {
-  var frac = new Fraction(1, 2)
+  const frac = new Fraction(1, 2)
 
   it("should initialize", function () {
     expect(frac.numer).toBeDefined()
@@ -65,7 +65,7 @@ describe("A valid, positive fraction", function () {
 })
 
 describe("A valid fraction with a negative numerator", function () {
-  var frac = new Fraction(-1, 2)
+  const frac = new Fraction(-1, 2)
 
   it("should initialize", function () {
     expect(frac.numer).toBeDefined()
@@ -90,7 +90,7 @@ describe("A valid fraction with a negative numerator", function () {
 })
 
 describe("A valid fraction with a negative denominator", function () {
-  var frac = new Fraction(2, -4)
+  const frac = new Fraction(2, -4)
 
   it("should initialize", function () {
     expect(frac.numer).toBeDefined()
@@ -98,22 +98,22 @@ describe("A valid fraction with a negative denominator", function () {
   })
 
   it("should print to string with a negative numerator after being reduced", function () {
-    var red = frac.reduce()
+    const red = frac.reduce()
     expect(red.toString()).toEqual("-1/2")
   })
 
   it("should print to tex with a negative numerator", function () {
-    var red = frac.reduce()
+    const red = frac.reduce()
     expect(red.toTex()).toEqual("\\frac{-1}{2}")
   })
 
   it("should print to tex with a negative numerator with algebra.toTex", function () {
-    var red = frac.reduce()
+    const red = frac.reduce()
     expect(algebra.toTex(red)).toEqual("\\frac{-1}{2}")
   })
 
   it("should bring the negative up to the numerator when reduced", function () {
-    var reduced = frac.reduce()
+    const reduced = frac.reduce()
     expect(reduced.numer).toEqual(-1)
     expect(reduced.denom).toEqual(2)
   })
@@ -124,7 +124,7 @@ describe("A valid fraction with a negative denominator", function () {
 })
 
 describe("Fractions with 1 in the denominator", function () {
-  var frac = new Fraction(5, 1)
+  const frac = new Fraction(5, 1)
 
   it("should initialize", function () {
     expect(frac.numer).toBeDefined()
@@ -145,7 +145,7 @@ describe("Fractions with 1 in the denominator", function () {
 })
 
 describe("A Fraction representing zero", function () {
-  var frac = new Fraction(0, 1)
+  const frac = new Fraction(0, 1)
 
   it("should initialize", function () {
     expect(frac.numer).toBeDefined()
@@ -166,7 +166,7 @@ describe("A Fraction representing zero", function () {
 })
 
 describe("Fractions with -1 in the denominator", function () {
-  var frac = new Fraction(5, -1)
+  const frac = new Fraction(5, -1)
 
   it("should initialize", function () {
     expect(frac.numer).toBeDefined()
@@ -187,17 +187,17 @@ describe("Fractions with -1 in the denominator", function () {
 })
 
 describe("Fraction addition", function () {
-  var x = new Fraction(1, 3)
+  const x = new Fraction(1, 3)
 
   it("should allow addition of other fractions", function () {
-    var y = new Fraction(1, 5)
-    var answer = x.add(y)
+    const y = new Fraction(1, 5)
+    const answer = x.add(y)
 
     expect(answer.toString()).toEqual("8/15")
   })
 
   it("should allow addition of integers", function () {
-    var answer = x.add(2)
+    const answer = x.add(2)
 
     expect(answer.toString()).toEqual("7/3")
   })
@@ -213,32 +213,32 @@ describe("Fraction addition", function () {
   })
 
   it("should return a reduced version of the answer", function () {
-    var y = new Fraction(2, 3)
-    var answer = x.add(y)
+    const y = new Fraction(2, 3)
+    const answer = x.add(y)
 
     expect(answer.toString()).toEqual("1")
   })
 
   it("should allow an answer of 0", function () {
-    var y = new Fraction(-1, 3)
-    var answer = x.add(y)
+    const y = new Fraction(-1, 3)
+    const answer = x.add(y)
 
     expect(answer.toString()).toEqual("0")
   })
 })
 
 describe("Fraction subtraction", function () {
-  var x = new Fraction(1, 3)
+  const x = new Fraction(1, 3)
 
   it("should allow subtraction of other fractions", function () {
-    var y = new Fraction(1, 5)
-    var answer = x.subtract(y)
+    const y = new Fraction(1, 5)
+    const answer = x.subtract(y)
 
     expect(answer.toString()).toEqual("2/15")
   })
 
   it("should allow subtraction of integers", function () {
-    var answer = x.subtract(2)
+    const answer = x.subtract(2)
 
     expect(answer.toString()).toEqual("-5/3")
   })
@@ -254,32 +254,32 @@ describe("Fraction subtraction", function () {
   })
 
   it("should return a reduced version of the answer", function () {
-    var y = new Fraction(4, 6)
-    var answer = x.subtract(y)
+    const y = new Fraction(4, 6)
+    const answer = x.subtract(y)
 
     expect(answer.toString()).toEqual("-1/3")
   })
 
   it("should allow an answer of 0", function () {
-    var y = new Fraction(1, 3)
-    var answer = x.subtract(y)
+    const y = new Fraction(1, 3)
+    const answer = x.subtract(y)
 
     expect(answer.toString()).toEqual("0")
   })
 })
 
 describe("Fraction multiplication", function () {
-  var x = new Fraction(1, 2)
+  const x = new Fraction(1, 2)
 
   it("should allow multiplication of other fractions", function () {
-    var y = new Fraction(1, 2)
-    var answer = x.multiply(y)
+    const y = new Fraction(1, 2)
+    const answer = x.multiply(y)
 
     expect(answer.toString()).toEqual("1/4")
   })
 
   it("should allow multiplication of integers", function () {
-    var answer = x.multiply(5)
+    const answer = x.multiply(5)
 
     expect(answer.toString()).toEqual("5/2")
   })
@@ -295,24 +295,24 @@ describe("Fraction multiplication", function () {
   })
 
   it("should allow multiplication of zero", function () {
-    var answer = x.multiply(0)
+    const answer = x.multiply(0)
 
     expect(answer.toString()).toEqual("0")
   })
 })
 
 describe("Fraction division", function () {
-  var x = new Fraction(1, 2)
+  const x = new Fraction(1, 2)
 
   it("should allow division of other fractions", function () {
-    var y = new Fraction(1, 2)
-    var answer = x.divide(y)
+    const y = new Fraction(1, 2)
+    const answer = x.divide(y)
 
     expect(answer.toString()).toEqual("1")
   })
 
   it("should allow division of integers", function () {
-    var answer = x.divide(5)
+    const answer = x.divide(5)
 
     expect(answer.toString()).toEqual("1/10")
   })
@@ -335,15 +335,15 @@ describe("Fraction division", function () {
 })
 
 describe("Fraction equality", function () {
-  var x = new Fraction(1, 2)
+  const x = new Fraction(1, 2)
 
   it("should be true when the fractions are equal", function () {
-    var y = new Fraction(2, 4)
+    const y = new Fraction(2, 4)
     expect(x.equalTo(y)).toBe(true)
   })
 
   it("should be false when the fractions are not equal", function () {
-    var y = new Fraction(2, 3)
+    const y = new Fraction(2, 3)
     expect(x.equalTo(y)).toBe(false)
   })
 
@@ -353,7 +353,7 @@ describe("Fraction equality", function () {
 })
 
 describe("Fraction exponentiation", function () {
-  var x = new Fraction(1, 2)
+  const x = new Fraction(1, 2)
 
   it("should return 1/1 if n = 0", function () {
     const answer = x.pow(0)
@@ -374,8 +374,8 @@ describe("Fraction exponentiation", function () {
   })
 
   it("should work with n < 1", function () {
-    var frac = new Fraction(1, 4)
-    var squareRootFrac = frac.pow(0.5)
+    const frac = new Fraction(1, 4)
+    const squareRootFrac = frac.pow(0.5)
     expect(squareRootFrac.equalTo(new Fraction(1, 2))).toBe(true)
   })
 
@@ -386,8 +386,8 @@ describe("Fraction exponentiation", function () {
   })
 
   it("should return a reduced answer", function () {
-    var frac = new Fraction(2, 4) // 2/4
-    var squareFrac = frac.pow(2) // 2^2/4^2 = 4/16 = 1/4
+    const frac = new Fraction(2, 4) // 2/4
+    const squareFrac = frac.pow(2) // 2^2/4^2 = 4/16 = 1/4
     expect(squareFrac.numer).toEqual(1)
     expect(squareFrac.denom).toEqual(4)
   })
@@ -395,74 +395,74 @@ describe("Fraction exponentiation", function () {
 
 describe("Checking if the square root of a fraction is rational", function () {
   it("should return true if it's 0", function () {
-    var frac = new Fraction(0, -7)
+    const frac = new Fraction(0, -7)
     expect(frac._squareRootIsRational()).toBe(true)
   })
 
   it("should return true if it's rational", function () {
-    var frac = new Fraction(1, 4)
+    const frac = new Fraction(1, 4)
     expect(frac._squareRootIsRational()).toBe(true)
   })
 
   it("should return false if it's irrational", function () {
-    var frac = new Fraction(2, 4)
+    const frac = new Fraction(2, 4)
     expect(frac._squareRootIsRational()).toBe(false)
   })
 })
 
 describe("Checking if the cube root of a fraction is rational", function () {
   it("should return true if it's 0", function () {
-    var frac = new Fraction(0, -7)
+    const frac = new Fraction(0, -7)
     expect(frac._cubeRootIsRational()).toBe(true)
   })
 
   it("should return true if it's rational", function () {
-    var frac = new Fraction(1, 8)
+    const frac = new Fraction(1, 8)
     expect(frac._cubeRootIsRational()).toBe(true)
   })
 
   it("should return true if it's rational and negative", function () {
-    var frac = new Fraction(1, -8)
+    const frac = new Fraction(1, -8)
     expect(frac._cubeRootIsRational()).toBe(true)
   })
 
   it("should return false if it's irrational", function () {
-    var frac = new Fraction(2, 4)
+    const frac = new Fraction(2, 4)
     expect(frac._cubeRootIsRational()).toBe(false)
   })
 })
 
 describe("Fraction simplification", function () {
   it("works with addition", function () {
-    var frac = new Fraction(1, 2) // 1/2
+    let frac = new Fraction(1, 2) // 1/2
     frac = frac.add(new Fraction(1, 2), false) // 1/2 + 1/2 = 2/2
 
     expect(frac.toString()).toEqual("2/2")
   })
 
   it("works with subtraction", function () {
-    var frac = new Fraction(3, 4) // 3/4
+    let frac = new Fraction(3, 4) // 3/4
     frac = frac.subtract(new Fraction(1, 4), false) // 3/4 - 1/4 = 2/4
 
     expect(frac.toString()).toEqual("2/4")
   })
 
   it("works with multiplication", function () {
-    var frac = new Fraction(1, 6) // 1/6
+    let frac = new Fraction(1, 6) // 1/6
     frac = frac.multiply(new Fraction(-2, 6), false) // 1/6 * -2/6 = -2/36
 
     expect(frac.toString()).toEqual("-2/36")
   })
 
   it("works with division", function () {
-    var frac = new Fraction(1, 2) // 1/2
+    let frac = new Fraction(1, 2) // 1/2
     frac = frac.divide(new Fraction(2, 4), false) // 1/2 / 2/4 = 4/4
 
     expect(frac.toString()).toEqual("4/4")
   })
 
   it("works with powers", function () {
-    var frac = new Fraction(2, 4) // 2/4
+    let frac = new Fraction(2, 4) // 2/4
 
     frac = frac.pow(2, false) // 2^2 / 4^2 = 4/16
 
@@ -470,21 +470,21 @@ describe("Fraction simplification", function () {
   })
 
   it("stays non-simplified when asking for the absolute value", function () {
-    var frac = new Fraction(-2, 4)
+    let frac = new Fraction(-2, 4)
     frac = frac.abs()
 
     expect(frac.toString()).toEqual("2/4")
   })
 
   it("leaves negatives in the denominator", function () {
-    var frac = new Fraction(1, 2) // 1/2
+    let frac = new Fraction(1, 2) // 1/2
     frac = frac.multiply(new Fraction(2, -4), false) // 1/2 * 2/-4 = 2/-8
 
     expect(frac.toString()).toEqual("2/-8")
   })
 
   it("returns the lcm in the denom when adding two fractions", function () {
-    var frac = new Fraction(1, 6) // 1/6
+    let frac = new Fraction(1, 6) // 1/6
     frac = frac.add(new Fraction(1, 3), false) // 1/6 + 1/3 = 1/6 + 2/3 = 3/6
 
     expect(frac.toString()).toEqual("3/6")

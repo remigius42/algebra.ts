@@ -49,9 +49,9 @@ Lexer.prototype.token = function () {
   }
 
   // The char at this.pos is part of a real token. Figure out which.
-  var c = this.buf.charAt(this.pos)
+  const c = this.buf.charAt(this.pos)
   // Look it up in the table of operators
-  var op = this.operatorTable[c]
+  const op = this.operatorTable[c]
   if (op !== undefined) {
     if (op === "L_PAREN" || op === "R_PAREN") {
       return { type: "PAREN", value: op, pos: this.pos++ }
@@ -87,7 +87,7 @@ Lexer._isAlphaNum = function (c) {
 }
 
 Lexer.prototype._process_digits = function (position) {
-  var endPosition = position
+  let endPosition = position
   while (
     endPosition < this.bufferLength &&
     Lexer._isDigit(this.buf.charAt(endPosition))
@@ -99,7 +99,7 @@ Lexer.prototype._process_digits = function (position) {
 
 Lexer.prototype._process_number = function () {
   //Read characters until a non-digit character appears
-  var endPosition = this._process_digits(this.pos)
+  let endPosition = this._process_digits(this.pos)
   //If it's a decimal point, continue to read digits
   if (this.buf.charAt(endPosition) === ".") {
     endPosition = this._process_digits(endPosition + 1)
@@ -112,7 +112,7 @@ Lexer.prototype._process_number = function () {
     )
   }
   //construct the NUMBER token
-  var tok = {
+  const tok = {
     type: "NUMBER",
     value: this.buf.substring(this.pos, endPosition),
     pos: this.pos
@@ -122,7 +122,7 @@ Lexer.prototype._process_number = function () {
 }
 
 Lexer.prototype._process_identifier = function () {
-  var endPosition = this.pos + 1
+  let endPosition = this.pos + 1
   while (
     endPosition < this.bufferLength &&
     Lexer._isAlphaNum(this.buf.charAt(endPosition))
@@ -130,7 +130,7 @@ Lexer.prototype._process_identifier = function () {
     endPosition++
   }
 
-  var tok = {
+  const tok = {
     type: "IDENTIFIER",
     value: this.buf.substring(this.pos, endPosition),
     pos: this.pos
@@ -141,7 +141,7 @@ Lexer.prototype._process_identifier = function () {
 
 Lexer.prototype._skipNonTokens = function () {
   while (this.pos < this.bufferLength) {
-    var c = this.buf.charAt(this.pos)
+    const c = this.buf.charAt(this.pos)
     if (c == " " || c == "\t" || c == "\r" || c == "\n") {
       this.pos++
     } else {

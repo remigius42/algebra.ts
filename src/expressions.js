@@ -5,8 +5,8 @@ export const Expression = function (variable) {
   this.constants = []
 
   if (typeof variable === "string") {
-    var v = new Variable(variable)
-    var t = new Term(v)
+    const v = new Variable(variable)
+    const t = new Term(v)
     this.terms = [t]
   } else if (isInt(variable)) {
     this.constants = [new Fraction(variable, 1)]
@@ -37,7 +37,7 @@ Expression.prototype.constant = function () {
 }
 
 Expression.prototype.simplify = function () {
-  var copy = this.copy()
+  const copy = this.copy()
 
   //simplify all terms
   copy.terms = copy.terms.map(function (t) {
@@ -54,7 +54,7 @@ Expression.prototype.simplify = function () {
 }
 
 Expression.prototype.copy = function () {
-  var copy = new Expression()
+  const copy = new Expression()
 
   //copy all constants
   copy.constants = this.constants.map(function (c) {
@@ -69,7 +69,7 @@ Expression.prototype.copy = function () {
 }
 
 Expression.prototype.add = function (a, simplify) {
-  var thisExp = this.copy()
+  const thisExp = this.copy()
 
   if (
     typeof a === "string" ||
@@ -77,10 +77,10 @@ Expression.prototype.add = function (a, simplify) {
     isInt(a) ||
     a instanceof Fraction
   ) {
-    var exp = new Expression(a)
+    const exp = new Expression(a)
     return thisExp.add(exp, simplify)
   } else if (a instanceof Expression) {
-    var keepTerms = a.copy().terms
+    const keepTerms = a.copy().terms
 
     thisExp.terms = thisExp.terms.concat(keepTerms)
     thisExp.constants = thisExp.constants.concat(a.constants)
@@ -97,13 +97,13 @@ Expression.prototype.add = function (a, simplify) {
 }
 
 Expression.prototype.subtract = function (a, simplify) {
-  var negative =
+  const negative =
     a instanceof Expression ? a.multiply(-1) : new Expression(a).multiply(-1)
   return this.add(negative, simplify)
 }
 
 Expression.prototype.multiply = function (a, simplify) {
-  var thisExp = this.copy()
+  const thisExp = this.copy()
 
   if (
     typeof a === "string" ||
@@ -111,17 +111,17 @@ Expression.prototype.multiply = function (a, simplify) {
     isInt(a) ||
     a instanceof Fraction
   ) {
-    var exp = new Expression(a)
+    const exp = new Expression(a)
     return thisExp.multiply(exp, simplify)
   } else if (a instanceof Expression) {
-    var thatExp = a.copy()
-    var newTerms = []
+    const thatExp = a.copy()
+    const newTerms = []
 
     for (let i = 0; i < thisExp.terms.length; i++) {
-      var thisTerm = thisExp.terms[i]
+      const thisTerm = thisExp.terms[i]
 
       for (let j = 0; j < thatExp.terms.length; j++) {
-        var thatTerm = thatExp.terms[j]
+        const thatTerm = thatExp.terms[j]
         newTerms.push(thisTerm.multiply(thatTerm, simplify))
       }
 
@@ -130,22 +130,22 @@ Expression.prototype.multiply = function (a, simplify) {
       }
     }
 
-    for (var i = 0; i < thatExp.terms.length; i++) {
+    for (let i = 0; i < thatExp.terms.length; i++) {
       let thatTerm = thatExp.terms[i]
 
-      for (var j = 0; j < thisExp.constants.length; j++) {
+      for (let j = 0; j < thisExp.constants.length; j++) {
         newTerms.push(thatTerm.multiply(thisExp.constants[j], simplify))
       }
     }
 
-    var newConstants = []
+    const newConstants = []
 
     for (let i = 0; i < thisExp.constants.length; i++) {
-      var thisConst = thisExp.constants[i]
+      const thisConst = thisExp.constants[i]
 
       for (let j = 0; j < thatExp.constants.length; j++) {
-        var thatConst = thatExp.constants[j]
-        var t = new Term()
+        const thatConst = thatExp.constants[j]
+        let t = new Term()
         t = t.multiply(thatConst, false)
         t = t.multiply(thisConst, false)
         newTerms.push(t)
@@ -172,12 +172,12 @@ Expression.prototype.divide = function (a, simplify) {
       throw new EvalError("Divide By Zero")
     }
 
-    var copy = this.copy()
+    const copy = this.copy()
 
-    for (var i = 0; i < copy.terms.length; i++) {
-      var thisTerm = copy.terms[i]
+    for (let i = 0; i < copy.terms.length; i++) {
+      const thisTerm = copy.terms[i]
 
-      for (var j = 0; j < thisTerm.coefficients.length; j++) {
+      for (let j = 0; j < thisTerm.coefficients.length; j++) {
         thisTerm.coefficients[j] = thisTerm.coefficients[j].divide(a, simplify)
       }
     }
@@ -190,18 +190,18 @@ Expression.prototype.divide = function (a, simplify) {
     return copy
   } else if (a instanceof Expression) {
     //Simplify both expressions
-    var num = this.copy().simplify()
-    var denom = a.copy().simplify()
+    let num = this.copy().simplify()
+    const denom = a.copy().simplify()
 
     //Total amount of terms and constants
-    var numTotal = num.terms.length + num.constants.length
-    var denomTotal = denom.terms.length + denom.constants.length
+    const numTotal = num.terms.length + num.constants.length
+    const denomTotal = denom.terms.length + denom.constants.length
 
     //Check if both terms are monomial
     if (numTotal === 1 && denomTotal === 1) {
       //Divide coefficients
-      var numCoef = num.terms[0].coefficients[0]
-      var denomCoef = denom.terms[0].coefficients[0]
+      const numCoef = num.terms[0].coefficients[0]
+      const denomCoef = denom.terms[0].coefficients[0]
 
       //The expressions have just been simplified - only one coefficient per term
       num.terms[0].coefficients[0] = numCoef.divide(denomCoef, simplify)
@@ -209,9 +209,9 @@ Expression.prototype.divide = function (a, simplify) {
 
       //Cancel variables
       for (let i = 0; i < num.terms[0].variables.length; i++) {
-        var numVar = num.terms[0].variables[i]
+        const numVar = num.terms[0].variables[i]
         for (let j = 0; j < denom.terms[0].variables.length; j++) {
-          var denomVar = denom.terms[0].variables[j]
+          const denomVar = denom.terms[0].variables[j]
           //Check for equal variables
           if (numVar.variable === denomVar.variable) {
             //Use the rule for division of powers
@@ -249,12 +249,12 @@ Expression.prototype.divide = function (a, simplify) {
 
 Expression.prototype.pow = function (a, simplify) {
   if (isInt(a)) {
-    var copy = this.copy()
+    let copy = this.copy()
 
     if (a === 0) {
       return new Expression().add(1)
     } else {
-      for (var i = 1; i < a; i++) {
+      for (let i = 1; i < a; i++) {
         copy = copy.multiply(this, simplify)
       }
 
@@ -272,7 +272,7 @@ Expression.prototype.pow = function (a, simplify) {
 }
 
 Expression.prototype.eval = function (values, simplify) {
-  var exp = new Expression()
+  let exp = new Expression()
   exp.constants = simplify ? [this.constant()] : this.constants.slice()
 
   //add all evaluated terms of this to exp
@@ -284,10 +284,10 @@ Expression.prototype.eval = function (values, simplify) {
 }
 
 Expression.prototype.summation = function (variable, lower, upper, simplify) {
-  var thisExpr = this.copy()
-  var newExpr = new Expression()
-  for (var i = lower; i < upper + 1; i++) {
-    var sub = {}
+  const thisExpr = this.copy()
+  let newExpr = new Expression()
+  for (let i = lower; i < upper + 1; i++) {
+    const sub = {}
     sub[variable] = i
     newExpr = newExpr.add(thisExpr.eval(sub, simplify), simplify)
   }
@@ -295,10 +295,10 @@ Expression.prototype.summation = function (variable, lower, upper, simplify) {
 }
 
 Expression.prototype.toString = function (options) {
-  var str = ""
+  let str = ""
 
   for (let i = 0; i < this.terms.length; i++) {
-    var term = this.terms[i]
+    const term = this.terms[i]
 
     str +=
       (term.coefficients[0].valueOf() < 0 ? " - " : " + ") +
@@ -306,7 +306,7 @@ Expression.prototype.toString = function (options) {
   }
 
   for (let i = 0; i < this.constants.length; i++) {
-    var constant = this.constants[i]
+    const constant = this.constants[i]
 
     str += (constant.valueOf() < 0 ? " - " : " + ") + constant.abs().toString()
   }
@@ -321,17 +321,17 @@ Expression.prototype.toString = function (options) {
 }
 
 Expression.prototype.toTex = function (dict) {
-  var str = ""
+  let str = ""
 
   for (let i = 0; i < this.terms.length; i++) {
-    var term = this.terms[i]
+    const term = this.terms[i]
 
     str +=
       (term.coefficients[0].valueOf() < 0 ? " - " : " + ") + term.toTex(dict)
   }
 
   for (let i = 0; i < this.constants.length; i++) {
-    var constant = this.constants[i]
+    const constant = this.constants[i]
 
     str += (constant.valueOf() < 0 ? " - " : " + ") + constant.abs().toTex()
   }
@@ -354,7 +354,7 @@ Expression.prototype._removeTermsWithCoefficientZero = function () {
 
 Expression.prototype._combineLikeTerms = function () {
   function alreadyEncountered(term, encountered) {
-    for (var i = 0; i < encountered.length; i++) {
+    for (let i = 0; i < encountered.length; i++) {
       if (term.canBeCombinedWith(encountered[i])) {
         return true
       }
@@ -363,17 +363,17 @@ Expression.prototype._combineLikeTerms = function () {
     return false
   }
 
-  var newTerms = []
-  var encountered = []
+  const newTerms = []
+  const encountered = []
 
-  for (var i = 0; i < this.terms.length; i++) {
-    var thisTerm = this.terms[i]
+  for (let i = 0; i < this.terms.length; i++) {
+    let thisTerm = this.terms[i]
 
     if (alreadyEncountered(thisTerm, encountered)) {
       continue
     } else {
-      for (var j = i + 1; j < this.terms.length; j++) {
-        var thatTerm = this.terms[j]
+      for (let j = i + 1; j < this.terms.length; j++) {
+        const thatTerm = this.terms[j]
 
         if (thisTerm.canBeCombinedWith(thatTerm)) {
           thisTerm = thisTerm.add(thatTerm)
@@ -390,11 +390,11 @@ Expression.prototype._combineLikeTerms = function () {
 }
 
 Expression.prototype._moveTermsWithDegreeZeroToConstants = function () {
-  var keepTerms = []
-  var constant = new Fraction(0, 1)
+  const keepTerms = []
+  let constant = new Fraction(0, 1)
 
-  for (var i = 0; i < this.terms.length; i++) {
-    var thisTerm = this.terms[i]
+  for (let i = 0; i < this.terms.length; i++) {
+    const thisTerm = this.terms[i]
 
     if (thisTerm.variables.length === 0) {
       constant = constant.add(thisTerm.coefficient())
@@ -410,12 +410,12 @@ Expression.prototype._moveTermsWithDegreeZeroToConstants = function () {
 
 Expression.prototype._sort = function () {
   function sortTerms(a, b) {
-    var x = a.maxDegree()
-    var y = b.maxDegree()
+    const x = a.maxDegree()
+    const y = b.maxDegree()
 
     if (x === y) {
-      var m = a.variables.length
-      var n = b.variables.length
+      const m = a.variables.length
+      const n = b.variables.length
 
       return n - m
     } else {
@@ -428,7 +428,7 @@ Expression.prototype._sort = function () {
 }
 
 Expression.prototype._hasVariable = function (variable) {
-  for (var i = 0; i < this.terms.length; i++) {
+  for (let i = 0; i < this.terms.length; i++) {
     if (this.terms[i].hasVariable(variable)) {
       return true
     }
@@ -438,7 +438,7 @@ Expression.prototype._hasVariable = function (variable) {
 }
 
 Expression.prototype._onlyHasVariable = function (variable) {
-  for (var i = 0; i < this.terms.length; i++) {
+  for (let i = 0; i < this.terms.length; i++) {
     if (!this.terms[i].onlyHasVariable(variable)) {
       return false
     }
@@ -448,8 +448,8 @@ Expression.prototype._onlyHasVariable = function (variable) {
 }
 
 Expression.prototype._noCrossProductsWithVariable = function (variable) {
-  for (var i = 0; i < this.terms.length; i++) {
-    var term = this.terms[i]
+  for (let i = 0; i < this.terms.length; i++) {
+    const term = this.terms[i]
     if (term.hasVariable(variable) && !term.onlyHasVariable(variable)) {
       return false
     }
@@ -459,8 +459,8 @@ Expression.prototype._noCrossProductsWithVariable = function (variable) {
 }
 
 Expression.prototype._noCrossProducts = function () {
-  for (var i = 0; i < this.terms.length; i++) {
-    var term = this.terms[i]
+  for (let i = 0; i < this.terms.length; i++) {
+    const term = this.terms[i]
     if (term.variables.length > 1) {
       return false
     }
@@ -483,32 +483,32 @@ Expression.prototype._maxDegreeOfVariable = function (variable) {
 
 Expression.prototype._quadraticCoefficients = function () {
   // This function isn't used until everything has been moved to the LHS in Equation.solve.
-  var a
-  var b = new Fraction(0, 1)
-  for (var i = 0; i < this.terms.length; i++) {
-    var thisTerm = this.terms[i]
+  let a
+  let b = new Fraction(0, 1)
+  for (let i = 0; i < this.terms.length; i++) {
+    const thisTerm = this.terms[i]
     a = thisTerm.maxDegree() === 2 ? thisTerm.coefficient().copy() : a
     b = thisTerm.maxDegree() === 1 ? thisTerm.coefficient().copy() : b
   }
-  var c = this.constant()
+  const c = this.constant()
 
   return { a: a, b: b, c: c }
 }
 
 Expression.prototype._cubicCoefficients = function () {
   // This function isn't used until everything has been moved to the LHS in Equation.solve.
-  var a
-  var b = new Fraction(0, 1)
-  var c = new Fraction(0, 1)
+  let a
+  let b = new Fraction(0, 1)
+  let c = new Fraction(0, 1)
 
-  for (var i = 0; i < this.terms.length; i++) {
-    var thisTerm = this.terms[i]
+  for (let i = 0; i < this.terms.length; i++) {
+    const thisTerm = this.terms[i]
     a = thisTerm.maxDegree() === 3 ? thisTerm.coefficient().copy() : a
     b = thisTerm.maxDegree() === 2 ? thisTerm.coefficient().copy() : b
     c = thisTerm.maxDegree() === 1 ? thisTerm.coefficient().copy() : c
   }
 
-  var d = this.constant()
+  const d = this.constant()
   return { a: a, b: b, c: c, d: d }
 }
 
@@ -539,17 +539,17 @@ Term.prototype.coefficient = function () {
 }
 
 Term.prototype.simplify = function () {
-  var copy = this.copy()
+  const copy = this.copy()
   copy.coefficients = [this.coefficient()]
   copy.combineVars()
   return copy.sort()
 }
 
 Term.prototype.combineVars = function () {
-  var uniqueVars = {}
+  const uniqueVars = {}
 
-  for (var i = 0; i < this.variables.length; i++) {
-    var thisVar = this.variables[i]
+  for (let i = 0; i < this.variables.length; i++) {
+    const thisVar = this.variables[i]
 
     if (thisVar.variable in uniqueVars) {
       uniqueVars[thisVar.variable] += thisVar.degree
@@ -558,10 +558,10 @@ Term.prototype.combineVars = function () {
     }
   }
 
-  var newVars = []
+  const newVars = []
 
-  for (var v in uniqueVars) {
-    var newVar = new Variable(v)
+  for (let v in uniqueVars) {
+    const newVar = new Variable(v)
     newVar.degree = uniqueVars[v]
     newVars.push(newVar)
   }
@@ -571,7 +571,7 @@ Term.prototype.combineVars = function () {
 }
 
 Term.prototype.copy = function () {
-  var copy = new Term()
+  const copy = new Term()
   copy.coefficients = this.coefficients.map(function (c) {
     return c.copy()
   })
@@ -583,7 +583,7 @@ Term.prototype.copy = function () {
 
 Term.prototype.add = function (term) {
   if (term instanceof Term && this.canBeCombinedWith(term)) {
-    var copy = this.copy()
+    const copy = this.copy()
     copy.coefficients = [copy.coefficient().add(term.coefficient())]
     return copy
   } else {
@@ -597,7 +597,7 @@ Term.prototype.add = function (term) {
 
 Term.prototype.subtract = function (term) {
   if (term instanceof Term && this.canBeCombinedWith(term)) {
-    var copy = this.copy()
+    const copy = this.copy()
     copy.coefficients = [copy.coefficient().subtract(term.coefficient())]
     return copy
   } else {
@@ -610,13 +610,13 @@ Term.prototype.subtract = function (term) {
 }
 
 Term.prototype.multiply = function (a, simplify) {
-  var thisTerm = this.copy()
+  const thisTerm = this.copy()
 
   if (a instanceof Term) {
     thisTerm.variables = thisTerm.variables.concat(a.variables)
     thisTerm.coefficients = a.coefficients.concat(thisTerm.coefficients)
   } else if (isInt(a) || a instanceof Fraction) {
-    var newCoef = isInt(a) ? new Fraction(a, 1) : a
+    const newCoef = isInt(a) ? new Fraction(a, 1) : a
 
     if (thisTerm.variables.length === 0) {
       thisTerm.coefficients.push(newCoef)
@@ -636,7 +636,7 @@ Term.prototype.multiply = function (a, simplify) {
 
 Term.prototype.divide = function (a, simplify) {
   if (isInt(a) || a instanceof Fraction) {
-    var thisTerm = this.copy()
+    const thisTerm = this.copy()
     thisTerm.coefficients = thisTerm.coefficients.map(function (c) {
       return c.divide(a, simplify)
     })
@@ -651,18 +651,18 @@ Term.prototype.divide = function (a, simplify) {
 }
 
 Term.prototype.eval = function (values, simplify) {
-  var copy = this.copy()
-  var exp = copy.coefficients.reduce(function (p, c) {
+  const copy = this.copy()
+  let exp = copy.coefficients.reduce(function (p, c) {
     return p.multiply(c, simplify)
   }, new Expression(1))
 
-  for (var i = 0; i < copy.variables.length; i++) {
-    var thisVar = copy.variables[i]
+  for (let i = 0; i < copy.variables.length; i++) {
+    const thisVar = copy.variables[i]
 
-    var ev
+    let ev
 
     if (thisVar.variable in values) {
-      var sub = values[thisVar.variable]
+      const sub = values[thisVar.variable]
 
       if (sub instanceof Fraction || sub instanceof Expression) {
         ev = sub.pow(thisVar.degree)
@@ -686,7 +686,7 @@ Term.prototype.eval = function (values, simplify) {
 }
 
 Term.prototype.hasVariable = function (variable) {
-  for (var i = 0; i < this.variables.length; i++) {
+  for (let i = 0; i < this.variables.length; i++) {
     if (this.variables[i].variable === variable) {
       return true
     }
@@ -708,17 +708,17 @@ Term.prototype.maxDegreeOfVariable = function (variable) {
 }
 
 Term.prototype.canBeCombinedWith = function (term) {
-  var thisVars = this.variables
-  var thatVars = term.variables
+  const thisVars = this.variables
+  const thatVars = term.variables
 
   if (thisVars.length != thatVars.length) {
     return false
   }
 
-  var matches = 0
+  let matches = 0
 
-  for (var i = 0; i < thisVars.length; i++) {
-    for (var j = 0; j < thatVars.length; j++) {
+  for (let i = 0; i < thisVars.length; i++) {
+    for (let j = 0; j < thatVars.length; j++) {
       if (
         thisVars[i].variable === thatVars[j].variable &&
         thisVars[i].degree === thatVars[j].degree
@@ -732,7 +732,7 @@ Term.prototype.canBeCombinedWith = function (term) {
 }
 
 Term.prototype.onlyHasVariable = function (variable) {
-  for (var i = 0; i < this.variables.length; i++) {
+  for (let i = 0; i < this.variables.length; i++) {
     if (this.variables[i].variable != variable) {
       return false
     }
@@ -751,11 +751,11 @@ Term.prototype.sort = function () {
 }
 
 Term.prototype.toString = function (options) {
-  var implicit = options && options.implicit
-  var str = ""
+  const implicit = options && options.implicit
+  let str = ""
 
-  for (var i = 0; i < this.coefficients.length; i++) {
-    var coef = this.coefficients[i]
+  for (let i = 0; i < this.coefficients.length; i++) {
+    const coef = this.coefficients[i]
 
     if (coef.abs().numer !== 1 || coef.abs().denom !== 1) {
       str += " * " + coef.toString()
@@ -763,7 +763,7 @@ Term.prototype.toString = function (options) {
   }
   str = this.variables.reduce(function (p, c) {
     if (implicit && !!p) {
-      var vStr = c.toString()
+      const vStr = c.toString()
       return vStr ? p + "*" + vStr : p
     } else return p.concat(c.toString())
   }, str)
@@ -779,12 +779,12 @@ Term.prototype.toTex = function (dict) {
     ? "cdot" // spellchecker:ignore cdot
     : dict.multiplication
 
-  var op = " \\" + dict.multiplication + " "
+  const op = " \\" + dict.multiplication + " "
 
-  var str = ""
+  let str = ""
 
-  for (var i = 0; i < this.coefficients.length; i++) {
-    var coef = this.coefficients[i]
+  for (let i = 0; i < this.coefficients.length; i++) {
+    const coef = this.coefficients[i]
 
     if (coef.abs().numer !== 1 || coef.abs().denom !== 1) {
       str += op + coef.toTex()
@@ -820,14 +820,14 @@ export const Variable = function (variable) {
 }
 
 Variable.prototype.copy = function () {
-  var copy = new Variable(this.variable)
+  const copy = new Variable(this.variable)
   copy.degree = this.degree
   return copy
 }
 
 Variable.prototype.toString = function () {
-  var degree = this.degree
-  var variable = this.variable
+  const degree = this.degree
+  const variable = this.variable
 
   if (degree === 0) {
     return ""
@@ -839,8 +839,8 @@ Variable.prototype.toString = function () {
 }
 
 Variable.prototype.toTex = function () {
-  var degree = this.degree
-  var variable = this.variable
+  const degree = this.degree
+  let variable = this.variable
 
   if (GREEK_LETTERS.indexOf(variable) > -1) {
     variable = "\\" + variable

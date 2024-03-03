@@ -122,10 +122,10 @@ Parser.prototype.parse = function (input) {
 }
 
 Parser.prototype.parseEqn = function () {
-  var ex1 = this.parseExpr()
+  const ex1 = this.parseExpr()
   if (this.match("equal")) {
     this.update()
-    var ex2 = this.parseExpr()
+    const ex2 = this.parseExpr()
     return new Equation(ex1, ex2)
   } else if (this.match("epsilon")) {
     return ex1
@@ -135,20 +135,20 @@ Parser.prototype.parseEqn = function () {
 }
 
 Parser.prototype.parseExpr = function () {
-  var term = this.parseTerm()
+  const term = this.parseTerm()
   return this.parseExprRest(term)
 }
 
 Parser.prototype.parseExprRest = function (term) {
   if (this.match("plus")) {
     this.update()
-    var plusTerm = this.parseTerm()
+    const plusTerm = this.parseTerm()
     if (term === undefined || plusTerm === undefined)
       throw new SyntaxError("Missing operand")
     return this.parseExprRest(term.add(plusTerm))
   } else if (this.match("minus")) {
     this.update()
-    var minusTerm = this.parseTerm()
+    const minusTerm = this.parseTerm()
     //This case is entered when a negative number is parsed e.g. x = -4
     if (term === undefined) {
       return this.parseExprRest(minusTerm.multiply(-1))
@@ -161,30 +161,30 @@ Parser.prototype.parseExprRest = function (term) {
 }
 
 Parser.prototype.parseTerm = function () {
-  var factor = this.parseFactor()
+  const factor = this.parseFactor()
   return this.parseTermRest(factor)
 }
 
 Parser.prototype.parseTermRest = function (factor) {
   if (this.match("multiply")) {
     this.update()
-    var mulFactor = this.parseFactor()
+    const mulFactor = this.parseFactor()
     return factor.multiply(this.parseTermRest(mulFactor))
   } else if (this.match("power")) {
     this.update()
-    var powFactor = this.parseFactor()
+    const powFactor = this.parseFactor()
     //WORKAROUND: algebra.js only allows integers and fractions for raising
     return this.parseTermRest(factor.pow(parseInt(powFactor.toString())))
   } else if (this.match("divide")) {
     this.update()
-    var divFactor = this.parseFactor()
+    const divFactor = this.parseFactor()
     //WORKAROUND: algebra.js only allows integers and fractions for division
     return this.parseTermRest(factor.divide(this.convertToFraction(divFactor)))
   } else if (this.match("epsilon")) {
     return factor
   } else {
     //a missing operator between terms is treated like a multiplier
-    var mulFactor2 = this.parseFactor()
+    const mulFactor2 = this.parseFactor()
     if (mulFactor2 === undefined) {
       return factor
     } else {
@@ -204,23 +204,23 @@ Parser.prototype.convertToFraction = function (expression) {
         "): Divisor must be of type Integer or Fraction."
     )
   } else {
-    var c = expression.constants[0]
+    const c = expression.constants[0]
     return new Fraction(c.numer, c.denom)
   }
 }
 
 Parser.prototype.parseFactor = function () {
   if (this.match("num")) {
-    var num = this.parseNumber()
+    const num = this.parseNumber()
     this.update()
     return num
   } else if (this.match("id")) {
-    var id = new Expression(this.current_token.value)
+    const id = new Expression(this.current_token.value)
     this.update()
     return id
   } else if (this.match("l_paren")) {
     this.update()
-    var expr = this.parseExpr()
+    const expr = this.parseExpr()
     if (this.match("r_paren")) {
       this.update()
       return expr
@@ -239,12 +239,12 @@ Parser.prototype.parseNumber = function () {
     return new Expression(parseInt(this.current_token.value))
   } else {
     //Split the decimal number to integer and decimal parts
-    var splits = this.current_token.value.split(".")
+    const splits = this.current_token.value.split(".")
     //count the digits of the decimal part
-    var decimals = splits[1].length
+    const decimals = splits[1].length
     //determine the multiplication factor
-    var factor = Math.pow(10, decimals)
-    var float_op = parseFloat(this.current_token.value)
+    const factor = Math.pow(10, decimals)
+    const float_op = parseFloat(this.current_token.value)
     //multiply the float with the factor and divide it again afterwards
     //to create a valid expression object
     return new Expression(parseInt(float_op * factor)).divide(factor)

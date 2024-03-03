@@ -2,7 +2,7 @@
 
 export function gcd(x, y) {
   while (y) {
-    var temp = x
+    const temp = x
     x = y
     y = temp % y
   }
@@ -20,7 +20,7 @@ export function isInt(thing) {
 
 export function round(decimal, places) {
   places = typeof places === "undefined" ? 2 : places
-  var x = Math.pow(10, places)
+  const x = Math.pow(10, places)
   return Math.round(parseFloat(decimal) * x) / x
 }
 

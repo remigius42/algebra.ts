@@ -3,17 +3,17 @@ import { gcd, isInt, lcm, round } from "../src/helper.js"
 
 describe("Greatest common divisor", function () {
   it("returns 1 when the arguments are 1 and 1", function () {
-    var g = gcd(1, 1)
+    const g = gcd(1, 1)
     expect(g).toEqual(1)
   })
 
   it("returns 2 when the arguments are 2 and 4", function () {
-    var g = gcd(2, 4)
+    const g = gcd(2, 4)
     expect(g).toEqual(2)
   })
 
   it("returns 1 when the arguments are 5 and 7", function () {
-    var g = gcd(5, 7)
+    const g = gcd(5, 7)
     expect(g).toEqual(1)
   })
 })
@@ -70,17 +70,17 @@ describe("round", function () {
 
 describe("algebra.toTex", function () {
   it("converts non-algebra.js objects to strings - string", function () {
-    var x = "hello"
+    const x = "hello"
     expect(algebra.toTex(x)).toEqual(x.toString())
   })
 
   it("converts non-algebra.js objects to strings - number", function () {
-    var x = 3.5
+    const x = 3.5
     expect(algebra.toTex(x)).toEqual(x.toString())
   })
 
   it("converts non-algebra.js objects to strings - boolean", function () {
-    var x = true
+    const x = true
     expect(algebra.toTex(x)).toEqual(x.toString())
   })
 })

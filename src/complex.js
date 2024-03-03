@@ -22,7 +22,7 @@ Complex.prototype.copy = function () {
 }
 
 Complex.prototype.add = function (a) {
-  var copy = this.copy()
+  const copy = this.copy()
 
   if (a instanceof Fraction || isInt(a)) {
     copy.real = copy.real.add(a)
@@ -41,7 +41,7 @@ Complex.prototype.add = function (a) {
 }
 
 Complex.prototype.subtract = function (a) {
-  var copy = this.copy()
+  const copy = this.copy()
 
   if (a instanceof Fraction || isInt(a)) {
     copy.real = copy.real.subtract(a)
@@ -61,20 +61,20 @@ Complex.prototype.subtract = function (a) {
 
 Complex.prototype.multiply = function (a) {
   if (a instanceof Fraction || isInt(a)) {
-    var copy = this.copy()
+    const copy = this.copy()
     copy.real = copy.real.multiply(a)
     copy.imaginary = copy.imaginary.multiply(a)
     return copy
   } else if (a instanceof Complex) {
-    var expr1 = new Expression("i").multiply(this.imaginary).add(this.real)
-    var expr2 = new Expression("i").multiply(a.imaginary).add(a.real)
-    var foil = expr1.multiply(expr2)
-    var coefs = foil._quadraticCoefficients()
-    var coefA = coefs.a
-    var coefB = coefs.b
-    var coefC = coefs.c
+    const expr1 = new Expression("i").multiply(this.imaginary).add(this.real)
+    const expr2 = new Expression("i").multiply(a.imaginary).add(a.real)
+    const foil = expr1.multiply(expr2)
+    const coefs = foil._quadraticCoefficients()
+    const coefA = coefs.a
+    const coefB = coefs.b
+    const coefC = coefs.c
 
-    var real = coefA.multiply(-1).add(coefC)
+    const real = coefA.multiply(-1).add(coefC)
     return new Complex(real, coefB)
   } else {
     throw new TypeError(
@@ -87,14 +87,14 @@ Complex.prototype.multiply = function (a) {
 
 Complex.prototype.divide = function (a) {
   if (a instanceof Fraction || isInt(a)) {
-    var copy = this.copy()
+    const copy = this.copy()
     copy.real = copy.real.divide(a)
     copy.imaginary = copy.imaginary.divide(a)
     return copy
   } else if (a instanceof Complex) {
-    var conjugate = new Complex(a.real, a.imaginary.multiply(-1))
-    var numerator = this.multiply(conjugate)
-    var denominator = a.multiply(conjugate).real
+    const conjugate = new Complex(a.real, a.imaginary.multiply(-1))
+    const numerator = this.multiply(conjugate)
+    const denominator = a.multiply(conjugate).real
     return numerator.divide(denominator)
   } else {
     throw new TypeError(

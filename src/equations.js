@@ -83,7 +83,7 @@ Equation.prototype.solveFor = function (variable) {
 
     // Otherwise, move everything to the LHS.
   } else {
-    var newLhs = this.lhs.copy()
+    let newLhs = this.lhs.copy()
     newLhs = newLhs.subtract(this.rhs)
 
     // If there are no terms left after this rearrangement and the constant is 0, there are infinite solutions.
@@ -104,7 +104,7 @@ Equation.prototype.solveFor = function (variable) {
       let c = coefs.c
 
       // Calculate the discriminant, b^2 - 4ac.
-      var discriminant = b.pow(2).subtract(a.multiply(c).multiply(4))
+      const discriminant = b.pow(2).subtract(a.multiply(c).multiply(4))
 
       // If the discriminant is greater than or equal to 0, there is at least one real root.
       if (discriminant.valueOf() >= 0) {
@@ -154,13 +154,13 @@ Equation.prototype.solveFor = function (variable) {
       let d = coefs.d
 
       // Calculate D and D0.
-      var D = a.multiply(b).multiply(c).multiply(d).multiply(18)
+      let D = a.multiply(b).multiply(c).multiply(d).multiply(18)
       D = D.subtract(b.pow(3).multiply(d).multiply(4))
       D = D.add(b.pow(2).multiply(c.pow(2)))
       D = D.subtract(a.multiply(c.pow(3)).multiply(4))
       D = D.subtract(a.pow(2).multiply(d.pow(2)).multiply(27))
 
-      var D0 = b.pow(2).subtract(a.multiply(c).multiply(3))
+      const D0 = b.pow(2).subtract(a.multiply(c).multiply(3))
 
       // Check for special cases when D = 0.
 
@@ -190,12 +190,12 @@ Equation.prototype.solveFor = function (variable) {
 
         // Otherwise, use a different method for solving.
       } else {
-        var f = (3 * (c / a) - Math.pow(b, 2) / Math.pow(a, 2)) / 3
-        var g = (2 * Math.pow(b, 3)) / Math.pow(a, 3)
+        const f = (3 * (c / a) - Math.pow(b, 2) / Math.pow(a, 2)) / 3
+        let g = (2 * Math.pow(b, 3)) / Math.pow(a, 3)
         g = g - (9 * b * c) / Math.pow(a, 2)
         g = g + (27 * d) / a
         g = g / 27
-        var h = Math.pow(g, 2) / 4 + Math.pow(f, 3) / 27
+        const h = Math.pow(g, 2) / 4 + Math.pow(f, 3) / 27
 
         /*
                	if f = g = h = 0 then roots are equal (has been already taken care of!)
@@ -204,10 +204,10 @@ Equation.prototype.solveFor = function (variable) {
                */
 
         if (h > 0) {
-          var R = -(g / 2) + Math.sqrt(h)
-          var S = Math.cbrt(R)
-          var T = -(g / 2) - Math.sqrt(h)
-          var U = Math.cbrt(T)
+          const R = -(g / 2) + Math.sqrt(h)
+          const S = Math.cbrt(R)
+          const T = -(g / 2) - Math.sqrt(h)
+          const U = Math.cbrt(T)
           let root1 = S + U - b / (3 * a)
           /* Round off the roots if the difference between absolute value of ceil and number is < e-15*/
           if (root1 < 0) {
@@ -220,14 +220,14 @@ Equation.prototype.solveFor = function (variable) {
 
           return [root1]
         } else {
-          var i = Math.sqrt(Math.pow(g, 2) / 4 - h)
-          var j = Math.cbrt(i)
+          const i = Math.sqrt(Math.pow(g, 2) / 4 - h)
+          const j = Math.cbrt(i)
 
-          var k = Math.acos(-(g / (2 * i)))
-          var L = -j
-          var M = Math.cos(k / 3)
-          var N = Math.sqrt(3) * Math.sin(k / 3)
-          var P = -(b / (3 * a))
+          const k = Math.acos(-(g / (2 * i)))
+          const L = -j
+          const M = Math.cos(k / 3)
+          const N = Math.sqrt(3) * Math.sin(k / 3)
+          const P = -(b / (3 * a))
 
           let root1 = 2 * j * Math.cos(k / 3) - b / (3 * a)
           let root2 = L * (M + N) + P
@@ -258,7 +258,7 @@ Equation.prototype.solveFor = function (variable) {
             if (cRoot3 - root3 < 1e-15) root3 = cRoot3
           }
 
-          var roots = [root1, root2, root3]
+          const roots = [root1, root2, root3]
           roots.sort(function (a, b) {
             return a - b
           }) // roots in ascending order
@@ -283,8 +283,8 @@ Equation.prototype.toTex = function () {
 }
 
 Equation.prototype._maxDegree = function () {
-  var lhsMax = this.lhs._maxDegree()
-  var rhsMax = this.rhs._maxDegree()
+  const lhsMax = this.lhs._maxDegree()
+  const rhsMax = this.rhs._maxDegree()
   return Math.max(lhsMax, rhsMax)
 }
 
