@@ -2,6 +2,8 @@ import { Expression, Term, Variable } from "./expressions.js"
 import { Fraction } from "./fractions.js"
 import { isInt } from "./helper.js"
 
+const ROOT_PRECISION = 10e-15
+
 export class Equation {
   constructor(lhs, rhs) {
     if (lhs instanceof Expression) {
@@ -210,16 +212,7 @@ export class Equation {
             const T = -(g / 2) - Math.sqrt(h)
             const U = Math.cbrt(T)
             let root1 = S + U - b / (3 * a)
-            /* Round off the roots if the difference between absolute value of ceil and number is < e-15*/
-            if (root1 < 0) {
-              let cRoot1 = Math.floor(root1)
-              if (root1 - cRoot1 < 1e-15) root1 = cRoot1
-            } else if (root1 > 0) {
-              let cRoot1 = Math.ceil(root1)
-              if (cRoot1 - root1 < 1e-15) root1 = cRoot1
-            }
-
-            return [root1]
+            return [root1].map(this.#roundRootToPrecision)
           } else {
             const i = Math.sqrt(Math.pow(g, 2) / 4 - h)
             const j = Math.cbrt(i)
@@ -234,32 +227,7 @@ export class Equation {
             let root2 = L * (M + N) + P
             let root3 = L * (M - N) + P
 
-            /* Round off the roots if the difference between absolute value of ceil and number is < e-15*/
-            if (root1 < 0) {
-              let cRoot1 = Math.floor(root1)
-              if (root1 - cRoot1 < 1e-15) root1 = cRoot1
-            } else if (root1 > 0) {
-              let cRoot1 = Math.ceil(root1)
-              if (cRoot1 - root1 < 1e-15) root1 = cRoot1
-            }
-
-            if (root2 < 0) {
-              let cRoot2 = Math.floor(root2)
-              if (root2 - cRoot2 < 1e-15) root2 = cRoot2
-            } else if (root2 > 0) {
-              let cRoot2 = Math.ceil(root2)
-              if (cRoot2 - root2 < 1e-15) root2 = cRoot2
-            }
-
-            if (root1 < 0) {
-              let cRoot3 = Math.floor(root3)
-              if (root3 - cRoot3 < 1e-15) root3 = cRoot3
-            } else if (root3 > 0) {
-              let cRoot3 = Math.ceil(root3)
-              if (cRoot3 - root3 < 1e-15) root3 = cRoot3
-            }
-
-            const roots = [root1, root2, root3]
+            const roots = [root1, root2, root3].map(this.#roundRootToPrecision)
             roots.sort(function (a, b) {
               return a - b
             }) // roots in ascending order
@@ -330,5 +298,17 @@ export class Equation {
     return (
       this.lhs.onlyHasVariable(variable) && this.rhs.onlyHasVariable(variable)
     )
+  }
+
+  /**
+   * Round root if the next integer is within ROOT_PRECISION.
+   */
+  #roundRootToPrecision(root) {
+    const roundedRoot = Math.round(root)
+    if (Math.abs(roundedRoot - root) < ROOT_PRECISION) {
+      return roundedRoot
+    } else {
+      return root
+    }
   }
 }
