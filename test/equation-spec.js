@@ -4,6 +4,30 @@ import { Expression } from "../src/expressions.js"
 import { Fraction } from "../src/fractions.js"
 import { round } from "../src/helper.js"
 
+describe("copy", () => {
+  it("should return different objects", () => {
+    const exp1 = new Expression("x").multiply(42)
+    const exp2 = new Expression("23")
+    const equation = new Equation(exp1, exp2)
+
+    const copy = equation.copy()
+
+    expect(copy.lhs).not.toBe(exp1)
+    expect(copy.rhs).not.toBe(exp2)
+  })
+
+  it("should return equal objects", () => {
+    const exp1 = new Expression("x").multiply(42)
+    const exp2 = new Expression("23")
+    const equation = new Equation(exp1, exp2)
+
+    const copy = equation.copy()
+
+    expect(copy.lhs).toEqual(exp1)
+    expect(copy.rhs).toEqual(exp2)
+  })
+})
+
 describe("A linear equation with one variable", () => {
   const x1 = new Expression("x").add(4).divide(5) // 1/5x + 4/5
   const x2 = new Expression("x").subtract(new Fraction(1, 6)) // x - 1/6

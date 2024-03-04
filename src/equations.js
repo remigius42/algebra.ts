@@ -29,6 +29,10 @@ export class Equation {
     }
   }
 
+  copy() {
+    return new Equation(this.lhs.copy(), this.rhs.copy())
+  }
+
   solveFor(variable) {
     if (!this.lhs.hasVariable(variable) && !this.rhs.hasVariable(variable)) {
       throw new TypeError(
