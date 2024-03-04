@@ -942,6 +942,40 @@ describe("Expression summation", () => {
   })
 })
 
+describe("Expression maxDegree", () => {
+  describe("maxDegree", () => {
+    it("should return 0 for constant expressions", () => {
+      const expression = new Expression(42)
+
+      expect(expression.maxDegree()).toEqual(0)
+    })
+
+    it("should return 2 for single quadratic variable", () => {
+      const expression = new Expression("x").pow(2)
+
+      expect(expression.maxDegree()).toEqual(2)
+    })
+
+    it("should return sum of degrees if variable occurs multiple times", () => {
+      const expression = new Expression("x")
+        .multiply(new Expression("y"))
+        .multiply(new Expression("x"))
+
+      expect(expression.maxDegree()).toEqual(2)
+    })
+
+    it("should return max sum of degrees if variables occur multiple times", () => {
+      const expression = new Expression("x")
+        .multiply(new Expression("y"))
+        .multiply(new Expression("x"))
+        .multiply(new Expression("y"))
+        .multiply(new Expression("y"))
+
+      expect(expression.maxDegree()).toEqual(3)
+    })
+  })
+})
+
 describe("Expression maxDegreeOfVariable", () => {
   it("should return 0 for maxDegree of missing variable", () => {
     const expression = new Expression("x")

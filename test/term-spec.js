@@ -396,6 +396,40 @@ describe("Term printing to to string", () => {
   })
 })
 
+describe("Term maxDegree", () => {
+  it("should return 0 for empty terms", () => {
+    const term = new Term()
+
+    expect(term.maxDegree()).toEqual(0)
+  })
+
+  it("should return 2 for single quadratic variable", () => {
+    const term = new Term(new Variable("x")).multiply(
+      new Term(new Variable("x"))
+    )
+
+    expect(term.maxDegree()).toEqual(2)
+  })
+
+  it("should return sum of degrees if variable occurs multiple times", () => {
+    const term = new Term(new Variable("x"))
+      .multiply(new Term(new Variable("y")))
+      .multiply(new Term(new Variable("x")))
+
+    expect(term.maxDegree()).toEqual(2)
+  })
+
+  it("should return max sum of degrees if variables occur multiple times", () => {
+    const term = new Term(new Variable("x"))
+      .multiply(new Term(new Variable("y")))
+      .multiply(new Term(new Variable("x")))
+      .multiply(new Term(new Variable("y")))
+      .multiply(new Term(new Variable("y")))
+
+    expect(term.maxDegree()).toEqual(3)
+  })
+})
+
 describe("Term maxDegreeOfVariable", () => {
   it("should return 0 for maxDegree of missing variable", () => {
     const term = new Term(new Variable("x"))

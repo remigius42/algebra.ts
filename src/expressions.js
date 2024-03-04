@@ -414,7 +414,7 @@ export class Expression {
   maxDegree() {
     return this.terms.reduce(function (p, c) {
       return Math.max(p, c.maxDegree())
-    }, 1)
+    }, 0)
   }
 
   maxDegreeOfVariable(variable) {
@@ -705,7 +705,7 @@ export class Term {
   maxDegree() {
     return this.variables.reduce(function (p, c) {
       return Math.max(p, c.degree)
-    }, 1)
+    }, 0)
   }
 
   maxDegreeOfVariable(variable) {
