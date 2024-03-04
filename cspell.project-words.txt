@@ -3,6 +3,7 @@ coef
 coefs
 commitlint
 conventionalcommits
+inequations
 infile
 javascripts
 lcov

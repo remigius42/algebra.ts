@@ -68,6 +68,20 @@ export class Equation {
     }
   }
 
+  /**
+   * Divide given right-hand side by given coefficient.
+   *
+   * Defining this operation as a class member simplifies handling side-effects,
+   * for example in case of inequations which reverse if the coefficient is
+   * negative.
+   * Note that you should be careful when introducing side-effects to
+   * ensure the methods are operating on a copy to prevent inadvertent
+   * modification.
+   */
+  divideRhsByCoefficient(rhs, coefficient) {
+    return rhs.divide(coefficient)
+  }
+
   eval(values) {
     return new Equation(this.lhs.eval(values), this.rhs.eval(values))
   }
@@ -165,7 +179,7 @@ export class Equation {
       }
     }
 
-    newRhs = newRhs.divide(newLhs.terms[0].coefficient())
+    newRhs = this.divideRhsByCoefficient(newRhs, newLhs.terms[0].coefficient())
 
     if (newRhs.terms.length === 0) {
       return newRhs.constant().reduce()
