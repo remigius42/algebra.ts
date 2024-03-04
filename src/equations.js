@@ -82,8 +82,23 @@ export class Equation {
     return rhs.divide(coefficient)
   }
 
-  eval(values) {
-    return new Equation(this.lhs.eval(values), this.rhs.eval(values))
+  eval(values, toBoolean = false) {
+    const equation = new Equation(this.lhs.eval(values), this.rhs.eval(values))
+
+    if (toBoolean) {
+      if (equation.maxDegree() === 0) {
+        return (
+          equation.lhs.constant().valueOf() ===
+          equation.rhs.constant().valueOf()
+        )
+      } else {
+        throw new EvalError(
+          "Can't evaluate equation to boolean since there are free variables."
+        )
+      }
+    } else {
+      return equation
+    }
   }
 
   toString(options) {

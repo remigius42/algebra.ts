@@ -531,6 +531,30 @@ describe("Equation evaluation", () => {
 
     expect(answer.toString()).toEqual("y + 4 = 2")
   })
+
+  it("with `toBoolean=true` returns boolean of there are no free variables", () => {
+    const x = new Expression("x")
+    const y = new Expression("y")
+    const eq = new Equation(x, y.add(2)) // x = y + 2
+
+    const answer = eq.eval({ x: 3, y: 1 }, true)
+
+    expect(answer).toEqual(true)
+  })
+
+  it("with `toBoolean=true` throws if there are free variables", () => {
+    const x = new Expression("x")
+    const y = new Expression("y")
+    const eq = new Equation(x, y.add(2)) // x = y + 2
+
+    expect(() => {
+      eq.eval({ x: 3 }, true)
+    }).toThrow(
+      new EvalError(
+        "Can't evaluate equation to boolean since there are free variables."
+      )
+    )
+  })
 })
 
 describe("An equation toString should accept options", () => {
