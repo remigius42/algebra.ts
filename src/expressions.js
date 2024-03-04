@@ -420,7 +420,7 @@ export class Expression {
   maxDegreeOfVariable(variable) {
     return this.terms.reduce(function (p, c) {
       return Math.max(p, c.maxDegreeOfVariable(variable))
-    }, 1)
+    }, 0)
   }
 
   quadraticCoefficients() {
@@ -711,7 +711,7 @@ export class Term {
   maxDegreeOfVariable(variable) {
     return this.variables.reduce(function (p, c) {
       return c.variable === variable ? Math.max(p, c.degree) : p
-    }, 1)
+    }, 0)
   }
 
   canBeCombinedWith(term) {

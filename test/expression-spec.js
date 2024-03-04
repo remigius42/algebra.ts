@@ -941,3 +941,25 @@ describe("Expression summation", () => {
     expect(answer.toString()).toEqual("4y + 30")
   })
 })
+
+describe("Expression maxDegreeOfVariable", () => {
+  it("should return 0 for maxDegree of missing variable", () => {
+    const expression = new Expression("x")
+
+    expect(expression.maxDegreeOfVariable("y")).toEqual(0)
+  })
+
+  it("should return 2 for quadratic variable", () => {
+    const expression = new Expression("x").pow(2)
+
+    expect(expression.maxDegreeOfVariable("x")).toEqual(2)
+  })
+
+  it("should return sum of degrees if variable occurs multiple times", () => {
+    const expression = new Expression("x")
+      .multiply(new Expression("y"))
+      .multiply(new Expression("x"))
+
+    expect(expression.maxDegreeOfVariable("x")).toEqual(2)
+  })
+})

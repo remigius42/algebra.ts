@@ -395,3 +395,27 @@ describe("Term printing to to string", () => {
     expect(t.toString({ implicit: true })).toEqual("3*y")
   })
 })
+
+describe("Term maxDegreeOfVariable", () => {
+  it("should return 0 for maxDegree of missing variable", () => {
+    const term = new Term(new Variable("x"))
+
+    expect(term.maxDegreeOfVariable("y")).toEqual(0)
+  })
+
+  it("should return 2 for quadratic variable", () => {
+    const term = new Term(new Variable("x")).multiply(
+      new Term(new Variable("x"))
+    )
+
+    expect(term.maxDegreeOfVariable("x")).toEqual(2)
+  })
+
+  it("should return sum of degrees if variable occurs multiple times", () => {
+    const term = new Term(new Variable("x"))
+      .multiply(new Term(new Variable("y")))
+      .multiply(new Term(new Variable("x")))
+
+    expect(term.maxDegreeOfVariable("x")).toEqual(2)
+  })
+})
