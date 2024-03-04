@@ -2,6 +2,7 @@ import algebra from "../algebra.js"
 import { Equation } from "../src/equations.js"
 import { Expression } from "../src/expressions.js"
 import { Fraction } from "../src/fractions.js"
+import { Inequation } from "../src/inequations.js"
 import { Parser } from "../src/parser.js"
 
 describe("Input validity", () => {
@@ -107,6 +108,38 @@ describe("Operators", () => {
     const lhs = new Expression("x").add(2)
     const rhs = new Expression(5)
     expect(p.parse(input)).toEqual(new Equation(lhs, rhs))
+  })
+
+  it("should parse < as inequation", () => {
+    const input = "2+x < 5"
+    const lhs = new Expression("x").add(2)
+    const rhs = new Expression(5)
+
+    expect(p.parse(input)).toEqual(new Inequation(lhs, rhs, "<"))
+  })
+
+  it("should parse > as inequation", () => {
+    const input = "2+x > 5"
+    const lhs = new Expression("x").add(2)
+    const rhs = new Expression(5)
+
+    expect(p.parse(input)).toEqual(new Inequation(lhs, rhs, ">"))
+  })
+
+  it("should parse <= as inequation", () => {
+    const input = "2+x <= 5"
+    const lhs = new Expression("x").add(2)
+    const rhs = new Expression(5)
+
+    expect(p.parse(input)).toEqual(new Inequation(lhs, rhs, "<="))
+  })
+
+  it("should parse >= as inequation", () => {
+    const input = "2+x >= 5"
+    const lhs = new Expression("x").add(2)
+    const rhs = new Expression(5)
+
+    expect(p.parse(input)).toEqual(new Inequation(lhs, rhs, ">="))
   })
 
   it("should parse - correctly", () => {

@@ -22,7 +22,9 @@ export class Lexer {
       "^": "POWER",
       "(": "L_PAREN",
       ")": "R_PAREN",
-      "=": "EQUALS"
+      "=": "EQUALS",
+      "<": "LESS_THAN",
+      ">": "GREATER_THAN"
     }
   }
 
@@ -56,6 +58,14 @@ export class Lexer {
     if (op !== undefined) {
       if (op === "L_PAREN" || op === "R_PAREN") {
         return { type: "PAREN", value: op, pos: this.pos++ }
+      } else if (op === "LESS_THAN" || op === "GREATER_THAN") {
+        if (this.buf.charAt(this.pos + 1) === "=") {
+          const pos = this.pos
+          this.pos += 2
+          return { type: "OPERATOR", value: `${op}_EQUALS`, pos }
+        } else {
+          return { type: "OPERATOR", value: op, pos: this.pos++ }
+        }
       } else {
         return { type: "OPERATOR", value: op, pos: this.pos++ }
       }

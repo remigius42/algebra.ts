@@ -1,6 +1,7 @@
 import { Equation } from "./src/equations.js"
 import { Expression } from "./src/expressions.js"
 import { Fraction } from "./src/fractions.js"
+import { Inequation } from "./src/inequations.js"
 import { Parser } from "./src/parser.js"
 
 const parse = function (input) {
@@ -13,7 +14,8 @@ const toTex = function (input) {
   if (
     input instanceof Fraction ||
     input instanceof Expression ||
-    input instanceof Equation
+    input instanceof Equation ||
+    input instanceof Inequation
   ) {
     return input.toTex()
   } else if (input instanceof Array) {

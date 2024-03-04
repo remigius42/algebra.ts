@@ -1,6 +1,7 @@
 import { Equation } from "./equations.js"
 import { Expression } from "./expressions.js"
 import { Fraction } from "./fractions.js"
+import { Inequation } from "./inequations.js"
 import { Lexer } from "./lexer.js"
 
 export class Parser {
@@ -90,6 +91,26 @@ export class Parser {
           this.current_token.type === "OPERATOR" &&
           this.current_token.value === "EQUALS"
         )
+      case "less_than":
+        return (
+          this.current_token.type === "OPERATOR" &&
+          this.current_token.value === "LESS_THAN"
+        )
+      case "less_than_equals":
+        return (
+          this.current_token.type === "OPERATOR" &&
+          this.current_token.value === "LESS_THAN_EQUALS"
+        )
+      case "greater_than":
+        return (
+          this.current_token.type === "OPERATOR" &&
+          this.current_token.value === "GREATER_THAN"
+        )
+      case "greater_than_equals":
+        return (
+          this.current_token.type === "OPERATOR" &&
+          this.current_token.value === "GREATER_THAN_EQUALS"
+        )
       case "l_paren":
         return (
           this.current_token.type === "PAREN" &&
@@ -128,11 +149,31 @@ export class Parser {
       this.update()
       const ex2 = this.#parseExpr()
       return new Equation(ex1, ex2)
+    } else if (this.#isInequation()) {
+      const relations = new Map([
+        ["LESS_THAN", "<"],
+        ["LESS_THAN_EQUALS", "<="],
+        ["GREATER_THAN", ">"],
+        ["GREATER_THAN_EQUALS", ">="]
+      ])
+      const relation = relations.get(this.current_token.value)
+      this.update()
+      const ex2 = this.#parseExpr()
+      return new Inequation(ex1, ex2, relation)
     } else if (this.match("epsilon")) {
       return ex1
     } else {
       throw new SyntaxError("Unbalanced Parenthesis")
     }
+  }
+
+  #isInequation() {
+    return (
+      this.match("less_than") ||
+      this.match("less_than_equals") ||
+      this.match("greater_than") ||
+      this.match("greater_than_equals")
+    )
   }
 
   #parseExpr() {
