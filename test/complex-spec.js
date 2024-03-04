@@ -1,14 +1,14 @@
 import { Complex } from "../src/complex.js"
 import { Fraction } from "../src/fractions.js"
 
-describe("Complex number initialization", function () {
-  it("should be defined when initialized correctly", function () {
+describe("Complex number initialization", () => {
+  it("should be defined when initialized correctly", () => {
     const c = new Complex(new Fraction(2, 1), new Fraction(3, 1)) // 2 + 3i
     expect(c).toBeDefined()
   })
 
-  it("should throw an error if initialized with an integer for the real part", function () {
-    expect(function () {
+  it("should throw an error if initialized with an integer for the real part", () => {
+    expect(() => {
       new Complex(2, new Fraction(3, 1))
     }).toThrow(
       new TypeError(
@@ -17,8 +17,8 @@ describe("Complex number initialization", function () {
     )
   })
 
-  it("should throw an error if initialized with an integer for the imaginary part", function () {
-    expect(function () {
+  it("should throw an error if initialized with an integer for the imaginary part", () => {
+    expect(() => {
       new Complex(new Fraction(3, 1), 2)
     }).toThrow(
       new TypeError(
@@ -28,23 +28,23 @@ describe("Complex number initialization", function () {
   })
 })
 
-describe("Complex number addition", function () {
+describe("Complex number addition", () => {
   const c = new Complex(new Fraction(2, 1), new Fraction(3, 1)) // 2 + 3i
 
-  it("works with adding integers", function () {
+  it("works with adding integers", () => {
     const answer = c.add(3) // 5 + 3i
     expect(answer.real.toString()).toEqual("5")
     expect(answer.imaginary.toString()).toEqual("3")
   })
 
-  it("works with adding fractions", function () {
+  it("works with adding fractions", () => {
     const answer = c.add(new Fraction(1, 2)) // 5/2 + 3i
     expect(answer.real.toString()).toEqual("5/2")
     expect(answer.imaginary.toString()).toEqual("3")
   })
 
-  it("does not work with adding floats", function () {
-    expect(function () {
+  it("does not work with adding floats", () => {
+    expect(() => {
       c.add(0.1)
     }).toThrow(
       new TypeError(
@@ -53,7 +53,7 @@ describe("Complex number addition", function () {
     )
   })
 
-  it("works with adding other complex numbers", function () {
+  it("works with adding other complex numbers", () => {
     const other = new Complex(new Fraction(3, 1), new Fraction(4, 1)) // 3 + 4i
     const answer = c.add(other)
     expect(answer.real.toString()).toEqual("5")
@@ -61,23 +61,23 @@ describe("Complex number addition", function () {
   })
 })
 
-describe("Complex number subtraction", function () {
+describe("Complex number subtraction", () => {
   const c = new Complex(new Fraction(2, 1), new Fraction(3, 1)) // 2 + 3i
 
-  it("works with integers", function () {
+  it("works with integers", () => {
     const answer = c.subtract(3) // -1 + 3i
     expect(answer.real.toString()).toEqual("-1")
     expect(answer.imaginary.toString()).toEqual("3")
   })
 
-  it("works with fractions", function () {
+  it("works with fractions", () => {
     const answer = c.subtract(new Fraction(1, 2)) // 3/2 + 3i
     expect(answer.real.toString()).toEqual("3/2")
     expect(answer.imaginary.toString()).toEqual("3")
   })
 
-  it("does not work with subtracting floats", function () {
-    expect(function () {
+  it("does not work with subtracting floats", () => {
+    expect(() => {
       c.subtract(0.1)
     }).toThrow(
       new TypeError(
@@ -86,7 +86,7 @@ describe("Complex number subtraction", function () {
     )
   })
 
-  it("works with other complex numbers", function () {
+  it("works with other complex numbers", () => {
     const other = new Complex(new Fraction(5, 1), new Fraction(3, 1)) // 5 + 3i
     const answer = c.subtract(other) // -3 + 0i
     expect(answer.real.toString()).toEqual("-3")
@@ -94,23 +94,23 @@ describe("Complex number subtraction", function () {
   })
 })
 
-describe("Complex number multiplication", function () {
+describe("Complex number multiplication", () => {
   const c = new Complex(new Fraction(2, 1), new Fraction(3, 1)) // 2 + 3i
 
-  it("works with an integer", function () {
+  it("works with an integer", () => {
     const answer = c.multiply(3) // 3(2 + 3i) = 6 + 9i
     expect(answer.real.toString()).toEqual("6")
     expect(answer.imaginary.toString()).toEqual("9")
   })
 
-  it("works with a fraction", function () {
+  it("works with a fraction", () => {
     const answer = c.multiply(new Fraction(1, 3)) // 1/3(2 + 3i) = 2/3 + i
     expect(answer.real.toString()).toEqual("2/3")
     expect(answer.imaginary.toString()).toEqual("1")
   })
 
-  it("does not work with multiplying floats", function () {
-    expect(function () {
+  it("does not work with multiplying floats", () => {
+    expect(() => {
       c.multiply(0.1)
     }).toThrow(
       new TypeError(
@@ -119,7 +119,7 @@ describe("Complex number multiplication", function () {
     )
   })
 
-  it("works with other complex numbers, positive sign", function () {
+  it("works with other complex numbers, positive sign", () => {
     const other = new Complex(new Fraction(5, 1), new Fraction(3, 1)) // 5 + 3i
 
     // (2 + 3i)(5 + 3i)
@@ -132,7 +132,7 @@ describe("Complex number multiplication", function () {
     expect(answer.imaginary.toString()).toEqual("21")
   })
 
-  it("works with other complex numbers, negative sign", function () {
+  it("works with other complex numbers, negative sign", () => {
     const other = new Complex(new Fraction(5, 1), new Fraction(-3, 1)) // 5 - 3i
 
     // (2 + 3i)(5 - 3i) =
@@ -146,23 +146,23 @@ describe("Complex number multiplication", function () {
   })
 })
 
-describe("Complex number division", function () {
+describe("Complex number division", () => {
   const c = new Complex(new Fraction(2, 1), new Fraction(3, 1)) // 2 + 3i
 
-  it("works with an integer", function () {
+  it("works with an integer", () => {
     const answer = c.divide(6) // (2 + 3i) / 6 = 1/3 + 1/2i
     expect(answer.real.toString()).toEqual("1/3")
     expect(answer.imaginary.toString()).toEqual("1/2")
   })
 
-  it("works with a fraction", function () {
+  it("works with a fraction", () => {
     const answer = c.divide(new Fraction(1, 2)) // (2 + 3i) / (1/2) = 4 + 6i
     expect(answer.real.toString()).toEqual("4")
     expect(answer.imaginary.toString()).toEqual("6")
   })
 
-  it("does not work with floats", function () {
-    expect(function () {
+  it("does not work with floats", () => {
+    expect(() => {
       c.divide(0.1)
     }).toThrow(
       new TypeError(
@@ -171,7 +171,7 @@ describe("Complex number division", function () {
     )
   })
 
-  it("works with other complex numbers, positive sign", function () {
+  it("works with other complex numbers, positive sign", () => {
     const other = new Complex(new Fraction(5, 1), new Fraction(3, 1)) // 5 + 3i
 
     // (2 + 3i) / (5 + 3i)
@@ -186,7 +186,7 @@ describe("Complex number division", function () {
     expect(answer.imaginary.toString()).toEqual("9/34")
   })
 
-  it("works with other complex numbers, negative sign", function () {
+  it("works with other complex numbers, negative sign", () => {
     const other = new Complex(new Fraction(5, 1), new Fraction(-3, 1)) // 5 - 3i
 
     // (2 + 3i) / (5 - 3i)

@@ -1,27 +1,27 @@
 import { Term, Variable } from "../src/expressions.js"
 import { Fraction } from "../src/fractions.js"
 
-describe("Terms", function () {
+describe("Terms", () => {
   const x = new Variable("x")
   const t = new Term(x)
 
-  it("are initialized with one variable", function () {
+  it("are initialized with one variable", () => {
     expect(t.variables.length).toEqual(1)
   })
 
-  it("are initialized with an array of coefficients", function () {
+  it("are initialized with an array of coefficients", () => {
     expect(t.coefficients[0].equalTo(new Fraction(1, 1))).toBe(true)
   })
 
-  it("can be initialized with nothing", function () {
+  it("can be initialized with nothing", () => {
     const t = new Term()
 
     expect(t.variables.length).toEqual(0)
     expect(t.coefficients[0].equalTo(new Fraction(1, 1))).toBe(true)
   })
 
-  it("can't be initialized with an integer", function () {
-    expect(function () {
+  it("can't be initialized with an integer", () => {
+    expect(() => {
       new Term(5)
     }).toThrow(
       new TypeError(
@@ -30,8 +30,8 @@ describe("Terms", function () {
     )
   })
 
-  it("can't be initialized with a float", function () {
-    expect(function () {
+  it("can't be initialized with a float", () => {
+    expect(() => {
       new Term(5.1)
     }).toThrow(
       new TypeError(
@@ -40,8 +40,8 @@ describe("Terms", function () {
     )
   })
 
-  it("can't be initialized with a string", function () {
-    expect(function () {
+  it("can't be initialized with a string", () => {
+    expect(() => {
       new Term("x")
     }).toThrow(
       new TypeError(
@@ -51,11 +51,11 @@ describe("Terms", function () {
   })
 })
 
-describe("Term addition", function () {
+describe("Term addition", () => {
   const x = new Variable("x")
   const y = new Variable("y")
 
-  it("combines like-terms correctly", function () {
+  it("combines like-terms correctly", () => {
     const t1 = new Term(x)
     const t2 = new Term(x)
 
@@ -63,11 +63,11 @@ describe("Term addition", function () {
     expect(answer.toString()).toEqual("2x")
   })
 
-  it("throws an error if trying to combine unlike terms", function () {
+  it("throws an error if trying to combine unlike terms", () => {
     const t1 = new Term(x)
     const t2 = new Term(y)
 
-    expect(function () {
+    expect(() => {
       t1.add(t2)
     }).toThrow(
       new TypeError(
@@ -77,11 +77,11 @@ describe("Term addition", function () {
   })
 })
 
-describe("Term subtraction", function () {
+describe("Term subtraction", () => {
   const x = new Variable("x")
   const y = new Variable("y")
 
-  it("combines like-terms correctly", function () {
+  it("combines like-terms correctly", () => {
     const t1 = new Term(x)
     const t2 = new Term(x)
 
@@ -91,11 +91,11 @@ describe("Term subtraction", function () {
     expect(answer.toString()).toEqual("x")
   })
 
-  it("throws an error if trying to combine unlike terms", function () {
+  it("throws an error if trying to combine unlike terms", () => {
     const t1 = new Term(x)
     const t2 = new Term(y)
 
-    expect(function () {
+    expect(() => {
       t1.subtract(t2)
     }).toThrow(
       new TypeError(
@@ -105,8 +105,8 @@ describe("Term subtraction", function () {
   })
 })
 
-describe("Term multiplication", function () {
-  it("combines coefficients correctly", function () {
+describe("Term multiplication", () => {
+  it("combines coefficients correctly", () => {
     const x = new Variable("x")
     const t1 = new Term(x)
     const t2 = new Term(x)
@@ -118,7 +118,7 @@ describe("Term multiplication", function () {
     expect(answer.toString()).toEqual("6x^2")
   })
 
-  it("combines degrees correctly", function () {
+  it("combines degrees correctly", () => {
     const x = new Variable("x")
     x.degree = 2
     const t1 = new Term(x)
@@ -129,7 +129,7 @@ describe("Term multiplication", function () {
     expect(answer.toString()).toEqual("x^5")
   })
 
-  it("combines unlike terms correctly", function () {
+  it("combines unlike terms correctly", () => {
     const x = new Variable("x")
     const y = new Variable("y")
     const t1 = new Term(x)
@@ -142,7 +142,7 @@ describe("Term multiplication", function () {
     expect(answer.toString()).toEqual("6xy")
   })
 
-  it("allows multiplication of integers", function () {
+  it("allows multiplication of integers", () => {
     const x = new Variable("x")
     const t = new Term(x)
 
@@ -150,7 +150,7 @@ describe("Term multiplication", function () {
     expect(answer.toString()).toEqual("2x")
   })
 
-  it("allows multiplication of fractions", function () {
+  it("allows multiplication of fractions", () => {
     const x = new Variable("x")
     const t = new Term(x)
 
@@ -158,11 +158,11 @@ describe("Term multiplication", function () {
     expect(answer.toString()).toEqual("2/3x")
   })
 
-  it("doesn't allow multiplication of floats", function () {
+  it("doesn't allow multiplication of floats", () => {
     const x = new Variable("x")
     const t = new Term(x)
 
-    expect(function () {
+    expect(() => {
       t.multiply(0.5)
     }).toThrow(
       new TypeError(
@@ -171,7 +171,7 @@ describe("Term multiplication", function () {
     )
   })
 
-  it("allows non-simplified coefficients", function () {
+  it("allows non-simplified coefficients", () => {
     const x = new Variable("x")
     let t = new Term(x)
 
@@ -181,7 +181,7 @@ describe("Term multiplication", function () {
     expect(t.toString()).toEqual("3 * 5x")
   })
 
-  it("allows non-simplified variables", function () {
+  it("allows non-simplified variables", () => {
     const x = new Variable("x")
     const t1 = new Term(x)
     const t2 = new Term(x)
@@ -192,8 +192,8 @@ describe("Term multiplication", function () {
   })
 })
 
-describe("Term division", function () {
-  it("allows division of integers", function () {
+describe("Term division", () => {
+  it("allows division of integers", () => {
     const x = new Variable("x")
     const t = new Term(x)
 
@@ -201,7 +201,7 @@ describe("Term division", function () {
     expect(answer.toString()).toEqual("1/3x")
   })
 
-  it("allows division of fractions", function () {
+  it("allows division of fractions", () => {
     const x = new Variable("x")
     const t = new Term(x)
 
@@ -209,11 +209,11 @@ describe("Term division", function () {
     expect(answer.toString()).toEqual("3/2x")
   })
 
-  it("doesn't allow division of floats", function () {
+  it("doesn't allow division of floats", () => {
     const x = new Variable("x")
     const t = new Term(x)
 
-    expect(function () {
+    expect(() => {
       t.divide(0.5)
     }).toThrow(
       new TypeError(
@@ -222,7 +222,7 @@ describe("Term division", function () {
     )
   })
 
-  it("allows non-simplified terms", function () {
+  it("allows non-simplified terms", () => {
     const x = new Variable("x")
     const t = new Term(x)
 
@@ -233,8 +233,8 @@ describe("Term division", function () {
   })
 })
 
-describe("Term sorting", function () {
-  it("sorts variables by degree", function () {
+describe("Term sorting", () => {
+  it("sorts variables by degree", () => {
     const x = new Term(new Variable("x"))
     const y = new Term(new Variable("y"))
     const t = y.multiply(x).multiply(x) // yx^2
@@ -243,8 +243,8 @@ describe("Term sorting", function () {
   })
 })
 
-describe("Term simplification", function () {
-  it("should combine terms", function () {
+describe("Term simplification", () => {
+  it("should combine terms", () => {
     const x = new Variable("x")
     const y = new Variable("y")
 
@@ -259,7 +259,7 @@ describe("Term simplification", function () {
     expect(t.toString()).toEqual("x^3y")
   })
 
-  it("should combine coefficients", function () {
+  it("should combine coefficients", () => {
     const x = new Variable("x")
 
     let t = new Term(x)
@@ -273,8 +273,8 @@ describe("Term simplification", function () {
   })
 })
 
-describe("Term evaluation", function () {
-  it("should work when there is one coefficient and simplify = false", function () {
+describe("Term evaluation", () => {
+  it("should work when there is one coefficient and simplify = false", () => {
     const x = new Variable("x")
     let t = new Term(x)
     t = t.multiply(3)
@@ -285,7 +285,7 @@ describe("Term evaluation", function () {
     expect(e.toString()).toEqual("5 * 3 * 2")
   })
 
-  it("should work when there is more than 1 coefficient and more than 1 variable and simplify = false", function () {
+  it("should work when there is more than 1 coefficient and more than 1 variable and simplify = false", () => {
     const x = new Variable("x")
     const y = new Variable("y")
     let t = new Term(x)
@@ -299,7 +299,7 @@ describe("Term evaluation", function () {
     expect(answer.toString()).toEqual("6 * 5 * 3 * 2y")
   })
 
-  it("works with negative numbers", function () {
+  it("works with negative numbers", () => {
     const x = new Variable("x")
     const y = new Variable("y")
     let t = new Term(x)
@@ -316,8 +316,8 @@ describe("Term evaluation", function () {
   })
 })
 
-describe("Term printing to TeX", function () {
-  it("works with non-simplified coefficients and uses cdot by default", function () {
+describe("Term printing to TeX", () => {
+  it("works with non-simplified coefficients and uses cdot by default", () => {
     // spellchecker:ignore cdot
     const x = new Variable("x")
     let t = new Term(x)
@@ -328,7 +328,7 @@ describe("Term printing to TeX", function () {
     expect(t.toTex()).toEqual("\\frac{3}{4} \\cdot \\frac{2}{3}x")
   })
 
-  it("allows you to pass in options", function () {
+  it("allows you to pass in options", () => {
     const x = new Variable("x")
     let t = new Term(x)
 
@@ -340,14 +340,14 @@ describe("Term printing to TeX", function () {
     )
   })
 
-  it("prints the absolute value when the term is negative - integer", function () {
+  it("prints the absolute value when the term is negative - integer", () => {
     const x = new Variable("x")
     const t = new Term(x)
     const z = new Term(x).subtract(t).subtract(t).subtract(t)
     expect(z.toTex()).toEqual("2x")
   })
 
-  it("prints the absolute value when the term is negative - fraction", function () {
+  it("prints the absolute value when the term is negative - fraction", () => {
     const x = new Variable("x")
     const t = new Term(x)
     const z = t.multiply(new Fraction(-9, 10))
@@ -355,8 +355,8 @@ describe("Term printing to TeX", function () {
   })
 })
 
-describe("Term printing to to string", function () {
-  it("implicit should be disabled by default", function () {
+describe("Term printing to to string", () => {
+  it("implicit should be disabled by default", () => {
     const x = new Variable("x")
     const y = new Variable("y")
     let t = new Term(x)
@@ -366,7 +366,7 @@ describe("Term printing to to string", function () {
     expect(t.toString()).toEqual("xy")
   })
 
-  it("implicit should add * between variables", function () {
+  it("implicit should add * between variables", () => {
     const x = new Variable("x")
     const y = new Variable("y")
     let t = new Term(x)
@@ -376,7 +376,7 @@ describe("Term printing to to string", function () {
     expect(t.toString({ implicit: true })).toEqual("x*y")
   })
 
-  it("implicit should add * between the coefficient and the variables", function () {
+  it("implicit should add * between the coefficient and the variables", () => {
     const x = new Variable("x")
     let t = new Term(x)
 
@@ -385,7 +385,7 @@ describe("Term printing to to string", function () {
     expect(t.toString({ implicit: true })).toEqual("3*x")
   })
 
-  it("implicit should ignore a variable with degree 0", function () {
+  it("implicit should ignore a variable with degree 0", () => {
     const x = new Variable("x")
     x.degree = 0
     let t = new Term(x)

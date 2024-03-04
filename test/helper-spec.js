@@ -1,85 +1,85 @@
 import algebra from "../algebra.js"
 import { gcd, isInt, lcm, round } from "../src/helper.js"
 
-describe("Greatest common divisor", function () {
-  it("returns 1 when the arguments are 1 and 1", function () {
+describe("Greatest common divisor", () => {
+  it("returns 1 when the arguments are 1 and 1", () => {
     const g = gcd(1, 1)
     expect(g).toEqual(1)
   })
 
-  it("returns 2 when the arguments are 2 and 4", function () {
+  it("returns 2 when the arguments are 2 and 4", () => {
     const g = gcd(2, 4)
     expect(g).toEqual(2)
   })
 
-  it("returns 1 when the arguments are 5 and 7", function () {
+  it("returns 1 when the arguments are 5 and 7", () => {
     const g = gcd(5, 7)
     expect(g).toEqual(1)
   })
 })
 
-describe("Least common multiple", function () {
-  it("should return 12 if the arguments are 4 and 6", function () {
+describe("Least common multiple", () => {
+  it("should return 12 if the arguments are 4 and 6", () => {
     expect(lcm(4, 6)).toEqual(12)
   })
 
-  it("should return 15 if the arguments are 3 and 5", function () {
+  it("should return 15 if the arguments are 3 and 5", () => {
     expect(lcm(3, 5)).toEqual(15)
   })
 })
 
-describe("isInt", function () {
-  it("should return false if it's a float", function () {
+describe("isInt", () => {
+  it("should return false if it's a float", () => {
     expect(isInt(0.5)).toBe(false)
   })
 
-  it("should return false if it's a string", function () {
+  it("should return false if it's a string", () => {
     expect(isInt("hi")).toBe(false)
   })
 
-  it("should return false if it's undefined", function () {
+  it("should return false if it's undefined", () => {
     expect(isInt()).toBe(false)
   })
 
-  it("should return true if it's an integer", function () {
+  it("should return true if it's an integer", () => {
     expect(isInt(4)).toBe(true)
   })
 })
 
-describe("round", function () {
-  it("should round integers to themselves", function () {
+describe("round", () => {
+  it("should round integers to themselves", () => {
     expect(round(5)).toEqual(5.0)
   })
 
-  it("should round to 2 decimal places by default", function () {
+  it("should round to 2 decimal places by default", () => {
     expect(round(5.555)).toEqual(5.56)
   })
 
-  it("should round to 0 decimal places correctly", function () {
+  it("should round to 0 decimal places correctly", () => {
     expect(round(5.55, 0)).toEqual(6)
   })
 
-  it("should round to 1 decimal places correctly", function () {
+  it("should round to 1 decimal places correctly", () => {
     expect(round(5.55, 1)).toEqual(5.6)
   })
 
-  it("should equal itself when rounding to decimal places beyond what's necessary", function () {
+  it("should equal itself when rounding to decimal places beyond what's necessary", () => {
     expect(round(5.55, 4)).toEqual(5.55)
   })
 })
 
-describe("algebra.toTex", function () {
-  it("converts non-algebra.js objects to strings - string", function () {
+describe("algebra.toTex", () => {
+  it("converts non-algebra.js objects to strings - string", () => {
     const x = "hello"
     expect(algebra.toTex(x)).toEqual(x.toString())
   })
 
-  it("converts non-algebra.js objects to strings - number", function () {
+  it("converts non-algebra.js objects to strings - number", () => {
     const x = 3.5
     expect(algebra.toTex(x)).toEqual(x.toString())
   })
 
-  it("converts non-algebra.js objects to strings - boolean", function () {
+  it("converts non-algebra.js objects to strings - boolean", () => {
     const x = true
     expect(algebra.toTex(x)).toEqual(x.toString())
   })
