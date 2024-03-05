@@ -453,3 +453,41 @@ describe("Term maxDegreeOfVariable", () => {
     expect(term.maxDegreeOfVariable("x")).toEqual(2)
   })
 })
+
+describe("Term variableNames", () => {
+  it("should return empty array if the term does not contain any variables", () => {
+    const term = new Term()
+
+    expect(term.variableNames).toHaveSize(0)
+  })
+
+  it("should return name if variable is present", () => {
+    const term = new Term(new Variable("x"))
+
+    expect(term.variableNames).toEqual(["x"])
+  })
+
+  it("should return names of all variables present", () => {
+    const term = new Term(new Variable("x")).multiply(
+      new Term(new Variable("y"))
+    )
+
+    expect(term.variableNames).toEqual(["x", "y"])
+  })
+
+  it("should return names of all variables present in alphabetical order", () => {
+    const term = new Term(new Variable("y")).multiply(
+      new Term(new Variable("x"))
+    )
+
+    expect(term.variableNames).toEqual(["x", "y"])
+  })
+
+  it("should return name of all variables only once", () => {
+    const term = new Term(new Variable("x"))
+      .multiply(new Term(new Variable("y")))
+      .multiply(new Term(new Variable("x")))
+
+    expect(term.variableNames).toEqual(["x", "y"])
+  })
+})

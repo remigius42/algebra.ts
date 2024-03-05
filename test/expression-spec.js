@@ -997,3 +997,37 @@ describe("Expression maxDegreeOfVariable", () => {
     expect(expression.maxDegreeOfVariable("x")).toEqual(2)
   })
 })
+
+describe("Expression variableNames", () => {
+  it("should return empty array if the expression does not contain any variables", () => {
+    const expression = new Expression(42)
+
+    expect(expression.variableNames).toHaveSize(0)
+  })
+
+  it("should return name if variable is present", () => {
+    const expression = new Expression("x")
+
+    expect(expression.variableNames).toEqual(["x"])
+  })
+
+  it("should return names of all variables present", () => {
+    const expression = new Expression("x").subtract(new Expression("y"))
+
+    expect(expression.variableNames).toEqual(["x", "y"])
+  })
+
+  it("should return names of all variables present in alphabetical order", () => {
+    const expression = new Expression("y").add(new Expression("x"))
+
+    expect(expression.variableNames).toEqual(["x", "y"])
+  })
+
+  it("should return name of all variables only once", () => {
+    const expression = new Expression("x")
+      .multiply(new Expression("y"))
+      .multiply(new Expression("x").pow(2))
+
+    expect(expression.variableNames).toEqual(["x", "y"])
+  })
+})

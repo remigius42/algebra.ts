@@ -29,6 +29,12 @@ export class Equation {
     }
   }
 
+  get variableNames() {
+    return [
+      ...new Set([...this.lhs.variableNames, ...this.rhs.variableNames])
+    ].sort()
+  }
+
   copy() {
     return new Equation(this.lhs.copy(), this.rhs.copy())
   }

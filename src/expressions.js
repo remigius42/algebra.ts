@@ -28,6 +28,10 @@ export class Expression {
     }
   }
 
+  get variableNames() {
+    return [...new Set(this.terms.flatMap(t => t.variableNames))].sort()
+  }
+
   constant() {
     return this.constants.reduce(
       function (p, c) {
@@ -543,6 +547,10 @@ export class Term {
       },
       new Fraction(1, 1)
     )
+  }
+
+  get variableNames() {
+    return [...new Set(this.variables.map(v => v.variable))].sort()
   }
 
   simplify() {

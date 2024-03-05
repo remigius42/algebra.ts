@@ -573,3 +573,52 @@ describe("An equation toString should accept options", () => {
     expect(eq.toString({ implicit: true })).toEqual("a*b = c*d")
   })
 })
+
+describe("variableNames", () => {
+  it("should return empty array if the equation does not contain any variables", () => {
+    const equation = new Equation(new Expression("x"), new Expression(42)).eval(
+      { x: 6 * 7 }
+    )
+
+    expect(equation.variableNames).toHaveSize(0)
+  })
+
+  it("should return name if variable is present in left-hand side", () => {
+    const equation = new Equation(new Expression("x"), new Expression(42))
+
+    expect(equation.variableNames).toEqual(["x"])
+  })
+
+  it("should return name if variable is present in right-hand side", () => {
+    const equation = new Equation(new Expression(42), new Expression("x"))
+
+    expect(equation.variableNames).toEqual(["x"])
+  })
+
+  it("should return names of all variables present", () => {
+    const equation = new Equation(
+      new Expression("a").subtract(new Expression("b")),
+      new Expression("c").add(new Expression("d"))
+    )
+
+    expect(equation.variableNames).toEqual(["a", "b", "c", "d"])
+  })
+
+  it("should return names of all variables present in alphabetical order", () => {
+    const equation = new Equation(
+      new Expression("d").subtract(new Expression("c")),
+      new Expression("b").add(new Expression("a"))
+    )
+
+    expect(equation.variableNames).toEqual(["a", "b", "c", "d"])
+  })
+
+  it("should return name of all variables only once", () => {
+    const equation = new Equation(
+      new Expression("x").subtract(new Expression("y").pow(2)),
+      new Expression("x").pow(4).add(new Expression("y"))
+    )
+
+    expect(equation.variableNames).toEqual(["x", "y"])
+  })
+})
