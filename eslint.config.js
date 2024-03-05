@@ -34,7 +34,7 @@ export default [
     }
   },
   {
-    files: ["test/**/*-spec.js"],
+    files: ["test/**/*.spec.js"],
     languageOptions: {
       globals: {
         describe: "readonly",
