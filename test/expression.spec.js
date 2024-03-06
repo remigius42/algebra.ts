@@ -1002,7 +1002,7 @@ describe("Expression variableNames", () => {
   it("should return empty array if the expression does not contain any variables", () => {
     const expression = new Expression(42)
 
-    expect(expression.variableNames).toHaveSize(0)
+    expect(expression.variableNames).toHaveLength(0)
   })
 
   it("should return name if variable is present", () => {

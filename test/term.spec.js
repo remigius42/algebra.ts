@@ -458,7 +458,7 @@ describe("Term variableNames", () => {
   it("should return empty array if the term does not contain any variables", () => {
     const term = new Term()
 
-    expect(term.variableNames).toHaveSize(0)
+    expect(term.variableNames).toHaveLength(0)
   })
 
   it("should return name if variable is present", () => {

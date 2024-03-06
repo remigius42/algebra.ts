@@ -580,7 +580,7 @@ describe("variableNames", () => {
       { x: 6 * 7 }
     )
 
-    expect(equation.variableNames).toHaveSize(0)
+    expect(equation.variableNames).toHaveLength(0)
   })
 
   it("should return name if variable is present in left-hand side", () => {

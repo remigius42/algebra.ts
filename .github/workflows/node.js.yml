@@ -32,9 +32,9 @@ jobs:
         run: npx markdownlint-cli2 '**/*.md' '#node_modules'
       - name: Lint JavaScript (ESLint)
         run: npx eslint --max-warnings=0 .
-      - name: Test (Jasmine)
-        run: npm run test
-      - name: Coverage (c8 to Coveralls)
+      - name: Test (Jest)
+        run: npm run test:ci
+      - name: Coverage (Jest to Coveralls)
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: npm run coveralls
@@ -54,7 +54,7 @@ jobs:
         if: always()
         uses: test-summary/action@v2.3
         with:
-          paths: .jasmine-results/junitresults.xml
+          paths: .jest-results/junit.xml
   security_scan:
     name: security scan
     runs-on: ubuntu-latest

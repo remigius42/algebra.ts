@@ -1,4 +1,0 @@
-{
-  "include": ["algebra.*", "src/**"],
-  "reporter": ["lcov", "text"]
-}
