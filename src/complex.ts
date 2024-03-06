@@ -1,8 +1,11 @@
-import { Expression } from "./expressions.js"
-import { Fraction } from "./fractions.js"
-import { isInt } from "./helper.js"
+import { Expression } from "./expressions"
+import { Fraction } from "./fractions"
+import { isInt } from "./helper"
 
 export class Complex {
+  real: Fraction
+  imaginary: Fraction
+
   constructor(real, imaginary) {
     if (real instanceof Fraction && imaginary instanceof Fraction) {
       this.real = real

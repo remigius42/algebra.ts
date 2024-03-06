@@ -1,5 +1,5 @@
-import { Complex } from "../src/complex.js"
-import { Fraction } from "../src/fractions.js"
+import { Complex } from "../src/complex"
+import { Fraction } from "../src/fractions"
 
 describe("Complex number initialization", () => {
   it("should be defined when initialized correctly", () => {

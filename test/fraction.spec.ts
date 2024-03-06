@@ -1,5 +1,5 @@
-import algebra from "../algebra.js"
-import { Fraction } from "../src/fractions.js"
+import algebra from "../algebra"
+import { Fraction } from "../src/fractions"
 
 describe("An invalid fraction", () => {
   it("should throw an exception with a denominator of 0", () => {

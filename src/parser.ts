@@ -1,10 +1,19 @@
-import { Equation } from "./equations.js"
-import { Expression } from "./expressions.js"
-import { Fraction } from "./fractions.js"
-import { Inequation } from "./inequations.js"
-import { Lexer } from "./lexer.js"
+import { Equation } from "./equations"
+import { Expression } from "./expressions"
+import { Fraction } from "./fractions"
+import { Inequation } from "./inequations"
+import { Lexer } from "./lexer"
+
+interface Token {
+  type: string
+  value: string
+  pos: number
+}
 
 export class Parser {
+  private lexer: Lexer
+  private current_token: Token | null
+
   constructor() {
     this.lexer = new Lexer()
     this.current_token = null
@@ -156,10 +165,17 @@ export class Parser {
         ["GREATER_THAN", ">"],
         ["GREATER_THAN_EQUALS", ">="]
       ])
-      const relation = relations.get(this.current_token.value)
-      this.update()
-      const ex2 = this.#parseExpr()
-      return new Inequation(ex1, ex2, relation)
+      if (this.current_token && relations.has(this.current_token.value)) {
+        const relation = relations.get(this.current_token.value)
+        this.update()
+        const ex2 = this.#parseExpr()
+        return new Inequation(ex1, ex2, relation)
+      } /* c8 ignore start */ else {
+        throw new Error(
+          `Should not be reached since the operator "${this.current_token?.value}" has been matched as inequation relational operator.`
+        )
+        /* c8 ignore end */
+      }
     } else if (this.match("epsilon")) {
       return ex1
     } else {
@@ -259,7 +275,7 @@ export class Parser {
       this.update()
       return num
     } else if (this.match("id")) {
-      const id = new Expression(this.current_token.value)
+      const id = new Expression(this.current_token?.value)
       this.update()
       return id
     } else if (this.match("l_paren")) {
@@ -279,19 +295,29 @@ export class Parser {
   // Converts a number token - integer or decimal - to an expression
   #parseNumber() {
     //Integer conversion
-    if (parseInt(this.current_token.value) == this.current_token.value) {
-      return new Expression(parseInt(this.current_token.value))
-    } else {
-      //Split the decimal number to integer and decimal parts
-      const splits = this.current_token.value.split(".")
-      //count the digits of the decimal part
-      const decimals = splits[1].length
-      //determine the multiplication factor
-      const factor = Math.pow(10, decimals)
-      const float_op = parseFloat(this.current_token.value)
-      //multiply the float with the factor and divide it again afterwards
-      //to create a valid expression object
-      return new Expression(parseInt(float_op * factor)).divide(factor)
+    if (this.current_token) {
+      if (
+        parseInt(this.current_token.value) ===
+        parseFloat(this.current_token.value)
+      ) {
+        return new Expression(parseInt(this.current_token.value))
+      } else {
+        //Split the decimal number to integer and decimal parts
+        const splits = this.current_token.value.split(".")
+        //count the digits of the decimal part
+        const decimals = splits[1].length
+        //determine the multiplication factor
+        const factor = Math.pow(10, decimals)
+        const float_op = parseFloat(this.current_token.value)
+        //multiply the float with the factor and divide it again afterwards
+        //to create a valid expression object
+        return new Expression(float_op * factor).divide(factor)
+      }
+    } /* c8 ignore start */ else {
+      throw new Error(
+        "Should not be reached since the current token has been matched as a number"
+      )
+      /* c8 ignore end */
     }
   }
 }

@@ -1,10 +1,13 @@
-import { Expression, Term, Variable } from "./expressions.js"
-import { Fraction } from "./fractions.js"
-import { isInt } from "./helper.js"
+import { Expression, Term, Variable } from "./expressions"
+import { Fraction } from "./fractions"
+import { isInt } from "./helper"
 
 const ROOT_PRECISION = 10e-15
 
 export class Equation {
+  lhs: Expression
+  rhs: Expression
+
   constructor(lhs, rhs) {
     if (lhs instanceof Expression) {
       this.lhs = lhs
@@ -39,7 +42,7 @@ export class Equation {
     return new Equation(this.lhs.copy(), this.rhs.copy())
   }
 
-  solveFor(variable) {
+  solveFor(variable, returnEquation = false) {
     if (!this.lhs.hasVariable(variable) && !this.rhs.hasVariable(variable)) {
       throw new TypeError(
         "Invalid Argument (" +
@@ -48,9 +51,11 @@ export class Equation {
       )
     }
 
+    let solution
+
     if (this.isLinear() || this.#variableCanBeIsolated(variable)) {
       // If the equation is linear and the variable in question can be isolated through arithmetic, solve.
-      return this.#solveLinearEquationWithSeparableVariable(variable)
+      solution = this.#solveLinearEquationWithSeparableVariable(variable)
     } else {
       // Otherwise, move everything to the LHS.
       let newLhs = this.lhs.copy()
@@ -67,10 +72,16 @@ export class Equation {
 
         // Otherwise, check degree and solve.
       } else if (this.isQuadratic(variable)) {
-        return this.#solveQuadraticEquation(newLhs)
+        solution = this.#solveQuadraticEquation(newLhs)
       } else if (this.#isCubic(variable)) {
-        return this.#solveCubicEquation(newLhs)
+        solution = this.#solveCubicEquation(newLhs)
       }
+    }
+
+    if (returnEquation) {
+      return new Equation(new Expression(variable), solution)
+    } else {
+      return solution
     }
   }
 
@@ -88,26 +99,24 @@ export class Equation {
     return rhs.divide(coefficient)
   }
 
-  eval(values, toBoolean = false) {
-    const equation = new Equation(this.lhs.eval(values), this.rhs.eval(values))
+  eval(values) {
+    return new Equation(this.lhs.eval(values), this.rhs.eval(values))
+  }
 
-    if (toBoolean) {
-      if (equation.maxDegree() === 0) {
-        return (
-          equation.lhs.constant().valueOf() ===
-          equation.rhs.constant().valueOf()
-        )
-      } else {
-        throw new EvalError(
-          "Can't evaluate equation to boolean since there are free variables."
-        )
-      }
+  evalToBoolean(values) {
+    const equation = this.eval(values)
+    if (equation.maxDegree() === 0) {
+      return (
+        equation.lhs.constant().valueOf() === equation.rhs.constant().valueOf()
+      )
     } else {
-      return equation
+      throw new EvalError(
+        "Can't evaluate equation to boolean since there are free variables."
+      )
     }
   }
 
-  toString(options) {
+  toString(options = { implicit: false }) {
     return this.lhs.toString(options) + " = " + this.rhs.toString(options)
   }
 
@@ -325,7 +334,7 @@ export class Equation {
         const T = -(g / 2) - Math.sqrt(h)
         const U = Math.cbrt(T)
         let root1 = S + U - b / (3 * a)
-        return [root1].map(this.#roundRootToPrecision)
+        return [root1].map(Equation.#roundRootToPrecision)
       } else {
         const i = Math.sqrt(Math.pow(g, 2) / 4 - h)
         const j = Math.cbrt(i)
@@ -340,7 +349,7 @@ export class Equation {
         let root2 = L * (M + N) + P
         let root3 = L * (M - N) + P
 
-        const roots = [root1, root2, root3].map(this.#roundRootToPrecision)
+        const roots = [root1, root2, root3].map(Equation.#roundRootToPrecision)
         roots.sort(function (a, b) {
           return a - b
         }) // roots in ascending order
@@ -353,7 +362,7 @@ export class Equation {
   /**
    * Round root if the next integer is within ROOT_PRECISION.
    */
-  #roundRootToPrecision(root) {
+  static #roundRootToPrecision(root) {
     const roundedRoot = Math.round(root)
     if (Math.abs(roundedRoot - root) < ROOT_PRECISION) {
       return roundedRoot

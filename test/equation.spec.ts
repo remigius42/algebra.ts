@@ -1,8 +1,8 @@
-import algebra from "../algebra.js"
-import { Equation } from "../src/equations.js"
-import { Expression } from "../src/expressions.js"
-import { Fraction } from "../src/fractions.js"
-import { round } from "../src/helper.js"
+import algebra from "../algebra"
+import { Equation } from "../src/equations"
+import { Expression } from "../src/expressions"
+import { Fraction } from "../src/fractions"
+import { round } from "../src/helper"
 
 describe("copy", () => {
   it("should return different objects", () => {
@@ -297,6 +297,15 @@ describe("Checking the type of an equation", () => {
   })
 })
 
+it("should return equation with solveFor and flag set", () => {
+  const expr = new Expression("x").multiply(2)
+  const eq = new Equation(expr, 2) // 2x = 2
+
+  const answer = eq.solveFor("x", true)
+
+  expect(answer).toEqual(new Equation(new Expression("x"), 1))
+})
+
 describe("Solving for variables that can't be isolated", () => {
   it("should return undefined if the variable is a cross product with other vars", () => {
     const expr = new Expression("x").multiply("y")
@@ -532,23 +541,23 @@ describe("Equation evaluation", () => {
     expect(answer.toString()).toEqual("y + 4 = 2")
   })
 
-  it("with `toBoolean=true` returns boolean of there are no free variables", () => {
+  it("evalToBoolean returns boolean of there are no free variables", () => {
     const x = new Expression("x")
     const y = new Expression("y")
     const eq = new Equation(x, y.add(2)) // x = y + 2
 
-    const answer = eq.eval({ x: 3, y: 1 }, true)
+    const answer = eq.evalToBoolean({ x: 3, y: 1 })
 
     expect(answer).toEqual(true)
   })
 
-  it("with `toBoolean=true` throws if there are free variables", () => {
+  it("evalToBoolean throws if there are free variables", () => {
     const x = new Expression("x")
     const y = new Expression("y")
     const eq = new Equation(x, y.add(2)) // x = y + 2
 
     expect(() => {
-      eq.eval({ x: 3 }, true)
+      eq.evalToBoolean({ x: 3 })
     }).toThrow(
       new EvalError(
         "Can't evaluate equation to boolean since there are free variables."

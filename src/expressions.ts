@@ -1,8 +1,13 @@
-import { Fraction } from "./fractions.js"
-import { GREEK_LETTERS, isInt } from "./helper.js"
+/* spellchecker:ignore cdot */
+
+import { Fraction } from "./fractions"
+import { GREEK_LETTERS, isInt } from "./helper"
 
 export class Expression {
-  constructor(variable) {
+  constants: Array<Fraction>
+  terms: Array<Term>
+
+  constructor(variable?) {
     this.constants = []
 
     if (typeof variable === "string") {
@@ -73,7 +78,7 @@ export class Expression {
     return copy
   }
 
-  add(a, simplify) {
+  add(a, simplify = true) {
     const thisExp = this.copy()
 
     if (
@@ -101,13 +106,13 @@ export class Expression {
     return simplify || simplify === undefined ? thisExp.simplify() : thisExp
   }
 
-  subtract(a, simplify) {
+  subtract(a, simplify = true) {
     const negative =
       a instanceof Expression ? a.multiply(-1) : new Expression(a).multiply(-1)
     return this.add(negative, simplify)
   }
 
-  multiply(a, simplify) {
+  multiply(a, simplify = true) {
     const thisExp = this.copy()
 
     if (
@@ -120,7 +125,7 @@ export class Expression {
       return thisExp.multiply(exp, simplify)
     } else if (a instanceof Expression) {
       const thatExp = a.copy()
-      const newTerms = []
+      const newTerms: Array<Term> = []
 
       for (let i = 0; i < thisExp.terms.length; i++) {
         const thisTerm = thisExp.terms[i]
@@ -171,7 +176,7 @@ export class Expression {
     return simplify || simplify === undefined ? thisExp.simplify() : thisExp
   }
 
-  divide(a, simplify) {
+  divide(a, simplify = true) {
     if (a instanceof Fraction || isInt(a)) {
       if (a.valueOf() === 0) {
         throw new EvalError("Divide By Zero")
@@ -255,7 +260,7 @@ export class Expression {
     }
   }
 
-  pow(a, simplify) {
+  pow(a, simplify = true) {
     if (isInt(a)) {
       let copy = this.copy()
 
@@ -279,7 +284,7 @@ export class Expression {
     }
   }
 
-  eval(values, simplify) {
+  eval(values, simplify = true) {
     let exp = new Expression()
     exp.constants = simplify ? [this.constant()] : this.constants.slice()
 
@@ -291,7 +296,7 @@ export class Expression {
     return exp
   }
 
-  summation(variable, lower, upper, simplify) {
+  summation(variable, lower, upper, simplify = true) {
     const thisExpr = this.copy()
     let newExpr = new Expression()
     for (let i = lower; i < upper + 1; i++) {
@@ -302,7 +307,7 @@ export class Expression {
     return newExpr
   }
 
-  toString(options) {
+  toString(options = { implicit: false }) {
     let str = ""
 
     for (let i = 0; i < this.terms.length; i++) {
@@ -329,7 +334,7 @@ export class Expression {
     }
   }
 
-  toTex(dict) {
+  toTex(dict = { multiplication: "cdot" }) {
     let str = ""
 
     for (let i = 0; i < this.terms.length; i++) {
@@ -476,8 +481,8 @@ export class Expression {
       return false
     }
 
-    const newTerms = []
-    const encountered = []
+    const newTerms: Array<Term> = []
+    const encountered: Array<Term> = []
 
     for (let i = 0; i < this.terms.length; i++) {
       let thisTerm = this.terms[i]
@@ -503,7 +508,7 @@ export class Expression {
   }
 
   #moveTermsWithDegreeZeroToConstants() {
-    const keepTerms = []
+    const keepTerms: Array<Term> = []
     let constant = new Fraction(0, 1)
 
     for (let i = 0; i < this.terms.length; i++) {
@@ -523,7 +528,10 @@ export class Expression {
 }
 
 export class Term {
-  constructor(variable) {
+  coefficients: Array<Fraction>
+  variables: Array<Variable>
+
+  constructor(variable?) {
     if (variable instanceof Variable) {
       this.variables = [variable.copy()]
     } else if (typeof variable === "undefined") {
@@ -573,7 +581,7 @@ export class Term {
       }
     }
 
-    const newVars = []
+    const newVars: Array<Variable> = []
 
     for (let v in uniqueVars) {
       const newVar = new Variable(v)
@@ -624,7 +632,7 @@ export class Term {
     }
   }
 
-  multiply(a, simplify) {
+  multiply(a, simplify = true) {
     const thisTerm = this.copy()
 
     if (a instanceof Term) {
@@ -649,7 +657,7 @@ export class Term {
     return simplify || simplify === undefined ? thisTerm.simplify() : thisTerm
   }
 
-  divide(a, simplify) {
+  divide(a, simplify = true) {
     if (isInt(a) || a instanceof Fraction) {
       const thisTerm = this.copy()
       thisTerm.coefficients = thisTerm.coefficients.map(function (c) {
@@ -665,7 +673,7 @@ export class Term {
     }
   }
 
-  eval(values, simplify) {
+  eval(values, simplify = true) {
     const copy = this.copy()
     let exp = copy.coefficients.reduce(function (p, c) {
       return p.multiply(c, simplify)
@@ -765,7 +773,7 @@ export class Term {
     return this
   }
 
-  toString(options) {
+  toString(options = { implicit: false }) {
     const implicit = options && options.implicit
     let str = ""
 
@@ -788,12 +796,7 @@ export class Term {
     return str
   }
 
-  toTex(dict) {
-    dict = dict === undefined ? {} : dict
-    dict.multiplication = !("multiplication" in dict)
-      ? "cdot" // spellchecker:ignore cdot
-      : dict.multiplication
-
+  toTex(dict = { multiplication: "cdot" }) {
     const op = " \\" + dict.multiplication + " "
 
     let str = ""
@@ -823,6 +826,9 @@ export class Term {
 }
 
 export class Variable {
+  variable: string
+  degree: number
+
   constructor(variable) {
     if (typeof variable === "string") {
       this.variable = variable

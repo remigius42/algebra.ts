@@ -1,8 +1,11 @@
-import { Equation } from "./equations.js"
-import { Expression } from "./expressions.js"
-import { Fraction } from "./fractions.js"
+import { Equation } from "./equations"
+import { Expression } from "./expressions"
+import { Fraction } from "./fractions"
 
 export class Inequation extends Equation {
+  private isLessThan = false
+  private isInclusive = false
+
   constructor(lhs, rhs, relation) {
     super(lhs, rhs)
     this.#parseRelation(relation)
@@ -21,13 +24,22 @@ export class Inequation extends Equation {
         this.#relationToString()
       )
 
-      return copy.#solveForWithSideEffects(variable)
+      return copy.solveForWithSideEffects(variable)
     } else {
       throw new EvalError("Only linear inequations are supported.")
     }
   }
 
-  #solveForWithSideEffects(variable) {
+  /**
+   * Solve for a variable with possible side-effects like changing inequality.
+   * In order to preserve state, this should normally be invoked on a copy.
+   *
+   * Note that the visibility of this method had to be switched from `#` to
+   * `private` due to an issue with the TypeScript compiler when it comes to
+   * references to `super`:
+   * https://github.com/microsoft/TypeScript/issues/44515
+   */
+  private solveForWithSideEffects(variable) {
     const solution = super.solveFor(variable)
     this.lhs = new Expression(variable)
     this.rhs = solution
@@ -45,46 +57,46 @@ export class Inequation extends Equation {
     return rhs.divide(coefficient)
   }
 
-  eval(values, toBoolean = false) {
-    const inequation = new Inequation(
+  eval(values) {
+    return new Inequation(
       this.lhs.eval(values),
       this.rhs.eval(values),
       this.#relationToString()
     )
-    if (toBoolean) {
-      if (inequation.maxDegree() == 0) {
-        if (inequation.isLessThan && inequation.isInclusive) {
-          return (
-            inequation.lhs.constant().valueOf() <=
-            inequation.rhs.constant().valueOf()
-          )
-        } else if (inequation.isLessThan && !inequation.isInclusive) {
-          return (
-            inequation.lhs.constant().valueOf() <
-            inequation.rhs.constant().valueOf()
-          )
-        } else if (!inequation.isLessThan && inequation.isInclusive) {
-          return (
-            inequation.lhs.constant().valueOf() >=
-            inequation.rhs.constant().valueOf()
-          )
-        } else {
-          return (
-            inequation.lhs.constant().valueOf() >
-            inequation.rhs.constant().valueOf()
-          )
-        }
+  }
+
+  evalToBoolean(values) {
+    const inequation = this.eval(values)
+    if (inequation.maxDegree() == 0) {
+      if (inequation.isLessThan && inequation.isInclusive) {
+        return (
+          inequation.lhs.constant().valueOf() <=
+          inequation.rhs.constant().valueOf()
+        )
+      } else if (inequation.isLessThan && !inequation.isInclusive) {
+        return (
+          inequation.lhs.constant().valueOf() <
+          inequation.rhs.constant().valueOf()
+        )
+      } else if (!inequation.isLessThan && inequation.isInclusive) {
+        return (
+          inequation.lhs.constant().valueOf() >=
+          inequation.rhs.constant().valueOf()
+        )
       } else {
-        throw new EvalError(
-          "Can't evaluate inequation to boolean since there are free variables."
+        return (
+          inequation.lhs.constant().valueOf() >
+          inequation.rhs.constant().valueOf()
         )
       }
     } else {
-      return inequation
+      throw new EvalError(
+        "Can't evaluate inequation to boolean since there are free variables."
+      )
     }
   }
 
-  toString(options) {
+  toString(options = { implicit: false }) {
     return `${this.lhs.toString(options)} ${this.#relationToString()} ${this.rhs.toString(options)}`
   }
 

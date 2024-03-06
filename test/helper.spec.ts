@@ -1,5 +1,5 @@
-import algebra from "../algebra.js"
-import { gcd, isInt, lcm, round } from "../src/helper.js"
+import algebra from "../algebra"
+import { gcd, isInt, lcm, round } from "../src/helper"
 
 describe("Greatest common divisor", () => {
   it("returns 1 when the arguments are 1 and 1", () => {

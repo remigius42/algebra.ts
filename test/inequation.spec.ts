@@ -1,5 +1,5 @@
-import { Expression } from "../src/expressions.js"
-import { Inequation } from "../src/inequations.js"
+import { Expression } from "../src/expressions"
+import { Inequation } from "../src/inequations"
 
 describe("creating inequations", () => {
   ;["<", ">"].forEach(relation => {
@@ -149,25 +149,23 @@ describe("evaluating inequations", () => {
     [">", false],
     [">=", true]
   ].forEach(([operator, expected]) => {
-    it(`with toBoolean=true and operator ${operator} returns boolean of there are no free variables`, () => {
+    it(`evalToBoolean and operator ${operator} returns boolean of there are no free variables`, () => {
       const x = new Expression("x")
       const y = new Expression("y")
       const eq = new Inequation(x, y.add(2), operator) // x OPERATOR y + 2
 
-      const answer = eq.eval({ x: 3, y: 1 }, true)
+      const answer = eq.evalToBoolean({ x: 3, y: 1 })
 
       expect(answer).toEqual(expected)
     })
   })
 
-  it("with `toBoolean=true` throws if there are free variables", () => {
+  it("evalToBoolean throws if there are free variables", () => {
     const x = new Expression("x")
     const y = new Expression("y")
     const eq = new Inequation(x, y.add(2), ">") // x > y + 2
 
-    expect(() => {
-      eq.eval({ x: 3 }, true)
-    }).toThrow(
+    expect(() => eq.evalToBoolean({ x: 3 })).toThrow(
       new EvalError(
         "Can't evaluate inequation to boolean since there are free variables."
       )

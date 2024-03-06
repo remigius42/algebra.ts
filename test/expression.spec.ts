@@ -1,7 +1,7 @@
-import algebra from "../algebra.js"
-import { Equation } from "../src/equations.js"
-import { Expression } from "../src/expressions.js"
-import { Fraction } from "../src/fractions.js"
+import algebra from "../algebra"
+import { Equation } from "../src/equations"
+import { Expression } from "../src/expressions"
+import { Fraction } from "../src/fractions"
 
 describe("An expression initialized with an alphabetic variable name", () => {
   const x = new Expression("x")

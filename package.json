@@ -1,8 +1,8 @@
 {
-  "name": "algebra.js",
+  "name": "algebra.ts",
   "version": "0.2.8",
   "description": "Build, display, and solve algebraic equations.",
-  "main": "algebra.js",
+  "main": "algebra.ts",
   "type": "module",
   "scripts": {
     "build": "rollup --config rollup.config.js",
@@ -19,7 +19,7 @@
     "url": "https://github.com/remigius42/algebra.ts.git"
   },
   "files": [
-    "algebra.js",
+    "algebra.ts",
     "src/"
   ],
   "devDependencies": {
@@ -28,12 +28,15 @@
     "@babel/plugin-syntax-import-assertions": "^7.23.3",
     "@babel/plugin-transform-modules-umd": "^7.23.3",
     "@babel/preset-env": "^7.24.0",
+    "@babel/preset-typescript": "^7.23.3",
     "@commitlint/cli": "^19.0.2",
     "@commitlint/config-conventional": "^19.0.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/jest": "^29.5.12",
     "c8": "^9.1.0",
     "conventional-changelog-cli": "^4.1.0",
     "core-js": "^3.36.0",
@@ -48,7 +51,11 @@
     "markdownlint": "^0.33.0",
     "markdownlint-cli2": "^0.12.1",
     "prettier": "3.2.5",
-    "rollup": "^4.12.0"
+    "rollup": "^4.12.0",
+    "ts-jest": "^29.1.2",
+    "tslib": "^2.6.2",
+    "typescript": "^5.4.2",
+    "typescript-eslint": "^7.1.1"
   },
   "keywords": [
     "algebra",

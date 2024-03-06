@@ -1,21 +1,46 @@
-/* spellchecker:ignore lintstagedrc */
+/* spellchecker:ignore lintstagedrc, tseslint */
 
 import babelParser from "@babel/eslint-parser"
-import js from "@eslint/js"
+import eslint from "@eslint/js"
 import eslintConfigPrettier from "eslint-config-prettier"
+import tseslint from "typescript-eslint"
+import { dirname } from "node:path"
+import { fileURLToPath } from "node:url"
 
-export default [
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+export default tseslint.config(
   {
     ignores: ["build/*"]
   },
-  js.configs.recommended,
+  eslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
+  {
+    languageOptions: {
+      parserOptions: {
+        project: true,
+        tsconfigRootDir: __dirname
+      }
+    }
+  },
   eslintConfigPrettier,
+  {
+    rules: {
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+      "@typescript-eslint/no-unsafe-return": "off",
+      "@typescript-eslint/no-unsafe-argument": "off",
+      "prefer-const": "off"
+    }
+  },
   {
     rules: {
       "no-console": "error",
       "no-var": "error",
       "object-shorthand": "error",
-      strict: "error"
+      strict: "error",
+      "@typescript-eslint/unbound-method": ["error", { ignoreStatic: true }]
     },
     linterOptions: {
       reportUnusedDisableDirectives: true
@@ -23,6 +48,7 @@ export default [
   },
   {
     files: ["rollup.config.js"],
+    ...tseslint.configs.disableTypeChecked,
     languageOptions: {
       parser: babelParser,
       parserOptions: {
@@ -34,13 +60,12 @@ export default [
     }
   },
   {
-    files: ["test/**/*.spec.js"],
+    files: ["**/*.js", ".lintstagedrc.js"],
+    extends: [tseslint.configs.disableTypeChecked],
     languageOptions: {
-      globals: {
-        describe: "readonly",
-        expect: "readonly",
-        it: "readonly"
+      parserOptions: {
+        project: false
       }
     }
   }
-]
+)

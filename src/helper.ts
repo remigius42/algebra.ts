@@ -14,12 +14,11 @@ export function lcm(x, y) {
   return (x * y) / gcd(x, y)
 }
 
-export function isInt(thing) {
+export function isInt(thing?) {
   return typeof thing == "number" && thing % 1 === 0
 }
 
-export function round(decimal, places) {
-  places = typeof places === "undefined" ? 2 : places
+export function round(decimal, places = 2) {
   const x = Math.pow(10, places)
   return Math.round(parseFloat(decimal) * x) / x
 }

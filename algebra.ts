@@ -1,8 +1,8 @@
-import { Equation } from "./src/equations.js"
-import { Expression } from "./src/expressions.js"
-import { Fraction } from "./src/fractions.js"
-import { Inequation } from "./src/inequations.js"
-import { Parser } from "./src/parser.js"
+import { Equation } from "./src/equations"
+import { Expression } from "./src/expressions"
+import { Fraction } from "./src/fractions"
+import { Inequation } from "./src/inequations"
+import { Parser } from "./src/parser"
 
 const parse = function (input) {
   const parser = new Parser()

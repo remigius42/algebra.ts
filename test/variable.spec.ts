@@ -1,4 +1,4 @@
-import { Variable } from "../src/expressions.js"
+import { Variable } from "../src/expressions"
 
 describe("A variable", () => {
   const x = new Variable("x")

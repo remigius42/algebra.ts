@@ -8,24 +8,27 @@
 */
 
 export class Lexer {
+  private pos: number
+  private buf: string
+  private bufferLength: number
+  private operatorTable = {
+    // Operator table, mapping operator -> token name
+    "+": "PLUS",
+    "-": "MINUS",
+    "*": "MULTIPLY",
+    "/": "DIVIDE",
+    "^": "POWER",
+    "(": "L_PAREN",
+    ")": "R_PAREN",
+    "=": "EQUALS",
+    "<": "LESS_THAN",
+    ">": "GREATER_THAN"
+  }
+
   constructor() {
     this.pos = 0
-    this.buf = null
+    this.buf = ""
     this.bufferLength = 0
-
-    // Operator table, mapping operator -> token name
-    this.operatorTable = {
-      "+": "PLUS",
-      "-": "MINUS",
-      "*": "MULTIPLY",
-      "/": "DIVIDE",
-      "^": "POWER",
-      "(": "L_PAREN",
-      ")": "R_PAREN",
-      "=": "EQUALS",
-      "<": "LESS_THAN",
-      ">": "GREATER_THAN"
-    }
   }
 
   // Initialize the Lexer's buffer. This resets the lexer's internal

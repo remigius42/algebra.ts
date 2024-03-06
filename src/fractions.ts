@@ -1,6 +1,9 @@
-import { gcd, isInt, lcm } from "./helper.js"
+import { gcd, isInt, lcm } from "./helper"
 
 export class Fraction {
+  numer: number
+  denom: number
+
   constructor(a, b) {
     if (b === 0) {
       throw new EvalError("Divide By Zero")
@@ -50,9 +53,7 @@ export class Fraction {
     }
   }
 
-  add(f, simplify) {
-    simplify = simplify === undefined ? true : simplify
-
+  add(f, simplify = true) {
     let a, b
 
     if (f instanceof Fraction) {
@@ -89,9 +90,7 @@ export class Fraction {
     return simplify ? copy.reduce() : copy
   }
 
-  subtract(f, simplify) {
-    simplify = simplify === undefined ? true : simplify
-
+  subtract(f, simplify = true) {
     const copy = this.copy()
 
     if (f instanceof Fraction) {
@@ -107,9 +106,7 @@ export class Fraction {
     }
   }
 
-  multiply(f, simplify) {
-    simplify = simplify === undefined ? true : simplify
-
+  multiply(f, simplify = true) {
     let a, b
 
     if (f instanceof Fraction) {
@@ -137,9 +134,7 @@ export class Fraction {
     return simplify ? copy.reduce() : copy
   }
 
-  divide(f, simplify) {
-    simplify = simplify === undefined ? true : simplify
-
+  divide(f, simplify = true) {
     if (f.valueOf() === 0) {
       throw new EvalError("Divide By Zero")
     }
@@ -159,9 +154,7 @@ export class Fraction {
     }
   }
 
-  pow(n, simplify) {
-    simplify = simplify === undefined ? true : simplify
-
+  pow(n, simplify = true) {
     let copy = this.copy()
 
     if (n >= 0) {
