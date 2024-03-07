@@ -1,7 +1,7 @@
 /* spellchecker:ignore cdot */
 
-import { Fraction } from "./fractions"
-import { GREEK_LETTERS, isInt } from "./helper"
+import { Fraction } from "./fraction"
+import { GREEK_LETTERS, isInt } from "./helpers"
 
 export class Expression {
   constants: Array<Fraction>

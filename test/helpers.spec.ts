@@ -1,5 +1,5 @@
 import algebra from "../algebra"
-import { gcd, isInt, lcm, round } from "../src/helper"
+import { gcd, isInt, lcm, round } from "../src/helpers"
 
 describe("Greatest common divisor", () => {
   it("returns 1 when the arguments are 1 and 1", () => {

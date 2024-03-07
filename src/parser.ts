@@ -1,7 +1,7 @@
-import { Equation } from "./equations"
+import { Equation } from "./equation"
 import { Expression } from "./expressions"
-import { Fraction } from "./fractions"
-import { Inequation } from "./inequations"
+import { Fraction } from "./fraction"
+import { Inequation } from "./inequation"
 import { Lexer } from "./lexer"
 
 interface Token {

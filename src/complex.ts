@@ -1,6 +1,6 @@
 import { Expression } from "./expressions"
-import { Fraction } from "./fractions"
-import { isInt } from "./helper"
+import { Fraction } from "./fraction"
+import { isInt } from "./helpers"
 
 export class Complex {
   real: Fraction

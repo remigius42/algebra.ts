@@ -1,5 +1,5 @@
 import algebra from "../algebra"
-import { Fraction } from "../src/fractions"
+import { Fraction } from "../src/fraction"
 
 describe("An invalid fraction", () => {
   it("should throw an exception with a denominator of 0", () => {

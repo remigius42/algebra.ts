@@ -1,5 +1,5 @@
 import { Term, Variable } from "../src/expressions"
-import { Fraction } from "../src/fractions"
+import { Fraction } from "../src/fraction"
 
 describe("Terms", () => {
   const x = new Variable("x")

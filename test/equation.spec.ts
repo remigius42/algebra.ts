@@ -1,8 +1,8 @@
 import algebra from "../algebra"
-import { Equation } from "../src/equations"
+import { Equation } from "../src/equation"
 import { Expression } from "../src/expressions"
-import { Fraction } from "../src/fractions"
-import { round } from "../src/helper"
+import { Fraction } from "../src/fraction"
+import { round } from "../src/helpers"
 
 describe("copy", () => {
   it("should return different objects", () => {

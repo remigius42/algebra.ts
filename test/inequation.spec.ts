@@ -1,5 +1,5 @@
 import { Expression } from "../src/expressions"
-import { Inequation } from "../src/inequations"
+import { Inequation } from "../src/inequation"
 
 describe("creating inequations", () => {
   ;["<", ">"].forEach(relation => {

@@ -1,6 +1,6 @@
-import { Equation } from "./equations"
+import { Equation } from "./equation"
 import { Expression } from "./expressions"
-import { Fraction } from "./fractions"
+import { Fraction } from "./fraction"
 
 export class Inequation extends Equation {
   private isLessThan = false

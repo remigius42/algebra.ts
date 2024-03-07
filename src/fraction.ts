@@ -1,4 +1,4 @@
-import { gcd, isInt, lcm } from "./helper"
+import { gcd, isInt, lcm } from "./helpers"
 
 export class Fraction {
   numer: number
