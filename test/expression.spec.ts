@@ -929,7 +929,7 @@ describe("Expression simplification", () => {
 describe("Expression summation", () => {
   it("should sum over expressions with one variable", () => {
     const xPlus3 = new Expression("x").add(3)
-    const ans = xPlus3.summation(new Expression("x"), 3, 6)
+    const ans = xPlus3.summation("x", 3, 6)
     expect(ans.toString()).toEqual("30")
   })
 

@@ -7,14 +7,14 @@ export class Expression {
   constants: Array<Fraction>
   terms: Array<Term>
 
-  constructor(variable?) {
+  constructor(variable?: unknown) {
     this.constants = []
 
     if (typeof variable === "string") {
       const v = new Variable(variable)
       const t = new Term(v)
       this.terms = [t]
-    } else if (isInt(variable)) {
+    } else if (typeof variable === "number" && isInt(variable)) {
       this.constants = [new Fraction(variable, 1)]
       this.terms = []
     } else if (variable instanceof Fraction) {
@@ -27,7 +27,7 @@ export class Expression {
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          variable.toString() +
+          String(variable) +
           "): Argument must be of type String, Integer, Fraction or Term."
       )
     }
@@ -78,7 +78,7 @@ export class Expression {
     return copy
   }
 
-  add(a, simplify = true) {
+  add(a: unknown, simplify = true): Expression {
     const thisExp = this.copy()
 
     if (
@@ -98,21 +98,21 @@ export class Expression {
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          a.toString() +
+          String(a) +
           "): Summand must be of type String, Expression, Term, Fraction or Integer."
       )
     }
 
-    return simplify || simplify === undefined ? thisExp.simplify() : thisExp
+    return simplify ? thisExp.simplify() : thisExp
   }
 
-  subtract(a, simplify = true) {
+  subtract(a: unknown, simplify = true) {
     const negative =
       a instanceof Expression ? a.multiply(-1) : new Expression(a).multiply(-1)
     return this.add(negative, simplify)
   }
 
-  multiply(a, simplify = true) {
+  multiply(a: unknown, simplify = true): Expression {
     const thisExp = this.copy()
 
     if (
@@ -148,7 +148,7 @@ export class Expression {
         }
       }
 
-      const newConstants = []
+      const newConstants: Array<Fraction> = []
 
       for (let i = 0; i < thisExp.constants.length; i++) {
         const thisConst = thisExp.constants[i]
@@ -168,17 +168,17 @@ export class Expression {
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          a.toString() +
+          String(a) +
           "): Multiplicand must be of type String, Expression, Term, Fraction or Integer."
       )
     }
 
-    return simplify || simplify === undefined ? thisExp.simplify() : thisExp
+    return simplify ? thisExp.simplify() : thisExp
   }
 
-  divide(a, simplify = true) {
-    if (a instanceof Fraction || isInt(a)) {
-      if (a.valueOf() === 0) {
+  divide(a: unknown, simplify = true) {
+    if (a instanceof Fraction || (typeof a === "number" && isInt(a))) {
+      if (a === 0 || a.valueOf() === 0) {
         throw new EvalError("Divide By Zero")
       }
 
@@ -254,14 +254,14 @@ export class Expression {
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          a.toString() +
+          String(a) +
           "): Divisor must be of type Fraction or Integer."
       )
     }
   }
 
-  pow(a, simplify = true) {
-    if (isInt(a)) {
+  pow(a: unknown, simplify = true): Expression {
+    if (typeof a === "number" && isInt(a)) {
       let copy = this.copy()
 
       if (a === 0) {
@@ -274,17 +274,20 @@ export class Expression {
         copy.sort()
       }
 
-      return simplify || simplify === undefined ? copy.simplify() : copy
+      return simplify ? copy.simplify() : copy
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          a.toString() +
+          String(a) +
           "): Exponent must be of type Integer."
       )
     }
   }
 
-  eval(values, simplify = true) {
+  eval(
+    values: Record<string, number | Expression | Fraction>,
+    simplify = true
+  ) {
     let exp = new Expression()
     exp.constants = simplify ? [this.constant()] : this.constants.slice()
 
@@ -296,11 +299,11 @@ export class Expression {
     return exp
   }
 
-  summation(variable, lower, upper, simplify = true) {
+  summation(variable: string, lower: number, upper: number, simplify = true) {
     const thisExpr = this.copy()
     let newExpr = new Expression()
     for (let i = lower; i < upper + 1; i++) {
-      const sub = {}
+      const sub: Record<string, number> = {}
       sub[variable] = i
       newExpr = newExpr.add(thisExpr.eval(sub, simplify), simplify)
     }
@@ -360,7 +363,7 @@ export class Expression {
   }
 
   sort() {
-    function sortTerms(a, b) {
+    function sortTerms(a: Term, b: Term) {
       const x = a.maxDegree()
       const y = b.maxDegree()
 
@@ -378,7 +381,7 @@ export class Expression {
     return this
   }
 
-  hasVariable(variable) {
+  hasVariable(variable: string) {
     for (let i = 0; i < this.terms.length; i++) {
       if (this.terms[i].hasVariable(variable)) {
         return true
@@ -388,7 +391,7 @@ export class Expression {
     return false
   }
 
-  onlyHasVariable(variable) {
+  onlyHasVariable(variable: string) {
     for (let i = 0; i < this.terms.length; i++) {
       if (!this.terms[i].onlyHasVariable(variable)) {
         return false
@@ -398,7 +401,7 @@ export class Expression {
     return true
   }
 
-  noCrossProductsWithVariable(variable) {
+  noCrossProductsWithVariable(variable: string) {
     for (let i = 0; i < this.terms.length; i++) {
       const term = this.terms[i]
       if (term.hasVariable(variable) && !term.onlyHasVariable(variable)) {
@@ -426,7 +429,7 @@ export class Expression {
     }, 0)
   }
 
-  maxDegreeOfVariable(variable) {
+  maxDegreeOfVariable(variable: string) {
     return this.terms.reduce(function (p, c) {
       return Math.max(p, c.maxDegreeOfVariable(variable))
     }, 0)
@@ -434,7 +437,7 @@ export class Expression {
 
   quadraticCoefficients() {
     // This function isn't used until everything has been moved to the LHS in Equation.solve.
-    let a
+    let a = new Fraction(0, 1)
     let b = new Fraction(0, 1)
     for (let i = 0; i < this.terms.length; i++) {
       const thisTerm = this.terms[i]
@@ -448,7 +451,7 @@ export class Expression {
 
   cubicCoefficients() {
     // This function isn't used until everything has been moved to the LHS in Equation.solve.
-    let a
+    let a = new Fraction(0, 1)
     let b = new Fraction(0, 1)
     let c = new Fraction(0, 1)
 
@@ -471,7 +474,7 @@ export class Expression {
   }
 
   #combineLikeTerms() {
-    function alreadyEncountered(term, encountered) {
+    function alreadyEncountered(term: Term, encountered: Array<Term>) {
       for (let i = 0; i < encountered.length; i++) {
         if (term.canBeCombinedWith(encountered[i])) {
           return true
@@ -531,7 +534,7 @@ export class Term {
   coefficients: Array<Fraction>
   variables: Array<Variable>
 
-  constructor(variable?) {
+  constructor(variable?: unknown) {
     if (variable instanceof Variable) {
       this.variables = [variable.copy()]
     } else if (typeof variable === "undefined") {
@@ -539,7 +542,7 @@ export class Term {
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          variable.toString() +
+          String(variable) +
           "): Term initializer must be of type Variable."
       )
     }
@@ -569,7 +572,7 @@ export class Term {
   }
 
   combineVars() {
-    const uniqueVars = {}
+    const uniqueVars: Record<string, number> = {}
 
     for (let i = 0; i < this.variables.length; i++) {
       const thisVar = this.variables[i]
@@ -604,7 +607,7 @@ export class Term {
     return copy
   }
 
-  add(term) {
+  add(term: unknown) {
     if (term instanceof Term && this.canBeCombinedWith(term)) {
       const copy = this.copy()
       copy.coefficients = [copy.coefficient().add(term.coefficient())]
@@ -612,13 +615,13 @@ export class Term {
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          term.toString() +
+          String(term) +
           "): Summand must be of type String, Expression, Term, Fraction or Integer."
       )
     }
   }
 
-  subtract(term) {
+  subtract(term: unknown) {
     if (term instanceof Term && this.canBeCombinedWith(term)) {
       const copy = this.copy()
       copy.coefficients = [copy.coefficient().subtract(term.coefficient())]
@@ -626,20 +629,20 @@ export class Term {
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          term.toString() +
+          String(term) +
           "): Subtrahend must be of type String, Expression, Term, Fraction or Integer."
       )
     }
   }
 
-  multiply(a, simplify = true) {
+  multiply(a: unknown, simplify = true) {
     const thisTerm = this.copy()
 
     if (a instanceof Term) {
       thisTerm.variables = thisTerm.variables.concat(a.variables)
       thisTerm.coefficients = a.coefficients.concat(thisTerm.coefficients)
-    } else if (isInt(a) || a instanceof Fraction) {
-      const newCoef = isInt(a) ? new Fraction(a, 1) : a
+    } else if ((typeof a === "number" && isInt(a)) || a instanceof Fraction) {
+      const newCoef = typeof a === "number" ? new Fraction(a, 1) : a
 
       if (thisTerm.variables.length === 0) {
         thisTerm.coefficients.push(newCoef)
@@ -649,7 +652,7 @@ export class Term {
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          a.toString() +
+          String(a) +
           "): Multiplicand must be of type String, Expression, Term, Fraction or Integer."
       )
     }
@@ -657,7 +660,7 @@ export class Term {
     return simplify || simplify === undefined ? thisTerm.simplify() : thisTerm
   }
 
-  divide(a, simplify = true) {
+  divide(a: unknown, simplify = true) {
     if (isInt(a) || a instanceof Fraction) {
       const thisTerm = this.copy()
       thisTerm.coefficients = thisTerm.coefficients.map(function (c) {
@@ -667,13 +670,16 @@ export class Term {
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          a.toString() +
+          String(a) +
           "): Argument must be of type Fraction or Integer."
       )
     }
   }
 
-  eval(values, simplify = true) {
+  eval(
+    values: Record<string, number | Expression | Fraction>,
+    simplify = true
+  ) {
     const copy = this.copy()
     let exp = copy.coefficients.reduce(function (p, c) {
       return p.multiply(c, simplify)
@@ -682,15 +688,17 @@ export class Term {
     for (let i = 0; i < copy.variables.length; i++) {
       const thisVar = copy.variables[i]
 
-      let ev
+      let ev: Expression
 
       if (thisVar.variable in values) {
         const sub = values[thisVar.variable]
 
-        if (sub instanceof Fraction || sub instanceof Expression) {
+        if (sub instanceof Expression) {
           ev = sub.pow(thisVar.degree)
+        } else if (sub instanceof Fraction) {
+          ev = new Expression(sub.pow(thisVar.degree))
         } else if (isInt(sub)) {
-          ev = Math.pow(sub, thisVar.degree)
+          ev = new Expression(Math.pow(sub, thisVar.degree))
         } else {
           throw new TypeError(
             "Invalid Argument (" +
@@ -708,7 +716,7 @@ export class Term {
     return exp
   }
 
-  hasVariable(variable) {
+  hasVariable(variable: string) {
     for (let i = 0; i < this.variables.length; i++) {
       if (this.variables[i].variable === variable) {
         return true
@@ -724,13 +732,13 @@ export class Term {
     }, 0)
   }
 
-  maxDegreeOfVariable(variable) {
+  maxDegreeOfVariable(variable: string) {
     return this.variables.reduce(function (p, c) {
       return c.variable === variable ? Math.max(p, c.degree) : p
     }, 0)
   }
 
-  canBeCombinedWith(term) {
+  canBeCombinedWith(term: Term) {
     const thisVars = this.variables
     const thatVars = term.variables
 
@@ -754,7 +762,7 @@ export class Term {
     return matches === thisVars.length
   }
 
-  onlyHasVariable(variable) {
+  onlyHasVariable(variable: string) {
     for (let i = 0; i < this.variables.length; i++) {
       if (this.variables[i].variable != variable) {
         return false
@@ -765,7 +773,7 @@ export class Term {
   }
 
   sort() {
-    function sortVars(a, b) {
+    function sortVars(a: Variable, b: Variable) {
       return b.degree - a.degree
     }
 
@@ -829,14 +837,14 @@ export class Variable {
   variable: string
   degree: number
 
-  constructor(variable) {
+  constructor(variable: unknown) {
     if (typeof variable === "string") {
       this.variable = variable
       this.degree = 1
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          variable.toString() +
+          String(variable) +
           "): Variable initializer must be of type String."
       )
     }

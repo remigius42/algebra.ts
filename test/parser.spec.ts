@@ -146,7 +146,7 @@ describe("Operators", () => {
     const input = "2-x = 5"
     const lhs = new Expression(2).subtract(new Expression("x"))
     const rhs = new Expression(5)
-    expect(p.parse(input).toString()).toEqual(new Equation(lhs, rhs).toString())
+    expect(p.parse(input)).toEqual(new Equation(lhs, rhs))
   })
 
   it("should parse / correctly", () => {
@@ -243,13 +243,13 @@ describe("Order of operations", () => {
     const input = "a*x^2"
     const exp = new Expression("a").multiply(new Expression("x").pow(2))
 
-    expect(algebra.parse(input).toString()).toEqual(exp.toString())
+    expect(algebra.parse(input)).toEqual(exp)
   })
 
   it("power has a higher operator precedence than multiplication when the multiply operator is missing", () => {
     const input = "(3/2)x^2"
     const exp = new Expression("x").pow(2).multiply(new Fraction(3, 2))
 
-    expect(algebra.parse(input).toString()).toEqual(exp.toString())
+    expect(algebra.parse(input)).toEqual(exp)
   })
 })

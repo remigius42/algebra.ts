@@ -70,7 +70,7 @@ describe("A linear equation with one variable", () => {
 
   it("should get the right answer", () => {
     const answer = eq.solveFor("x")
-    expect(answer.toString()).toEqual("29/24")
+    expect(String(answer)).toEqual("29/24")
   })
 })
 
@@ -107,7 +107,7 @@ describe("An equation with multiple variables", () => {
 
   it("should get the right answer", () => {
     const answer = eq.solveFor("a") // a = c + d - b
-    expect(answer.toString()).toEqual("c + d - b")
+    expect(String(answer)).toEqual("c + d - b")
   })
 
   it("should solve for variables that can be isolated", () => {
@@ -115,7 +115,7 @@ describe("An equation with multiple variables", () => {
 
     const answer = eq.solveFor("b")
 
-    expect(answer.toString()).toEqual("-a^2 + c + d")
+    expect(String(answer)).toEqual("-a^2 + c + d")
   })
 
   it("should return undefined when solving for a variable that can't be isolated", () => {
@@ -134,7 +134,7 @@ describe("Solving a quadratic equation", () => {
     const ex = x.multiply(x).add(x).subtract(2)
     const eq = new Equation(ex, 0) // x^2 + x - 2 = 0
 
-    const answers = eq.solveFor("x") // -2, 1
+    const answers = eq.solveFor("x") as Array<Fraction> // -2, 1
 
     expect(answers[0].equalTo(new Fraction(-2, 1))).toBe(true)
     expect(answers[1].equalTo(new Fraction(1, 1))).toBe(true)
@@ -143,7 +143,7 @@ describe("Solving a quadratic equation", () => {
   it("should return two reduced fractions if the equation has two real roots that are rational fractions", () => {
     const ex = x.multiply(x).multiply(2).add(x)
     const eq = new Equation(ex, 0)
-    const answers = eq.solveFor("x")
+    const answers = eq.solveFor("x") as Array<Fraction>
 
     expect(answers[0].equalTo(new Fraction(-1, 2))).toBe(true)
     expect(answers[1].equalTo(new Fraction(0, 1))).toBe(true)
@@ -153,7 +153,7 @@ describe("Solving a quadratic equation", () => {
     const ex = x.multiply(x).add(x.multiply(4)).add(2)
     const eq = new Equation(ex, 0) // x^2 + 4x + 2 = 0
 
-    const answers = eq.solveFor("x") // -2 - √2, √2 - 2
+    const answers = eq.solveFor("x") as Array<number> // -2 - √2, √2 - 2
     const expected = [-2 - Math.sqrt(2), Math.sqrt(2) - 2]
 
     expect(round(answers[0])).toEqual(round(expected[0]))
@@ -166,7 +166,7 @@ describe("Solving a quadratic equation", () => {
     lhs = lhs.subtract(5)
 
     const eq = new Equation(lhs, 0) // 2x^2 + 2x - 5 = 0
-    const answers = eq.solveFor("x")
+    const answers = eq.solveFor("x") as Array<number>
     const expected = [-1 / 2 - Math.sqrt(11) / 2, Math.sqrt(11) / 2 - 1 / 2]
 
     expect(round(answers[0])).toEqual(round(expected[0]))
@@ -177,7 +177,7 @@ describe("Solving a quadratic equation", () => {
     const ex = x.multiply(x).add(x.multiply(2))
     const eq = new Equation(ex, -1) // x^2 + 2x = -1
 
-    const answers = eq.solveFor("x")
+    const answers = eq.solveFor("x") as Array<Fraction>
 
     expect(answers[0].equalTo(new Fraction(-1, 1)))
   })
@@ -186,7 +186,7 @@ describe("Solving a quadratic equation", () => {
     const ex = x.multiply(x.multiply(2)).add(4)
     const eq = new Equation(ex, 0) // x^2 + 2x + 4 = 0
 
-    const answers = eq.solveFor("x")
+    const answers = eq.solveFor("x") as Array<number>
 
     expect(answers.length).toEqual(0)
   })
@@ -194,17 +194,17 @@ describe("Solving a quadratic equation", () => {
   it("should work when some terms are on the other side", () => {
     const eq = new Equation(x.multiply(x), x.multiply(-1).add(2)) // x^2 = -x + 2
 
-    const answers = eq.solveFor("x") // -2, 1
+    const answers = eq.solveFor("x") as Array<Fraction> // -2, 1
 
-    expect(answers[0].equalTo(new Fraction(-2, 1))).toBe(true)
-    expect(answers[1].equalTo(new Fraction(1, 1))).toBe(true)
+    expect(answers?.[0].equalTo(new Fraction(-2, 1))).toBe(true)
+    expect(answers?.[1].equalTo(new Fraction(1, 1))).toBe(true)
   })
 
   it("should return 1 if there are infinite solutions", () => {
     const eq = new Equation(x.multiply(x), x.multiply(x)) // x^2 = x^2
-    const answers = eq.solveFor("x")
+    const answers = eq.solveFor("x") as Array<Fraction>
 
-    expect(answers[0].equalTo(new Fraction(1, 1))).toBe(true)
+    expect(answers?.[0].equalTo(new Fraction(1, 1))).toBe(true)
   })
 })
 
@@ -339,7 +339,8 @@ describe("Solving linear equations with no / infinite solution", () => {
     const x = new Expression("x")
     const eq = new Equation(x, x) // x = x
 
-    const answer = eq.solveFor("x")
+    const answer = eq.solveFor("x") as Fraction
+
     expect(answer.equalTo(new Fraction(1, 1))).toBe(true)
   })
 })
@@ -355,7 +356,7 @@ describe("Solving a cubic equation", () => {
 
     const eq = new Equation(expr, 0) // x^3 - 3x^2 + 3x - 1 = 0
     const answers = eq.solveFor("x")
-    expect(answers.toString()).toEqual("1")
+    expect(String(answers)).toEqual("1")
   })
 
   it("works when there's one distinct real root - discriminant > 0", () => {
@@ -368,7 +369,7 @@ describe("Solving a cubic equation", () => {
 
     const eq = new Equation(expr, 15) // x^3 - 3x^2 + 3x - 1 = 0
     const answers = eq.solveFor("x")
-    expect(answers.toString()).toEqual("3.46621207433047")
+    expect(String(answers)).toEqual("3.46621207433047")
   })
 
   it("works when there's one distinct real root less than zero - discriminant > 0", () => {
@@ -377,7 +378,7 @@ describe("Solving a cubic equation", () => {
 
     const answers = cubicEquation.solveFor("x")
 
-    expect(answers.toString()).toEqual("-2")
+    expect(String(answers)).toEqual("-2")
   })
 
   it("works when there's two distinct real roots - discriminant = 0", () => {
@@ -388,67 +389,62 @@ describe("Solving a cubic equation", () => {
     const eq = new Equation(expr, 0) // x^3 - 3x + 2 = 0
     const answers = eq.solveFor("x")
 
-    expect(answers.toString()).toEqual("-2,1")
+    expect(String(answers)).toEqual("-2,1")
   })
 
   it("works when there are three real roots, discriminant > 0, negative roots", () => {
     const n1 = new Expression("x").add(2) // x + 2
     const n2 = new Expression("x").add(3) // x + 3
     const n3 = new Expression("x").add(4) // x + 4
+    const cubic = new Equation(n1.multiply(n2).multiply(n3), 0)
 
-    let cubic = n1.multiply(n2).multiply(n3)
-    cubic = new Equation(cubic, 0)
     const answers = cubic.solveFor("x")
 
-    expect(answers.toString()).toEqual("-4,-3,-2")
+    expect(String(answers)).toEqual("-4,-3,-2")
   })
 
   it("works when there are three real roots, discriminant > 0 and a != 1", () => {
     const n1 = new Expression("x").add("x").add(2) // 2x + 2
     const n2 = new Expression("x").add(3) // x + 3
     const n3 = new Expression("x").add(4) // x + 4
+    const cubic = new Equation(n1.multiply(n2).multiply(n3), 0)
 
-    let cubic = n1.multiply(n2).multiply(n3)
-    cubic = new Equation(cubic, 0)
     const answers = cubic.solveFor("x")
 
-    expect(answers.toString()).toEqual("-4,-3,-1")
+    expect(String(answers)).toEqual("-4,-3,-1")
   })
 
   it("works when there are three real roots, discriminant > 0, positive roots", () => {
     const n1 = new Expression("x").subtract(2) // x - 2
     const n2 = new Expression("x").subtract(3) // x - 3
     const n3 = new Expression("x").subtract(4) // x - 4
+    const cubic = new Equation(n1.multiply(n2).multiply(n3), 0)
 
-    let cubic = n1.multiply(n2).multiply(n3)
-    cubic = new Equation(cubic, 0)
     const answers = cubic.solveFor("x")
 
-    expect(answers.toString()).toEqual("2,3,4")
+    expect(String(answers)).toEqual("2,3,4")
   })
 
   it("rounds of roots when there are three real positive roots with values within 10E15 to next integer", () => {
     const n1 = new Expression("x").subtract(new Fraction(2 * 10e15 + 1, 10e15)) // x - 2 + 10e-15
     const n2 = new Expression("x").subtract(new Fraction(3 * 10e15 + 1, 10e15)) // x - 3 + 10e-15
     const n3 = new Expression("x").subtract(new Fraction(4 * 10e15 + 1, 10e15)) // x - 4 + 10e-15
+    const cubic = new Equation(n1.multiply(n2).multiply(n3), 0)
 
-    let cubic = n1.multiply(n2).multiply(n3)
-    cubic = new Equation(cubic, 0)
     const answers = cubic.solveFor("x")
 
-    expect(answers.toString()).toEqual("2,3,4")
+    expect(String(answers)).toEqual("2,3,4")
   })
 
   it("does not round of roots when there are three real positive roots with values > 10E15 to next integer", () => {
     const n1 = new Expression("x").subtract(new Fraction(2 * 10e14 + 2, 10e14)) // x - 2 + 2*10e-14
     const n2 = new Expression("x").subtract(new Fraction(3 * 10e14 + 2, 10e14)) // x - 3 + 2*10e-14
     const n3 = new Expression("x").subtract(new Fraction(4 * 10e14 + 3, 10e14)) // x - 4 + 3*10e-14
+    const cubic = new Equation(n1.multiply(n2).multiply(n3), 0)
 
-    let cubic = n1.multiply(n2).multiply(n3)
-    cubic = new Equation(cubic, 0)
     const answers = cubic.solveFor("x")
 
-    expect(answers.toString()).toEqual(
+    expect(String(answers)).toEqual(
       "2.0000000000000107,2.999999999999981,4.000000000000015"
     )
   })
@@ -457,24 +453,22 @@ describe("Solving a cubic equation", () => {
     const n1 = new Expression("x").add(new Fraction(2 * 10e15 + 1, 10e15)) // x + 2 + 10e-15
     const n2 = new Expression("x").add(new Fraction(3 * 10e15 + 1, 10e15)) // x + 3 + 10e-15
     const n3 = new Expression("x").add(new Fraction(4 * 10e15 + 1, 10e15)) // x + 4 + 10e-15
+    const cubic = new Equation(n1.multiply(n2).multiply(n3), 0)
 
-    let cubic = n1.multiply(n2).multiply(n3)
-    cubic = new Equation(cubic, 0)
     const answers = cubic.solveFor("x")
 
-    expect(answers.toString()).toEqual("-4,-3,-2")
+    expect(String(answers)).toEqual("-4,-3,-2")
   })
 
   it("does not round of roots when there are three real negative roots with values > 10E15 to next integer", () => {
     const n1 = new Expression("x").add(new Fraction(2 * 10e14 + 2, 10e14)) // x + 2 + 2*10e-14
     const n2 = new Expression("x").add(new Fraction(3 * 10e14 + 2, 10e14)) // x + 3 + 2*10e-14
     const n3 = new Expression("x").add(new Fraction(4 * 10e14 + 3, 10e14)) // x + 4 + 3*10e-14
+    const cubic = new Equation(n1.multiply(n2).multiply(n3), 0)
 
-    let cubic = n1.multiply(n2).multiply(n3)
-    cubic = new Equation(cubic, 0)
     const answers = cubic.solveFor("x")
 
-    expect(answers.toString()).toEqual(
+    expect(String(answers)).toEqual(
       "-4.000000000000015,-2.9999999999999813,-2.0000000000000107"
     )
   })
@@ -483,9 +477,8 @@ describe("Solving a cubic equation", () => {
     const n1 = new Expression("x").add("x").add(2) // 2x + 2
     const n2 = new Expression("x").add(3) // x + 3
     const n3 = new Expression("x").add(4) // x + 4
+    const cubic = new Equation(n1.multiply(n2).multiply(n3), 0)
 
-    let cubic = n1.multiply(n2).multiply(n3)
-    cubic = new Equation(cubic, 0)
     const answers = cubic.solveFor("x")
 
     expect(algebra.toTex(answers)).toEqual("-4,-3,-1")
@@ -500,15 +493,15 @@ describe("Solving a cubic equation", () => {
 
     const answers = cubic.solveFor("x")
 
-    expect(answers.toString()).toEqual("2")
+    expect(String(answers)).toEqual("2")
   })
 
   it("returns 1 when there are infinite solutions", () => {
     const exp = new Expression("x").pow(3)
     const cubic = new Equation(exp.add(4), exp.add(4)) // x^3 + 4 = x^3 + 4
 
-    const answers = cubic.solveFor("x")
-    expect(answers[0].equalTo(new Fraction(1, 1))).toBe(true)
+    const answers = cubic.solveFor("x") as Array<Fraction>
+    expect(answers?.[0].equalTo(new Fraction(1, 1))).toBe(true)
   })
 
   it("should throw an exception when there's no solution", () => {
@@ -528,7 +521,7 @@ describe("Equation evaluation", () => {
 
     const eq = new Equation(x, y.add(2)) // x = y + 2
     const answer = eq.eval({ x: 2 })
-    expect(answer.toString()).toEqual("2 = y + 2")
+    expect(String(answer)).toEqual("2 = y + 2")
   })
 
   it("works with expressions", () => {
@@ -538,7 +531,7 @@ describe("Equation evaluation", () => {
     const eq = new Equation(x, 2) // x = 2
     const answer = eq.eval({ x: sub }) // y + 4 = 2
 
-    expect(answer.toString()).toEqual("y + 4 = 2")
+    expect(String(answer)).toEqual("y + 4 = 2")
   })
 
   it("evalToBoolean returns boolean of there are no free variables", () => {

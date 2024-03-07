@@ -11,19 +11,19 @@ export class Lexer {
   private pos: number
   private buf: string
   private bufferLength: number
-  private operatorTable = {
-    // Operator table, mapping operator -> token name
-    "+": "PLUS",
-    "-": "MINUS",
-    "*": "MULTIPLY",
-    "/": "DIVIDE",
-    "^": "POWER",
-    "(": "L_PAREN",
-    ")": "R_PAREN",
-    "=": "EQUALS",
-    "<": "LESS_THAN",
-    ">": "GREATER_THAN"
-  }
+  // Operator table, mapping operator -> token name
+  private operatorTable = new Map([
+    ["+", "PLUS"],
+    ["-", "MINUS"],
+    ["*", "MULTIPLY"],
+    ["/", "DIVIDE"],
+    ["^", "POWER"],
+    ["(", "L_PAREN"],
+    [")", "R_PAREN"],
+    ["=", "EQUALS"],
+    ["<", "LESS_THAN"],
+    [">", "GREATER_THAN"]
+  ])
 
   constructor() {
     this.pos = 0
@@ -34,7 +34,7 @@ export class Lexer {
   // Initialize the Lexer's buffer. This resets the lexer's internal
   // state and subsequent tokens will be returned starting with the
   // beginning of the new buffer.
-  input(buf) {
+  input(buf: string) {
     this.pos = 0
     this.buf = buf
     this.bufferLength = buf.length
@@ -57,7 +57,7 @@ export class Lexer {
     // The char at this.pos is part of a real token. Figure out which.
     const c = this.buf.charAt(this.pos)
     // Look it up in the table of operators
-    const op = this.operatorTable[c]
+    const op = this.operatorTable.get(c)
     if (op !== undefined) {
       if (op === "L_PAREN" || op === "R_PAREN") {
         return { type: "PAREN", value: op, pos: this.pos++ }
@@ -86,21 +86,21 @@ export class Lexer {
     }
   }
 
-  static #isDigit(c) {
+  static #isDigit(c: string) {
     return c >= "0" && c <= "9"
   }
 
-  static #isAlpha(c) {
+  static #isAlpha(c: string) {
     return (c >= "a" && c <= "z") || (c >= "A" && c <= "Z")
   }
 
-  static #isAlphaNum(c) {
+  static #isAlphaNum(c: string) {
     return (
       (c >= "a" && c <= "z") || (c >= "A" && c <= "Z") || (c >= "0" && c <= "9")
     )
   }
 
-  #process_digits(position) {
+  #process_digits(position: number) {
     let endPosition = position
     while (
       endPosition < this.bufferLength &&

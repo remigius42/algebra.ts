@@ -4,13 +4,13 @@ import { Fraction } from "./src/fractions"
 import { Inequation } from "./src/inequations"
 import { Parser } from "./src/parser"
 
-const parse = function (input) {
+const parse = function (input: string) {
   const parser = new Parser()
   const result = parser.parse(input)
   return result
 }
 
-const toTex = function (input) {
+const toTex = function (input: unknown) {
   if (
     input instanceof Fraction ||
     input instanceof Expression ||
@@ -24,12 +24,12 @@ const toTex = function (input) {
         if (e instanceof Fraction) {
           return e.toTex()
         } else {
-          return e.toString()
+          return String(e)
         }
       })
       .join()
   } else {
-    return input.toString()
+    return String(input)
   }
 }
 

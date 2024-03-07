@@ -66,7 +66,7 @@ export class Parser {
   }
 
   // Returns true if the current token matches the keyword
-  match(keyword) {
+  match(keyword: string) {
     if (this.current_token === null) return keyword === "epsilon"
 
     switch (keyword) {
@@ -145,7 +145,7 @@ export class Parser {
       header comment. The parsing process constructs a abstract syntax tree
       using the classes the algebra.js library provides
   */
-  parse(input) {
+  parse(input: string) {
     //pass the input to the lexer
     this.lexer.input(input)
     this.update()
@@ -166,7 +166,7 @@ export class Parser {
         ["GREATER_THAN_EQUALS", ">="]
       ])
       if (this.current_token && relations.has(this.current_token.value)) {
-        const relation = relations.get(this.current_token.value)
+        const relation = relations.get(this.current_token.value)!
         this.update()
         const ex2 = this.#parseExpr()
         return new Inequation(ex1, ex2, relation)
@@ -197,7 +197,7 @@ export class Parser {
     return this.#parseExprRest(term)
   }
 
-  #parseExprRest(term) {
+  #parseExprRest(term?: Expression): Expression | undefined {
     if (this.match("plus")) {
       this.update()
       const plusTerm = this.#parseTerm()
@@ -209,7 +209,9 @@ export class Parser {
       const minusTerm = this.#parseTerm()
       //This case is entered when a negative number is parsed e.g. x = -4
       if (term === undefined) {
-        return this.#parseExprRest(minusTerm.multiply(-1))
+        return minusTerm
+          ? this.#parseExprRest(minusTerm.multiply(-1))
+          : undefined
       } else {
         return this.#parseExprRest(term.subtract(minusTerm))
       }
@@ -223,8 +225,10 @@ export class Parser {
     return this.#parseTermRest(factor)
   }
 
-  #parseTermRest(factor) {
-    if (this.match("multiply")) {
+  #parseTermRest(factor: Expression | undefined): Expression | undefined {
+    if (factor === undefined) {
+      return factor
+    } else if (this.match("multiply")) {
       this.update()
       const mulFactor = this.#parseFactor()
       return factor.multiply(this.#parseTermRest(mulFactor))
@@ -232,14 +236,14 @@ export class Parser {
       this.update()
       const powFactor = this.#parseFactor()
       //WORKAROUND: algebra.js only allows integers and fractions for raising
-      return this.#parseTermRest(factor.pow(parseInt(powFactor.toString())))
+      return this.#parseTermRest(factor.pow(parseInt(String(powFactor))))
     } else if (this.match("divide")) {
       this.update()
       const divFactor = this.#parseFactor()
       //WORKAROUND: algebra.js only allows integers and fractions for division
-      return this.#parseTermRest(
-        factor.divide(this.#convertToFraction(divFactor))
-      )
+      return divFactor
+        ? this.#parseTermRest(factor.divide(this.#convertToFraction(divFactor)))
+        : undefined
     } else if (this.match("epsilon")) {
       return factor
     } else {
@@ -256,7 +260,7 @@ export class Parser {
   /**
    * Is used to convert expressions to fractions, as dividing by expressions is not possible
    **/
-  #convertToFraction(expression) {
+  #convertToFraction(expression: Expression) {
     if (expression.terms.length > 0) {
       throw new TypeError(
         "Invalid Argument (" +
@@ -269,7 +273,7 @@ export class Parser {
     }
   }
 
-  #parseFactor() {
+  #parseFactor(): Expression | undefined {
     if (this.match("num")) {
       const num = this.#parseNumber()
       this.update()

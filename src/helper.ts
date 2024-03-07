@@ -1,6 +1,6 @@
 /* spellchecker:ignore varepsilon, vartheta, varrho, varphi */
 
-export function gcd(x, y) {
+export function gcd(x: number, y: number) {
   while (y) {
     const temp = x
     x = y
@@ -10,17 +10,17 @@ export function gcd(x, y) {
   return x
 }
 
-export function lcm(x, y) {
+export function lcm(x: number, y: number) {
   return (x * y) / gcd(x, y)
 }
 
-export function isInt(thing?) {
+export function isInt(thing?: unknown) {
   return typeof thing == "number" && thing % 1 === 0
 }
 
-export function round(decimal, places = 2) {
+export function round(decimal: number, places = 2) {
   const x = Math.pow(10, places)
-  return Math.round(parseFloat(decimal) * x) / x
+  return Math.round(decimal * x) / x
 }
 
 export const GREEK_LETTERS = [

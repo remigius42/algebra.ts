@@ -152,7 +152,7 @@ describe("evaluating inequations", () => {
     it(`evalToBoolean and operator ${operator} returns boolean of there are no free variables`, () => {
       const x = new Expression("x")
       const y = new Expression("y")
-      const eq = new Inequation(x, y.add(2), operator) // x OPERATOR y + 2
+      const eq = new Inequation(x, y.add(2), String(operator)) // x OPERATOR y + 2
 
       const answer = eq.evalToBoolean({ x: 3, y: 1 })
 

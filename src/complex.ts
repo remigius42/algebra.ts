@@ -6,16 +6,16 @@ export class Complex {
   real: Fraction
   imaginary: Fraction
 
-  constructor(real, imaginary) {
+  constructor(real: unknown, imaginary: unknown) {
     if (real instanceof Fraction && imaginary instanceof Fraction) {
       this.real = real
       this.imaginary = imaginary
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          real.toString() +
+          String(real) +
           ", " +
-          imaginary.toString() +
+          String(imaginary) +
           "): Real and imaginary parts must be of type Fraction."
       )
     }
@@ -25,7 +25,7 @@ export class Complex {
     return new Complex(this.real, this.imaginary)
   }
 
-  add(a) {
+  add(a: unknown) {
     const copy = this.copy()
 
     if (a instanceof Fraction || isInt(a)) {
@@ -36,7 +36,7 @@ export class Complex {
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          a.toString() +
+          String(a) +
           "): Summand must be of type Complex, Fraction or Integer."
       )
     }
@@ -44,7 +44,7 @@ export class Complex {
     return copy
   }
 
-  subtract(a) {
+  subtract(a: unknown) {
     const copy = this.copy()
 
     if (a instanceof Fraction || isInt(a)) {
@@ -55,7 +55,7 @@ export class Complex {
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          a.toString() +
+          String(a) +
           "): Subtrahend must be of type Complex, Fraction or Integer."
       )
     }
@@ -63,7 +63,7 @@ export class Complex {
     return copy
   }
 
-  multiply(a) {
+  multiply(a: unknown) {
     if (a instanceof Fraction || isInt(a)) {
       const copy = this.copy()
       copy.real = copy.real.multiply(a)
@@ -83,13 +83,13 @@ export class Complex {
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          a.toString() +
+          String(a) +
           "): Multiplicand must be of type Complex, Fraction or Integer."
       )
     }
   }
 
-  divide(a) {
+  divide(a: unknown): Complex {
     if (a instanceof Fraction || isInt(a)) {
       const copy = this.copy()
       copy.real = copy.real.divide(a)
@@ -103,7 +103,7 @@ export class Complex {
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          a.toString() +
+          String(a) +
           "): Divisor must be of type Complex, Fraction or Integer."
       )
     }

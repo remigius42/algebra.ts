@@ -8,7 +8,7 @@ export class Equation {
   lhs: Expression
   rhs: Expression
 
-  constructor(lhs, rhs) {
+  constructor(lhs: unknown, rhs: unknown) {
     if (lhs instanceof Expression) {
       this.lhs = lhs
 
@@ -19,14 +19,14 @@ export class Equation {
       } else {
         throw new TypeError(
           "Invalid Argument (" +
-            rhs.toString() +
+            String(rhs) +
             "): Right-hand side must be of type Expression, Fraction or Integer."
         )
       }
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          lhs.toString() +
+          String(lhs) +
           "): Left-hand side must be of type Expression."
       )
     }
@@ -42,7 +42,7 @@ export class Equation {
     return new Equation(this.lhs.copy(), this.rhs.copy())
   }
 
-  solveFor(variable, returnEquation = false) {
+  solveFor(variable: string, returnEquation = false) {
     if (!this.lhs.hasVariable(variable) && !this.rhs.hasVariable(variable)) {
       throw new TypeError(
         "Invalid Argument (" +
@@ -51,7 +51,7 @@ export class Equation {
       )
     }
 
-    let solution
+    let solution: Expression | Fraction | Array<Fraction> | Array<number>
 
     if (this.isLinear() || this.#variableCanBeIsolated(variable)) {
       // If the equation is linear and the variable in question can be isolated through arithmetic, solve.
@@ -75,6 +75,11 @@ export class Equation {
         solution = this.#solveQuadraticEquation(newLhs)
       } else if (this.#isCubic(variable)) {
         solution = this.#solveCubicEquation(newLhs)
+      } else {
+        // throw new EvalError(
+        //   "Unsupported equation type. Only certain linear, quadratic and cubic equations are supported."
+        // )
+        return undefined
       }
     }
 
@@ -95,15 +100,15 @@ export class Equation {
    * ensure the methods are operating on a copy to prevent inadvertent
    * modification.
    */
-  divideRhsByCoefficient(rhs, coefficient) {
+  divideRhsByCoefficient(rhs: Expression, coefficient: Fraction) {
     return rhs.divide(coefficient)
   }
 
-  eval(values) {
+  eval(values: Record<string, number | Expression | Fraction>) {
     return new Equation(this.lhs.eval(values), this.rhs.eval(values))
   }
 
-  evalToBoolean(values) {
+  evalToBoolean(values: Record<string, number | Expression | Fraction>) {
     const equation = this.eval(values)
     if (equation.maxDegree() === 0) {
       return (
@@ -130,7 +135,7 @@ export class Equation {
     return Math.max(lhsMax, rhsMax)
   }
 
-  maxDegreeOfVariable(variable) {
+  maxDegreeOfVariable(variable: string) {
     return Math.max(
       this.lhs.maxDegreeOfVariable(variable),
       this.rhs.maxDegreeOfVariable(variable)
@@ -141,22 +146,22 @@ export class Equation {
     return this.maxDegree() === 1 && this.#noCrossProducts()
   }
 
-  isQuadratic(variable) {
+  isQuadratic(variable: string) {
     return this.maxDegree() === 2 && this.#onlyHasVariable(variable)
   }
 
-  #isCubic(variable) {
+  #isCubic(variable: string) {
     return this.maxDegree() === 3 && this.#onlyHasVariable(variable)
   }
 
-  #variableCanBeIsolated(variable) {
+  #variableCanBeIsolated(variable: string) {
     return (
       this.maxDegreeOfVariable(variable) === 1 &&
       this.#noCrossProductsWithVariable(variable)
     )
   }
 
-  #noCrossProductsWithVariable(variable) {
+  #noCrossProductsWithVariable(variable: string) {
     return (
       this.lhs.noCrossProductsWithVariable(variable) &&
       this.rhs.noCrossProductsWithVariable(variable)
@@ -167,13 +172,13 @@ export class Equation {
     return this.lhs.noCrossProducts() && this.rhs.noCrossProducts()
   }
 
-  #onlyHasVariable(variable) {
+  #onlyHasVariable(variable: string) {
     return (
       this.lhs.onlyHasVariable(variable) && this.rhs.onlyHasVariable(variable)
     )
   }
 
-  #solveLinearEquationWithSeparableVariable(variable) {
+  #solveLinearEquationWithSeparableVariable(variable: string) {
     const solvingFor = new Term(new Variable(variable))
     let newLhs = new Expression()
     let newRhs = new Expression()
@@ -219,11 +224,11 @@ export class Equation {
     return newRhs
   }
 
-  #solveQuadraticEquation(newLhs) {
+  #solveQuadraticEquation(newLhs: Expression) {
     const coefs = newLhs.quadraticCoefficients()
 
-    let a = coefs.a
-    let b = coefs.b
+    const a = coefs.a
+    const b = coefs.b
     const c = coefs.c
 
     // Calculate the discriminant, b^2 - 4ac.
@@ -256,11 +261,10 @@ export class Equation {
           // If the answers will be irrational, return numbers.
         } else {
           squareRootDiscriminant = Math.sqrt(discriminant.valueOf())
-          a = a.valueOf()
-          b = b.valueOf()
-
-          const root1 = (-b - squareRootDiscriminant) / (2 * a)
-          const root2 = (-b + squareRootDiscriminant) / (2 * a)
+          const root1 =
+            (-b.valueOf() - squareRootDiscriminant) / (2 * a.valueOf())
+          const root2 =
+            (-b.valueOf() + squareRootDiscriminant) / (2 * a.valueOf())
           return [root1, root2]
         }
       }
@@ -270,7 +274,7 @@ export class Equation {
     }
   }
 
-  #solveCubicEquation(newLhs) {
+  #solveCubicEquation(newLhs: Expression) {
     const coefs = newLhs.cubicCoefficients()
 
     const a = coefs.a
@@ -315,10 +319,13 @@ export class Equation {
 
       // Otherwise, use a different method for solving.
     } else {
-      const f = (3 * (c / a) - Math.pow(b, 2) / Math.pow(a, 2)) / 3
-      let g = (2 * Math.pow(b, 3)) / Math.pow(a, 3)
-      g = g - (9 * b * c) / Math.pow(a, 2)
-      g = g + (27 * d) / a
+      const f =
+        (3 * (c.valueOf() / a.valueOf()) -
+          Math.pow(b.valueOf(), 2) / Math.pow(a.valueOf(), 2)) /
+        3
+      let g = (2 * Math.pow(b.valueOf(), 3)) / Math.pow(a.valueOf(), 3)
+      g = g - (9 * b.valueOf() * c.valueOf()) / Math.pow(a.valueOf(), 2)
+      g = g + (27 * d.valueOf()) / a.valueOf()
       g = g / 27
       const h = Math.pow(g, 2) / 4 + Math.pow(f, 3) / 27
 
@@ -333,7 +340,7 @@ export class Equation {
         const S = Math.cbrt(R)
         const T = -(g / 2) - Math.sqrt(h)
         const U = Math.cbrt(T)
-        const root1 = S + U - b / (3 * a)
+        const root1 = S + U - b.valueOf() / (3 * a.valueOf())
         return [root1].map(Equation.#roundRootToPrecision)
       } else {
         const i = Math.sqrt(Math.pow(g, 2) / 4 - h)
@@ -343,9 +350,9 @@ export class Equation {
         const L = -j
         const M = Math.cos(k / 3)
         const N = Math.sqrt(3) * Math.sin(k / 3)
-        const P = -(b / (3 * a))
+        const P = -(b.valueOf() / (3 * a.valueOf()))
 
-        const root1 = 2 * j * Math.cos(k / 3) - b / (3 * a)
+        const root1 = 2 * j * Math.cos(k / 3) - b.valueOf() / (3 * a.valueOf())
         const root2 = L * (M + N) + P
         const root3 = L * (M - N) + P
 
@@ -362,7 +369,7 @@ export class Equation {
   /**
    * Round root if the next integer is within ROOT_PRECISION.
    */
-  static #roundRootToPrecision(root) {
+  static #roundRootToPrecision(root: number) {
     const roundedRoot = Math.round(root)
     if (Math.abs(roundedRoot - root) < ROOT_PRECISION) {
       return roundedRoot

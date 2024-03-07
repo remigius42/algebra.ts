@@ -4,7 +4,7 @@ export class Fraction {
   numer: number
   denom: number
 
-  constructor(a, b) {
+  constructor(a: number, b: number) {
     if (b === 0) {
       throw new EvalError("Divide By Zero")
     } else if (isInt(a) && isInt(b)) {
@@ -40,7 +40,7 @@ export class Fraction {
     return copy
   }
 
-  equalTo(fraction) {
+  equalTo(fraction: unknown) {
     if (fraction instanceof Fraction) {
       const thisReduced = this.reduce()
       const thatReduced = fraction.reduce()
@@ -53,19 +53,19 @@ export class Fraction {
     }
   }
 
-  add(f, simplify = true) {
-    let a, b
+  add(f: unknown, simplify = true) {
+    let a: number, b: number
 
     if (f instanceof Fraction) {
       a = f.numer
       b = f.denom
-    } else if (isInt(f)) {
+    } else if (typeof f === "number" && isInt(f)) {
       a = f
       b = 1
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          f.toString() +
+          String(f) +
           "): Summand must be of type Fraction or Integer."
       )
     }
@@ -90,29 +90,29 @@ export class Fraction {
     return simplify ? copy.reduce() : copy
   }
 
-  subtract(f, simplify = true) {
+  subtract(f: unknown, simplify = true) {
     const copy = this.copy()
 
     if (f instanceof Fraction) {
       return copy.add(new Fraction(-f.numer, f.denom), simplify)
-    } else if (isInt(f)) {
+    } else if (typeof f === "number" && isInt(f)) {
       return copy.add(new Fraction(-f, 1), simplify)
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          f.toString() +
+          String(f) +
           "): Subtrahend must be of type Fraction or Integer."
       )
     }
   }
 
-  multiply(f, simplify = true) {
-    let a, b
+  multiply(f: unknown, simplify = true) {
+    let a: number, b: number
 
     if (f instanceof Fraction) {
       a = f.numer
       b = f.denom
-    } else if (isInt(f) && f) {
+    } else if (typeof f === "number" && isInt(f) && f !== 0) {
       a = f
       b = 1
     } else if (f === 0) {
@@ -121,7 +121,7 @@ export class Fraction {
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          f.toString() +
+          String(f) +
           "): Multiplicand must be of type Fraction or Integer."
       )
     }
@@ -134,8 +134,8 @@ export class Fraction {
     return simplify ? copy.reduce() : copy
   }
 
-  divide(f, simplify = true) {
-    if (f.valueOf() === 0) {
+  divide(f: unknown, simplify = true) {
+    if (f === 0 || (f instanceof Fraction && f.valueOf() === 0)) {
       throw new EvalError("Divide By Zero")
     }
 
@@ -143,18 +143,18 @@ export class Fraction {
 
     if (f instanceof Fraction) {
       return copy.multiply(new Fraction(f.denom, f.numer), simplify)
-    } else if (isInt(f)) {
+    } else if (typeof f === "number" && isInt(f)) {
       return copy.multiply(new Fraction(1, f), simplify)
     } else {
       throw new TypeError(
         "Invalid Argument (" +
-          f.toString() +
+          String(f) +
           "): Divisor must be of type Fraction or Integer."
       )
     }
   }
 
-  pow(n, simplify = true) {
+  pow(n: number, simplify = true) {
     let copy = this.copy()
 
     if (n >= 0) {

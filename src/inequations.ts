@@ -6,7 +6,7 @@ export class Inequation extends Equation {
   private isLessThan = false
   private isInclusive = false
 
-  constructor(lhs, rhs, relation) {
+  constructor(lhs: unknown, rhs: unknown, relation: string) {
     super(lhs, rhs)
     this.#parseRelation(relation)
   }
@@ -16,7 +16,7 @@ export class Inequation extends Equation {
     return new Inequation(equation.lhs, equation.rhs, this.#relationToString())
   }
 
-  solveFor(variable) {
+  solveFor(variable: string) {
     if (this.isLinear()) {
       const copy = new Inequation(
         this.lhs.copy(),
@@ -39,25 +39,26 @@ export class Inequation extends Equation {
    * references to `super`:
    * https://github.com/microsoft/TypeScript/issues/44515
    */
-  private solveForWithSideEffects(variable) {
-    const solution = super.solveFor(variable)
+  private solveForWithSideEffects(variable: string) {
+    const solution = super.solveFor(variable) as Expression
+    const rhs =
+      solution instanceof Expression ? solution : new Expression(solution)
     this.lhs = new Expression(variable)
-    this.rhs = solution
+    this.rhs = rhs
 
     return this
   }
 
-  divideRhsByCoefficient(rhs, coefficient) {
+  divideRhsByCoefficient(rhs: Expression, coefficient: Fraction) {
     const isCoefficientNegative =
-      (coefficient instanceof Fraction && coefficient.valueOf() < 0) ||
-      coefficient < 0
+      coefficient instanceof Fraction && coefficient.valueOf() < 0
     if (isCoefficientNegative) {
       this.isLessThan = !this.isLessThan
     }
     return rhs.divide(coefficient)
   }
 
-  eval(values) {
+  eval(values: Record<string, number | Expression | Fraction>) {
     return new Inequation(
       this.lhs.eval(values),
       this.rhs.eval(values),
@@ -65,7 +66,7 @@ export class Inequation extends Equation {
     )
   }
 
-  evalToBoolean(values) {
+  evalToBoolean(values: Record<string, number | Expression | Fraction>) {
     const inequation = this.eval(values)
     if (inequation.maxDegree() == 0) {
       if (inequation.isLessThan && inequation.isInclusive) {
@@ -114,11 +115,11 @@ export class Inequation extends Equation {
     return `${this.lhs.toTex()} ${relationTexString} ${this.rhs.toTex()}`
   }
 
-  #parseRelation(relation) {
+  #parseRelation(relation: string) {
     const RELATIONS = ["<", "<=", ">", ">="]
     if (RELATIONS.includes(relation)) {
-      this.isLessThan = relation.match(/^</)
-      this.isInclusive = relation.match(/=$/)
+      this.isLessThan = /^</.test(relation)
+      this.isInclusive = /=$/.test(relation)
     } else {
       throw new SyntaxError(
         `Relation "${relation}" is not supported. Only ${RELATIONS.map(relation => `"${relation}"`).join(", ")} are supported.`
