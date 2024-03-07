@@ -1,6 +1,7 @@
-import { Expression, Term, Variable } from "./expressions"
+import { Expression, Term } from "./expressions"
 import { Fraction } from "./fraction"
 import { isInt } from "./helpers"
+import { Variable } from "./variable"
 
 const ROOT_PRECISION = 10e-15
 
