@@ -13,6 +13,10 @@ ignorePaths:
   - "/build"
   - "/cspell.project-words.txt"
   - "/dist"
+  - "/docs/javascripts/algebra-*.js"
+  - "/docs/params.json"
+  - "/docs/stylesheets/normalize.css"
+  - "/docs/stylesheets/pygment_trac.css" # spellchecker:ignore pygment_trac
 dictionaryDefinitions:
   - name: project-words
     path: "./cspell.project-words.txt"

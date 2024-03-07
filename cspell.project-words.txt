@@ -7,6 +7,7 @@ inequation
 inequations
 infile
 javascripts
+katex
 lcov
 lcovonly
 markdownlint

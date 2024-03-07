@@ -12,7 +12,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export default tseslint.config(
   {
-    ignores: ["build/*", "dist/*"]
+    ignores: ["build/*", "dist/*", "docs/javascripts"]
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,

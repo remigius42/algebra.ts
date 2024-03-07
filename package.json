@@ -10,7 +10,6 @@
     "test:ci": "jest --ci",
     "coveralls": "npm test && cat ./coverage/lcov.info | npx coveralls && rm -rf ./coverage",
     "lint": "eslint --no-warn-ignored .",
-    "sync": "npm run build && git checkout gh-pages && cp build/*.min.js javascripts",
     "version": "conventional-changelog --preset conventionalcommits --infile CHANGELOG.md --same-file --append && prettier --write CHANGELOG.md && git add CHANGELOG.md",
     "prepare": "husky"
   },
