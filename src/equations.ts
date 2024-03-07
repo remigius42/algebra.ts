@@ -179,7 +179,7 @@ export class Equation {
     let newRhs = new Expression()
 
     for (let i = 0; i < this.rhs.terms.length; i++) {
-      let term = this.rhs.terms[i]
+      const term = this.rhs.terms[i]
 
       if (term.canBeCombinedWith(solvingFor)) {
         newLhs = newLhs.subtract(term)
@@ -189,7 +189,7 @@ export class Equation {
     }
 
     for (let i = 0; i < this.lhs.terms.length; i++) {
-      let term = this.lhs.terms[i]
+      const term = this.lhs.terms[i]
 
       if (term.canBeCombinedWith(solvingFor)) {
         newLhs = newLhs.add(term)
@@ -220,11 +220,11 @@ export class Equation {
   }
 
   #solveQuadraticEquation(newLhs) {
-    let coefs = newLhs.quadraticCoefficients()
+    const coefs = newLhs.quadraticCoefficients()
 
     let a = coefs.a
     let b = coefs.b
-    let c = coefs.c
+    const c = coefs.c
 
     // Calculate the discriminant, b^2 - 4ac.
     const discriminant = b.pow(2).subtract(a.multiply(c).multiply(4))
@@ -244,11 +244,11 @@ export class Equation {
         // If the answers will be rational, return reduced Fraction objects.
         if (discriminant.squareRootIsRational()) {
           squareRootDiscriminant = discriminant.pow(0.5)
-          let root1 = b
+          const root1 = b
             .multiply(-1)
             .subtract(squareRootDiscriminant)
             .divide(a.multiply(2))
-          let root2 = b
+          const root2 = b
             .multiply(-1)
             .add(squareRootDiscriminant)
             .divide(a.multiply(2))
@@ -259,8 +259,8 @@ export class Equation {
           a = a.valueOf()
           b = b.valueOf()
 
-          let root1 = (-b - squareRootDiscriminant) / (2 * a)
-          let root2 = (-b + squareRootDiscriminant) / (2 * a)
+          const root1 = (-b - squareRootDiscriminant) / (2 * a)
+          const root2 = (-b + squareRootDiscriminant) / (2 * a)
           return [root1, root2]
         }
       }
@@ -271,12 +271,12 @@ export class Equation {
   }
 
   #solveCubicEquation(newLhs) {
-    let coefs = newLhs.cubicCoefficients()
+    const coefs = newLhs.cubicCoefficients()
 
-    let a = coefs.a
-    let b = coefs.b
-    let c = coefs.c
-    let d = coefs.d
+    const a = coefs.a
+    const b = coefs.b
+    const c = coefs.c
+    const d = coefs.d
 
     // Calculate D and D0.
     let D = a.multiply(b).multiply(c).multiply(d).multiply(18)
@@ -292,7 +292,7 @@ export class Equation {
     if (D.valueOf() === 0) {
       // If D = D0 = 0, there is one distinct real root, -b / 3a.
       if (D0.valueOf() === 0) {
-        let root1 = b.multiply(-1).divide(a.multiply(3))
+        const root1 = b.multiply(-1).divide(a.multiply(3))
 
         return [root1.reduce()]
         // Otherwise, if D0 != 0, there are two distinct real roots.
@@ -304,7 +304,7 @@ export class Equation {
         root1 = root1.subtract(b.pow(3))
         root1 = root1.divide(a.multiply(D0))
 
-        let root2 = a
+        const root2 = a
           .multiply(d)
           .multiply(9)
           .subtract(b.multiply(c))
@@ -333,7 +333,7 @@ export class Equation {
         const S = Math.cbrt(R)
         const T = -(g / 2) - Math.sqrt(h)
         const U = Math.cbrt(T)
-        let root1 = S + U - b / (3 * a)
+        const root1 = S + U - b / (3 * a)
         return [root1].map(Equation.#roundRootToPrecision)
       } else {
         const i = Math.sqrt(Math.pow(g, 2) / 4 - h)
@@ -345,9 +345,9 @@ export class Equation {
         const N = Math.sqrt(3) * Math.sin(k / 3)
         const P = -(b / (3 * a))
 
-        let root1 = 2 * j * Math.cos(k / 3) - b / (3 * a)
-        let root2 = L * (M + N) + P
-        let root3 = L * (M - N) + P
+        const root1 = 2 * j * Math.cos(k / 3) - b / (3 * a)
+        const root2 = L * (M + N) + P
+        const root3 = L * (M - N) + P
 
         const roots = [root1, root2, root3].map(Equation.#roundRootToPrecision)
         roots.sort(function (a, b) {

@@ -141,7 +141,7 @@ export class Expression {
       }
 
       for (let i = 0; i < thatExp.terms.length; i++) {
-        let thatTerm = thatExp.terms[i]
+        const thatTerm = thatExp.terms[i]
 
         for (let j = 0; j < thisExp.constants.length; j++) {
           newTerms.push(thatTerm.multiply(thisExp.constants[j], simplify))
@@ -583,7 +583,7 @@ export class Term {
 
     const newVars: Array<Variable> = []
 
-    for (let v in uniqueVars) {
+    for (const v in uniqueVars) {
       const newVar = new Variable(v)
       newVar.degree = uniqueVars[v]
       newVars.push(newVar)
