@@ -10,7 +10,7 @@ layout: default
 ## Quick Start
 
 ```js
-var expr = new Expression("x")
+let expr = new Expression("x")
 expr = expr.subtract(3)
 expr = expr.add("x")
 
@@ -18,13 +18,13 @@ console.log(expr.toString()) // 2x - 3
 ```
 
 ```js
-var eq = new Equation(expr, 4)
+const eq = new Equation(expr, 4)
 
 console.log(eq.toString()) // 2x - 3 = 4
 ```
 
 ```js
-var x = eq.solveFor("x")
+const x = eq.solveFor("x")
 
 console.log("x = " + x.toString()) // x = 7/2
 ```
@@ -90,11 +90,11 @@ Download [algebra-0.2.5.min.js](javascripts/algebra-0.2.5.min.js).
 ### In Node
 
 ```sh
-npm install algebra.js
+npm install algebra.ts
 ```
 
 ```js
-var algebra = require("algebra.js")
+import { parse, toTex } from "algebra.ts"
 ```
 
 ## Getting Started
@@ -102,9 +102,20 @@ var algebra = require("algebra.js")
 The main objects available are Fraction, Expression, and Equation.
 
 ```js
-var Fraction = algebra.Fraction
-var Expression = algebra.Expression
-var Equation = algebra.Equation
+import { Fraction, Expression, Equation } from "algebra.ts"
+```
+
+Note that if you are using `algebra.ts` via
+
+```html
+<script src="algebra-0.2.5.min.js"></script>
+```
+
+the script will be loaded via [UMD](https://github.com/umdjs/umd) and you have
+to use the prefix `algebra`, for example
+
+```js
+let frac = new algebra.Fraction(1, 2)
 ```
 
 ### Fractions
@@ -113,7 +124,7 @@ Add, subtract, multiply, and divide fractions by either integers or other fracti
 reduced.
 
 ```js
-var frac = new Fraction(1, 2)
+let frac = new Fraction(1, 2)
 console.log(frac.toString()) // 1/2
 
 frac = frac.add(new Fraction(3, 4))
@@ -134,7 +145,7 @@ console.log(frac.toString()) // -1/5
 Initialize expressions with a variable name.
 
 ```js
-var x = new Expression("x")
+let x = new Expression("x")
 ```
 
 #### Add / Subtract
@@ -142,7 +153,7 @@ var x = new Expression("x")
 Add or subtract integers, fractions, variables, or other expressions to or from expressions.
 
 ```js
-var x = new Expression("x")
+let x = new Expression("x")
 
 x = x.add(3)
 console.log(x.toString()) // x + 3
@@ -153,7 +164,7 @@ console.log(x.toString()) // x + 8/3
 x = x.add("y")
 console.log(x.toString()) // x + y + 8/3
 
-var otherExp = new Expression("x").add(6)
+const otherExp = new Expression("x").add(6)
 
 x = x.add(otherExp)
 console.log(x.toString()) // 2x + y + 26/3
@@ -163,10 +174,10 @@ When adding / subtracting an expression to / from another expression, any like-t
 Keep in mind the distributive property when subtracting expressions.
 
 ```js
-var expr1 = new Expression("a").add("b").add("c")
-var expr2 = new Expression("c").subtract("b")
+const expr1 = new Expression("a").add("b").add("c")
+const expr2 = new Expression("c").subtract("b")
 
-var expr3 = expr1.subtract(expr2)
+const expr3 = expr1.subtract(expr2)
 
 console.log(
   expr1.toString() + " - (" + expr2.toString() + ") = " + expr3.toString()
@@ -178,16 +189,16 @@ console.log(
 Multiply expressions by integers, fractions, variables, or other expressions.
 
 ```js
-var expr1 = new Expression("x")
+let expr1 = new Expression("x")
 expr1 = expr1.add(2)
 expr1 = expr1.multiply(4)
 
-var expr2 = new Expression("x")
+let expr2 = new Expression("x")
 expr2 = expr2.multiply("y")
 expr2 = expr2.multiply(new Fraction(1, 3))
 expr2 = expr2.add(4)
 
-var expr3 = expr1.multiply(expr2)
+const expr3 = expr1.multiply(expr2)
 
 console.log(
   "(" + expr1.toString() + ")(" + expr2.toString() + ") = " + expr3.toString()
@@ -199,7 +210,7 @@ console.log(
 Divide expressions by either integers or fractions.
 
 ```js
-var x = new Expression("x").divide(2).divide(new Fraction(1, 5))
+const x = new Expression("x").divide(2).divide(new Fraction(1, 5))
 console.log(x.toString()) // 5/2x
 ```
 
@@ -210,13 +221,13 @@ Sum expressions over a particular variable and range with `Expression.summation(
 $$\sum\limits_{x=3}^6 (x + y + 3) = 4y + 30$$
 
 ```js
-var exp = new Expression("x")
+let exp = new Expression("x")
 exp = exp.add("y")
 exp = exp.add(3)
 
 console.log(exp.toString()) // x + y + 3
 
-var sum = exp.summation("x", 3, 6)
+const sum = exp.summation("x", 3, 6)
 
 console.log(sum.toString()) // 4y + 30
 ```
@@ -226,9 +237,9 @@ console.log(sum.toString()) // 4y + 30
 Raise expressions to integer powers.
 
 ```js
-var exp = new Expression("x").add(2)
+const exp = new Expression("x").add(2)
 
-var exp3 = exp.pow(3)
+const exp3 = exp.pow(3)
 
 console.log("(" + exp.toString() + ")^3 = " + exp3.toString()) // (x + 2)^3 = x^3 + 6x^2 + 12x + 8
 ```
@@ -240,7 +251,7 @@ Evaluate expressions by substituting in fractions, integers, or other expression
 ##### Integers and Fractions
 
 ```js
-var expr = new Expression("x")
+let expr = new Expression("x")
 expr = expr.multiply(2)
 expr = expr.multiply("x")
 expr = expr.add("y")
@@ -248,8 +259,8 @@ expr = expr.add(new Fraction(1, 3))
 
 console.log(expr.toString()) // 2x^2 + y + 1/3
 
-var answer1 = expr.eval({ x: 2 })
-var answer2 = expr.eval({ x: 2, y: new Fraction(3, 4) })
+const answer1 = expr.eval({ x: 2 })
+const answer2 = expr.eval({ x: 2, y: new Fraction(3, 4) })
 
 console.log(answer1.toString()) // y + 25/3
 console.log(answer2.toString()) // 109/12
@@ -258,12 +269,12 @@ console.log(answer2.toString()) // 109/12
 ##### Other Expressions
 
 ```js
-var expr = new Expression("x").add(2)
+const expr = new Expression("x").add(2)
 
 console.log(expr.toString()) // x + 2
 
-var sub = new Expression("y").add(4)
-var answer = expr.eval({ x: sub })
+const sub = new Expression("y").add(4)
+const answer = expr.eval({ x: sub })
 
 console.log(answer.toString()) // y + 6
 ```
@@ -274,7 +285,7 @@ All expression operations accept a `simplify` argument that will yield an unsimp
 You can then get a simplified expression with `Expression.simplify`.
 
 ```js
-var exp = new Expression("x").add(2)
+let exp = new Expression("x").add(2)
 console.log(exp.toString()) // x + 2
 
 exp = exp.multiply(5, false)
@@ -306,15 +317,15 @@ console.log(exp.toString()) // x^2 + 6x + 9
 Build an equation by setting an expression equal to another expression or to an integer or fraction.
 
 ```js
-var z = new Expression("z")
+const z = new Expression("z")
 
-var eq1 = new Equation(z.subtract(4).divide(9), z.add(6))
+const eq1 = new Equation(z.subtract(4).divide(9), z.add(6))
 console.log(eq1.toString()) // 1/9z - 4/9 = z + 6
 
-var eq2 = new Equation(z.add(4).multiply(9), 6)
+const eq2 = new Equation(z.add(4).multiply(9), 6)
 console.log(eq2.toString()) // 9z + 36 = 6
 
-var eq3 = new Equation(z.divide(2).multiply(7), new Fraction(1, 4))
+const eq3 = new Equation(z.divide(2).multiply(7), new Fraction(1, 4))
 console.log(eq3.toString()) // 7/2z = 1/4
 ```
 
@@ -325,13 +336,13 @@ console.log(eq3.toString()) // 7/2z = 1/4
 If a linear equation only has one variable, solving for that variable will return a fraction object.
 
 ```js
-var x1 = algebra.parse("1/5 * x + 2/15")
-var x2 = algebra.parse("1/7 * x + 4")
+const x1 = algebra.parse("1/5 * x + 2/15")
+const x2 = algebra.parse("1/7 * x + 4")
 
-var eq = new Equation(x1, x2)
+const eq = new Equation(x1, x2)
 console.log(eq.toString()) // 1/5x + 2/15 = 1/7x + 4
 
-var answer = eq.solveFor("x")
+const answer = eq.solveFor("x")
 
 console.log("x = " + answer.toString()) // x = 203/3
 ```
@@ -341,15 +352,15 @@ console.log("x = " + answer.toString()) // x = 203/3
 If a linear equation has more than one variable, solving for a variable will return an expression.
 
 ```js
-var expr1 = algebra.parse("1/4 * x + 5/4")
-var expr2 = algebra.parse("3 * y - 12/5")
+const expr1 = algebra.parse("1/4 * x + 5/4")
+const expr2 = algebra.parse("3 * y - 12/5")
 
-var eq = new Equation(expr1, expr2)
+const eq = new Equation(expr1, expr2)
 
 console.log(eq.toString()) // 1/4x + 5/4 = 3y - 12/5
 
-var xAnswer = eq.solveFor("x")
-var yAnswer = eq.solveFor("y")
+const xAnswer = eq.solveFor("x")
+const yAnswer = eq.solveFor("y")
 
 console.log("x = " + xAnswer.toString()) // x = 12y - 73/5
 console.log("y = " + yAnswer.toString()) // y = 1/12x + 73/60
@@ -368,14 +379,14 @@ Solving a quadratic equation with a discriminant that is greater than or equal t
 depending on if the roots are rational or irrational, respectively. Solving a quadratic equation with a discriminant that is less than 0 will return an empty array.
 
 ```js
-var n1 = algebra.parse("x + 5")
-var n2 = algebra.parse("x - 3/4")
+const n1 = algebra.parse("x + 5")
+const n2 = algebra.parse("x - 3/4")
 
-var quad = new Equation(n1.multiply(n2), 0)
+const quad = new Equation(n1.multiply(n2), 0)
 
 console.log(quad.toString()) // x^2 + 17/4x - 15/4 = 0
 
-var answers = quad.solveFor("x")
+const answers = quad.solveFor("x")
 
 console.log("x = " + answers.toString()) // x = -5,3/4
 ```
@@ -391,15 +402,15 @@ where $a \neq 0$.
 All cubic equations have at least one real root. Solving a cubic equation returns an array of its real roots as either Fraction objects or numbers.
 
 ```js
-var n1 = algebra.parse("x + 2")
-var n2 = algebra.parse("x + 3")
-var n3 = algebra.parse("x + 4")
+const n1 = algebra.parse("x + 2")
+const n2 = algebra.parse("x + 3")
+const n3 = algebra.parse("x + 4")
 
-var cubic = new Equation(n1.multiply(n2).multiply(n3), 0)
+const cubic = new Equation(n1.multiply(n2).multiply(n3), 0)
 
 console.log(cubic.toString()) // x^3 + 9x^2 + 26x + 24 = 0
 
-var answers = cubic.solveFor("x")
+const answers = cubic.solveFor("x")
 
 console.log("x = " + answers.toString()) // x = -4,-3,-2
 ```
@@ -413,17 +424,17 @@ Coming soon.
 Equations will only be solved if there is an [algebraic solution](https://en.wikipedia.org/wiki/Algebraic_solution) or if the variable being solved for can be isolated through arithmetic operations. Attempting to solve an equation that does not fit these criteria returns `undefined`.
 
 ```js
-var expr = new Expression("x")
+const expr = new Expression("x")
 expr = expr.multiply("x")
 expr = expr.add("x")
 expr = expr.add("y")
 
-var eq = new Equation(expr, 3)
+const eq = new Equation(expr, 3)
 
 console.log(eq.toString()) // x^2 + x + y = 3
 
-var xAnswer = eq.solveFor("x")
-var yAnswer = eq.solveFor("y")
+const xAnswer = eq.solveFor("x")
+const yAnswer = eq.solveFor("y")
 
 console.log("x = " + xAnswer) // x = undefined
 
@@ -439,7 +450,7 @@ Use `algebra.parse` to parse expressions and equations from strings.
 You must use the `*` operator between coefficients and variables.
 
 ```js
-var exp = new algebra.parse("2 * x^2 + 4 * x + 4")
+const exp = new algebra.parse("2 * x^2 + 4 * x + 4")
 
 console.log(exp.toString()) // 2x^2 + 4x + 4
 ```
@@ -447,7 +458,7 @@ console.log(exp.toString()) // 2x^2 + 4x + 4
 You also must use the `*` operator between cross products; otherwise, they'll be interpreted as a single variable.
 
 ```js
-var exp = algebra.parse("x * y + 4")
+const exp = algebra.parse("x * y + 4")
 
 console.log(exp.toString()) // xy + 4
 ```
@@ -455,11 +466,11 @@ console.log(exp.toString()) // xy + 4
 #### Parse Equations
 
 ```js
-var eq = algebra.parse("x^2 + 4 * x + 4 = 0")
+const eq = algebra.parse("x^2 + 4 * x + 4 = 0")
 
 console.log(eq.toString()) // x^2 + 4x + 4 = 0
 
-var ans = eq.solveFor("x")
+const ans = eq.solveFor("x")
 
 console.log("x = " + ans.toString()) // x = -2
 ```
@@ -476,16 +487,16 @@ Make things pretty with LaTeX. The `algebra` object has a `.toTex()` method for 
 <div id="mySolution"></div>
 
 <script>
-  var a = new Expression("x").pow(2)
-  var b = new Expression("x").multiply(new Fraction(5, 4))
-  var c = new Fraction(-21, 4)
+  const a = new Expression("x").pow(2)
+  const b = new Expression("x").multiply(new Fraction(5, 4))
+  const c = new Fraction(-21, 4)
 
-  var expr = a.add(b).add(c)
+  const expr = a.add(b).add(c)
 
-  var quad = new Equation(expr, 0)
+  const quad = new Equation(expr, 0)
   katex.render(algebra.toTex(quad), myEquation)
 
-  var answers = quad.solveFor("x")
+  const answers = quad.solveFor("x")
   katex.render("x = " + algebra.toTex(answers), mySolution)
 </script>
 ```
@@ -494,16 +505,16 @@ Make things pretty with LaTeX. The `algebra` object has a `.toTex()` method for 
 <div id="mySolution"></div>
 
 <script>
-var a = new Expression("x").pow(2);
-var b = new Expression("x").multiply(new Fraction(5, 4));
-var c = new Fraction(-21, 4);
+const a = new Expression("x").pow(2);
+const b = new Expression("x").multiply(new Fraction(5, 4));
+const c = new Fraction(-21, 4);
 
-var expr = a.add(b).add(c);
+const expr = a.add(b).add(c);
 
-var quad = new Equation(expr, 0);
+const quad = new Equation(expr, 0);
 katex.render(algebra.toTex(quad), myEquation);
 
-var answers = quad.solveFor("x");
+const answers = quad.solveFor("x");
 katex.render("x = " + algebra.toTex(answers), mySolution);
 </script>
 
@@ -518,8 +529,8 @@ Also supports Greek letters, obviously!
 </div>
 
 <script>
-  var lambda = new Expression("lambda").add(3).divide(4)
-  var Phi = new Expression("Phi").subtract(new Fraction(1, 5)).add(lambda)
+  const lambda = new Expression("lambda").add(3).divide(4)
+  const Phi = new Expression("Phi").subtract(new Fraction(1, 5)).add(lambda)
 
   katex.render(algebra.toTex(lambda), expr1)
   katex.render(algebra.toTex(Phi), expr2)
@@ -532,8 +543,8 @@ Also supports Greek letters, obviously!
 </div>
 
 <script>
-var lambda = new Expression("lambda").add(3).divide(4);
-var Phi = new Expression("Phi").subtract(new Fraction(1, 5)).add(lambda);
+const lambda = new Expression("lambda").add(3).divide(4);
+const Phi = new Expression("Phi").subtract(new Fraction(1, 5)).add(lambda);
 
 katex.render(lambda.toTex(), expr1);
 katex.render(Phi.toTex(), expr2);
