@@ -12,7 +12,7 @@ export default compact.flatMap(compact =>
   formats.map(format => ({
     input: "index.ts",
     output: {
-      file: `build/algebra-${pkg.version}.${format}${compact ? ".min" : ""}.js`,
+      file: `dist/algebra-${pkg.version}.${format}${compact ? ".min" : ""}.js`,
       name: "algebra",
       format
     },

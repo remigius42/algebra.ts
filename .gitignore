@@ -3,4 +3,5 @@ _site
 .idea
 .jest-results
 coverage
+/dist
 node_modules

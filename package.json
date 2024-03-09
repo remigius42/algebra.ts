@@ -20,7 +20,8 @@
   },
   "files": [
     "index.ts",
-    "src/"
+    "src/",
+    "dist/"
   ],
   "devDependencies": {
     "@babel/core": "^7.24.0",

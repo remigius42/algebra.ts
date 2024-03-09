@@ -49,7 +49,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: algebra-${{ steps.package-version.outputs.current-version }}.ts
-          path: "build/algebra-${{ steps.package-version.outputs.current-version }}.*"
+          path: "dist/algebra-${{ steps.package-version.outputs.current-version }}.*"
       - name: Test summary
         if: always()
         uses: test-summary/action@v2.3

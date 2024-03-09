@@ -12,6 +12,7 @@ ignorePaths:
   - "/.vscode/settings.json"
   - "/build"
   - "/cspell.project-words.txt"
+  - "/dist"
 dictionaryDefinitions:
   - name: project-words
     path: "./cspell.project-words.txt"
