@@ -15,7 +15,7 @@ ignorePaths:
   - "/dist"
   - "/docs/javascripts/algebra-*.js"
   - "/docs/params.json"
-  - "/docs/stylesheets/normalize.css"
+  - "/docs/stylesheets/modern-normalize.css"
   - "/docs/stylesheets/pygment_trac.css" # spellchecker:ignore pygment_trac
 dictionaryDefinitions:
   - name: project-words
