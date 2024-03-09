@@ -4,13 +4,13 @@ import { Fraction } from "./fraction"
 import { Inequation } from "./inequation"
 import { Parser } from "./parser"
 
-const parse = function (input: string) {
+export function parse(input: string) {
   const parser = new Parser()
   const result = parser.parse(input)
   return result
 }
 
-const toTex = function (input: unknown) {
+export function toTex(input: unknown) {
   if (
     input instanceof Fraction ||
     input instanceof Expression ||
@@ -31,9 +31,4 @@ const toTex = function (input: unknown) {
   } else {
     return String(input)
   }
-}
-
-export default {
-  parse,
-  toTex
 }

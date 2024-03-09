@@ -1,4 +1,4 @@
-import algebra from "../src/algebra"
+import { toTex } from "../src/algebra"
 import { Fraction } from "../src/fraction"
 
 describe("An invalid fraction", () => {
@@ -56,7 +56,7 @@ describe("A valid, positive fraction", () => {
   })
 
   it("should print to tex properly with algebra.toTex", () => {
-    expect(algebra.toTex(frac)).toEqual("\\frac{1}{2}")
+    expect(toTex(frac)).toEqual("\\frac{1}{2}")
   })
 
   it("should coerce to a number properly", () => {
@@ -81,7 +81,7 @@ describe("A valid fraction with a negative numerator", () => {
   })
 
   it("should print to tex with the negative in the numerator with algebra.toTex", () => {
-    expect(algebra.toTex(frac)).toEqual("\\frac{-1}{2}")
+    expect(toTex(frac)).toEqual("\\frac{-1}{2}")
   })
 
   it("should coerce to a valueOf properly", () => {
@@ -109,7 +109,7 @@ describe("A valid fraction with a negative denominator", () => {
 
   it("should print to tex with a negative numerator with algebra.toTex", () => {
     const red = frac.reduce()
-    expect(algebra.toTex(red)).toEqual("\\frac{-1}{2}")
+    expect(toTex(red)).toEqual("\\frac{-1}{2}")
   })
 
   it("should bring the negative up to the numerator when reduced", () => {
@@ -140,7 +140,7 @@ describe("Fractions with 1 in the denominator", () => {
   })
 
   it("should print to tex with positive integers with algebra.toTex", () => {
-    expect(algebra.toTex(frac)).toEqual("5")
+    expect(toTex(frac)).toEqual("5")
   })
 })
 
@@ -161,7 +161,7 @@ describe("A Fraction representing zero", () => {
   })
 
   it("should print to tex with zero with algebra.toTex", () => {
-    expect(algebra.toTex(frac)).toEqual("0")
+    expect(toTex(frac)).toEqual("0")
   })
 })
 
@@ -182,7 +182,7 @@ describe("Fractions with -1 in the denominator", () => {
   })
 
   it("should print to tex with negative integers with algebra.toTex", () => {
-    expect(algebra.toTex(frac)).toEqual("-5")
+    expect(toTex(frac)).toEqual("-5")
   })
 })
 

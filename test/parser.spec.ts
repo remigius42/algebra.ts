@@ -1,4 +1,4 @@
-import algebra from "../src/algebra"
+import { parse } from "../src/algebra"
 import { Equation } from "../src/equation"
 import { Expression } from "../src/expressions"
 import { Fraction } from "../src/fraction"
@@ -56,7 +56,7 @@ describe("Input validity", () => {
     const input = "2+alpha = 5"
     const lhs = new Expression("alpha").add(2)
     const rhs = new Expression(5)
-    expect(algebra.parse(input)).toEqual(new Equation(lhs, rhs))
+    expect(parse(input)).toEqual(new Equation(lhs, rhs))
   })
 
   it("should not accept incomplete decimal numbers", () => {
@@ -76,19 +76,19 @@ describe("Input validity", () => {
   it("should treat decimal numbers correctly", () => {
     const input = "2.0 + 4.5"
     const expr = new Expression(13).divide(2)
-    expect(algebra.parse(input)).toEqual(expr)
+    expect(parse(input)).toEqual(expr)
   })
 
   it("should treat decimal numbers correctly", () => {
     const input = "0.0"
     const expr = new Expression(0)
-    expect(algebra.parse(input)).toEqual(expr)
+    expect(parse(input)).toEqual(expr)
   })
 
   it("should treat negative numbers correctly", () => {
     const input = "x = -4"
     const eqn = new Equation(new Expression("x"), new Expression(-4))
-    expect(algebra.parse(input)).toEqual(eqn)
+    expect(parse(input)).toEqual(eqn)
   })
 
   it("should parse terms following negative terms correctly", () => {
@@ -97,7 +97,7 @@ describe("Input validity", () => {
       new Expression("x").multiply(-2).add(new Expression("y").multiply(3)),
       new Expression(4)
     )
-    expect(algebra.parse(input)).toEqual(eqn)
+    expect(parse(input)).toEqual(eqn)
   })
 })
 
@@ -216,40 +216,40 @@ describe("Order of operations", () => {
     const input = "(x + 2)(x + 2)"
     let e1 = new Expression("x").add(2)
     e1 = e1.multiply(e1)
-    expect(algebra.parse(input)).toEqual(e1)
+    expect(parse(input)).toEqual(e1)
   })
 
   it("should treat integers adjacent to parentheses as multiplication", () => {
     const input = "5(x+2)"
     let e1 = new Expression("x").add(2)
     e1 = e1.multiply(5)
-    expect(algebra.parse(input)).toEqual(e1)
+    expect(parse(input)).toEqual(e1)
   })
 
   it("should treat integers adjacent to parentheses as multiplication", () => {
     const input = "(x+2)5"
     let e1 = new Expression("x").add(2)
     e1 = e1.multiply(5)
-    expect(algebra.parse(input)).toEqual(e1)
+    expect(parse(input)).toEqual(e1)
   })
 
   it("should be able to raise expressions wrapped in parentheses", () => {
     const input = "(x+2)^2"
     const exp = new Expression("x").add(2).pow(2)
 
-    expect(algebra.parse(input)).toEqual(exp)
+    expect(parse(input)).toEqual(exp)
   })
   it("power has a higher operator precedence than multiplication ", () => {
     const input = "a*x^2"
     const exp = new Expression("a").multiply(new Expression("x").pow(2))
 
-    expect(algebra.parse(input)).toEqual(exp)
+    expect(parse(input)).toEqual(exp)
   })
 
   it("power has a higher operator precedence than multiplication when the multiply operator is missing", () => {
     const input = "(3/2)x^2"
     const exp = new Expression("x").pow(2).multiply(new Fraction(3, 2))
 
-    expect(algebra.parse(input)).toEqual(exp)
+    expect(parse(input)).toEqual(exp)
   })
 })

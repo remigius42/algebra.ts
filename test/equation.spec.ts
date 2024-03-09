@@ -1,4 +1,4 @@
-import algebra from "../src/algebra"
+import { toTex } from "../src/algebra"
 import { Equation } from "../src/equation"
 import { Expression } from "../src/expressions"
 import { Fraction } from "../src/fraction"
@@ -48,9 +48,7 @@ describe("A linear equation with one variable", () => {
   })
 
   it("should print to TeX properly with algebra.toTex", () => {
-    expect(algebra.toTex(eq)).toEqual(
-      "\\frac{1}{5}x + \\frac{4}{5} = x - \\frac{1}{6}"
-    )
+    expect(toTex(eq)).toEqual("\\frac{1}{5}x + \\frac{4}{5} = x - \\frac{1}{6}")
   })
 
   it("should return a fraction when solving for the one variable", () => {
@@ -216,7 +214,7 @@ describe("An array of answers resulting from solving an equation", () => {
     const eq = new Equation(ex, 0) // x^2 + x - 2 = 0
 
     const answers = eq.solveFor("x") // -2, 1
-    expect(algebra.toTex(answers)).toEqual("-2,1")
+    expect(toTex(answers)).toEqual("-2,1")
   })
 
   it("should convert toTex properly with irrational solutions", () => {
@@ -224,9 +222,7 @@ describe("An array of answers resulting from solving an equation", () => {
     const eq = new Equation(ex, 0) // 5x^2 + x - 2 = 0
 
     const answers = eq.solveFor("x")
-    expect(algebra.toTex(answers)).toEqual(
-      "-0.7403124237432849,0.5403124237432848"
-    )
+    expect(toTex(answers)).toEqual("-0.7403124237432849,0.5403124237432848")
   })
 })
 
@@ -481,7 +477,7 @@ describe("Solving a cubic equation", () => {
 
     const answers = cubic.solveFor("x")
 
-    expect(algebra.toTex(answers)).toEqual("-4,-3,-1")
+    expect(toTex(answers)).toEqual("-4,-3,-1")
   })
 
   it("works when there is one real root, discriminant < 0", () => {

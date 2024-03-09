@@ -1,4 +1,4 @@
-import algebra from "../src/algebra"
+import { toTex } from "../src/algebra"
 import { Equation } from "../src/equation"
 import { Expression } from "../src/expressions"
 import { Fraction } from "../src/fraction"
@@ -37,7 +37,7 @@ describe("An expression initialized with a greek letter variable name", () => {
   })
 
   it("works with algebra.toTex", () => {
-    expect(algebra.toTex(lambda)).toEqual("5\\lambda + 15")
+    expect(toTex(lambda)).toEqual("5\\lambda + 15")
   })
 })
 
@@ -578,7 +578,7 @@ describe("Expression printing to tex", () => {
 
   it("works with algebra.toTex", () => {
     const x = new Expression("x").add(2)
-    expect(algebra.toTex(x)).toEqual("x + 2")
+    expect(toTex(x)).toEqual("x + 2")
   })
 })
 

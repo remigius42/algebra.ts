@@ -1,4 +1,4 @@
-import algebra from "../src/algebra"
+import { toTex } from "../src/algebra"
 import { gcd, isInt, lcm, round } from "../src/helpers"
 
 describe("Greatest common divisor", () => {
@@ -71,16 +71,16 @@ describe("round", () => {
 describe("algebra.toTex", () => {
   it("converts non-algebra.js objects to strings - string", () => {
     const x = "hello"
-    expect(algebra.toTex(x)).toEqual(x.toString())
+    expect(toTex(x)).toEqual(x.toString())
   })
 
   it("converts non-algebra.js objects to strings - number", () => {
     const x = 3.5
-    expect(algebra.toTex(x)).toEqual(x.toString())
+    expect(toTex(x)).toEqual(x.toString())
   })
 
   it("converts non-algebra.js objects to strings - boolean", () => {
     const x = true
-    expect(algebra.toTex(x)).toEqual(x.toString())
+    expect(toTex(x)).toEqual(x.toString())
   })
 })

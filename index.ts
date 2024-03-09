@@ -1,5 +1,4 @@
-import algebra from "./src/algebra"
-export default algebra
+export { parse, toTex } from "./src/algebra"
 export { Equation } from "./src/equation"
 export { Inequation } from "./src/inequation"
 export { Expression, Term } from "./src/expressions"
