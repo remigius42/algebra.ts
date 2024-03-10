@@ -13,19 +13,12 @@ layout: default
 let expr = new Expression("x")
 expr = expr.subtract(3)
 expr = expr.add("x")
-
 console.log(expr.toString()) // 2x - 3
-```
 
-```js
 const eq = new Equation(expr, 4)
-
 console.log(eq.toString()) // 2x - 3 = 4
-```
 
-```js
 const x = eq.solveFor("x")
-
 console.log("x = " + x.toString()) // x = 7/2
 ```
 
