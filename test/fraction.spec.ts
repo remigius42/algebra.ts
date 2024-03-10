@@ -1,4 +1,4 @@
-import algebra from "../algebra"
+import algebra from "../src/algebra"
 import { Fraction } from "../src/fraction"
 
 describe("An invalid fraction", () => {

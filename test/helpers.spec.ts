@@ -1,4 +1,4 @@
-import algebra from "../algebra"
+import algebra from "../src/algebra"
 import { gcd, isInt, lcm, round } from "../src/helpers"
 
 describe("Greatest common divisor", () => {

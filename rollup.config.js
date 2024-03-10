@@ -10,7 +10,7 @@ const compact = [false, true]
 
 export default compact.flatMap(compact =>
   formats.map(format => ({
-    input: "algebra.ts",
+    input: "index.ts",
     output: {
       file: `build/algebra-${pkg.version}.${format}${compact ? ".min" : ""}.js`,
       name: "algebra",

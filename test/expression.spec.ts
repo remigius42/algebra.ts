@@ -1,4 +1,4 @@
-import algebra from "../algebra"
+import algebra from "../src/algebra"
 import { Equation } from "../src/equation"
 import { Expression } from "../src/expressions"
 import { Fraction } from "../src/fraction"

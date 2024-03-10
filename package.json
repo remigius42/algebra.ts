@@ -19,7 +19,7 @@
     "url": "https://github.com/remigius42/algebra.ts.git"
   },
   "files": [
-    "algebra.ts",
+    "index.ts",
     "src/"
   ],
   "devDependencies": {
