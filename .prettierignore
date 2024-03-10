@@ -3,7 +3,6 @@ package.json
 package-lock.json
 
 # build output
-/build/**
 /dist/**
 
 # GitHub Pages scripts
