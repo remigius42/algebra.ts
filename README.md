@@ -8,13 +8,13 @@
 const expr = new Expression("x")
 expr = expr.subtract(3)
 expr = expr.add("x")
-console.log(expr.toString()) // 2x - 3
+console.log(String(expr)) // 2x - 3
 
 const eq = new Equation(expr, 4)
-console.log(eq.toString()) // 2x - 3 = 4
+console.log(String(eq)) // 2x - 3 = 4
 
 const x = eq.solveFor("x")
-console.log("x = " + x.toString()) // x = 7/2
+console.log("x = " + String(x)) // x = 7/2
 ```
 
 [Read the full documentation at the project site](https://remigius42.github.io/algebra.ts/).

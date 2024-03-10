@@ -13,13 +13,13 @@ layout: default
 let expr = new Expression("x")
 expr = expr.subtract(3)
 expr = expr.add("x")
-console.log(expr.toString()) // 2x - 3
+console.log(String(expr)) // 2x - 3
 
 const eq = new Equation(expr, 4)
-console.log(eq.toString()) // 2x - 3 = 4
+console.log(String(eq)) // 2x - 3 = 4
 
 const x = eq.solveFor("x")
-console.log("x = " + x.toString()) // x = 7/2
+console.log("x = " + String(x)) // x = 7/2
 ```
 
 ## Contents
@@ -118,19 +118,19 @@ reduced.
 
 ```js
 let frac = new Fraction(1, 2)
-console.log(frac.toString()) // 1/2
+console.log(String(frac)) // 1/2
 
 frac = frac.add(new Fraction(3, 4))
-console.log(frac.toString()) // 5/4
+console.log(String(frac)) // 5/4
 
 frac = frac.subtract(2)
-console.log(frac.toString()) // -3/4
+console.log(String(frac)) // -3/4
 
 frac = frac.multiply(new Fraction(4, 3))
-console.log(frac.toString()) // -1
+console.log(String(frac)) // -1
 
 frac = frac.divide(5)
-console.log(frac.toString()) // -1/5
+console.log(String(frac)) // -1/5
 ```
 
 ### Expressions
@@ -149,18 +149,18 @@ Add or subtract integers, fractions, variables, or other expressions to or from 
 let x = new Expression("x")
 
 x = x.add(3)
-console.log(x.toString()) // x + 3
+console.log(String(x)) // x + 3
 
 x = x.subtract(new Fraction(1, 3))
-console.log(x.toString()) // x + 8/3
+console.log(String(x)) // x + 8/3
 
 x = x.add("y")
-console.log(x.toString()) // x + y + 8/3
+console.log(String(x)) // x + y + 8/3
 
 const otherExp = new Expression("x").add(6)
 
 x = x.add(otherExp)
-console.log(x.toString()) // 2x + y + 26/3
+console.log(String(x)) // 2x + y + 26/3
 ```
 
 When adding / subtracting an expression to / from another expression, any like-terms will be combined.
@@ -172,9 +172,7 @@ const expr2 = new Expression("c").subtract("b")
 
 const expr3 = expr1.subtract(expr2)
 
-console.log(
-  expr1.toString() + " - (" + expr2.toString() + ") = " + expr3.toString()
-) // a + b + c - (c - b) = a + 2b
+console.log(String(expr1) + " - (" + String(expr2) + ") = " + String(expr3)) // a + b + c - (c - b) = a + 2b
 ```
 
 #### Multiply
@@ -193,9 +191,7 @@ expr2 = expr2.add(4)
 
 const expr3 = expr1.multiply(expr2)
 
-console.log(
-  "(" + expr1.toString() + ")(" + expr2.toString() + ") = " + expr3.toString()
-) // (4x + 8)(1/3xy + 4) = 4/3x^2y + 8/3xy + 16x + 32
+console.log("(" + String(expr1) + ")(" + String(expr2) + ") = " + String(expr3)) // (4x + 8)(1/3xy + 4) = 4/3x^2y + 8/3xy + 16x + 32
 ```
 
 #### Divide
@@ -204,7 +200,7 @@ Divide expressions by either integers or fractions.
 
 ```js
 const x = new Expression("x").divide(2).divide(new Fraction(1, 5))
-console.log(x.toString()) // 5/2x
+console.log(String(x)) // 5/2x
 ```
 
 #### Summation
@@ -218,11 +214,11 @@ let exp = new Expression("x")
 exp = exp.add("y")
 exp = exp.add(3)
 
-console.log(exp.toString()) // x + y + 3
+console.log(String(exp)) // x + y + 3
 
 const sum = exp.summation("x", 3, 6)
 
-console.log(sum.toString()) // 4y + 30
+console.log(String(sum)) // 4y + 30
 ```
 
 #### Raise
@@ -234,7 +230,7 @@ const exp = new Expression("x").add(2)
 
 const exp3 = exp.pow(3)
 
-console.log("(" + exp.toString() + ")^3 = " + exp3.toString()) // (x + 2)^3 = x^3 + 6x^2 + 12x + 8
+console.log("(" + String(exp) + ")^3 = " + String(exp3)) // (x + 2)^3 = x^3 + 6x^2 + 12x + 8
 ```
 
 #### Evaluate
@@ -250,13 +246,13 @@ expr = expr.multiply("x")
 expr = expr.add("y")
 expr = expr.add(new Fraction(1, 3))
 
-console.log(expr.toString()) // 2x^2 + y + 1/3
+console.log(String(expr)) // 2x^2 + y + 1/3
 
 const answer1 = expr.eval({ x: 2 })
 const answer2 = expr.eval({ x: 2, y: new Fraction(3, 4) })
 
-console.log(answer1.toString()) // y + 25/3
-console.log(answer2.toString()) // 109/12
+console.log(String(answer1)) // y + 25/3
+console.log(String(answer2)) // 109/12
 ```
 
 ##### Other Expressions
@@ -264,12 +260,12 @@ console.log(answer2.toString()) // 109/12
 ```js
 const expr = new Expression("x").add(2)
 
-console.log(expr.toString()) // x + 2
+console.log(String(expr)) // x + 2
 
 const sub = new Expression("y").add(4)
 const answer = expr.eval({ x: sub })
 
-console.log(answer.toString()) // y + 6
+console.log(String(answer)) // y + 6
 ```
 
 #### Simplification
@@ -279,28 +275,28 @@ You can then get a simplified expression with `Expression.simplify`.
 
 ```js
 let exp = new Expression("x").add(2)
-console.log(exp.toString()) // x + 2
+console.log(String(exp)) // x + 2
 
 exp = exp.multiply(5, false)
-console.log(exp.toString()) // 5x + 5 * 2
+console.log(String(exp)) // 5x + 5 * 2
 
 exp = exp.simplify()
-console.log(exp.toString()) // 5x + 10
+console.log(String(exp)) // 5x + 10
 
 exp = exp.add(5, false)
-console.log(exp.toString()) // 5x + 10 + 5
+console.log(String(exp)) // 5x + 10 + 5
 
 exp = exp.divide(5, false)
-console.log(exp.toString()) // 5/5x + 10/5 + 5/5
+console.log(String(exp)) // 5/5x + 10/5 + 5/5
 
 exp = exp.simplify()
-console.log(exp.toString()) // x + 3
+console.log(String(exp)) // x + 3
 
 exp = exp.pow(2, false)
-console.log(exp.toString()) // xx + 3x + 3x + 3 * 3
+console.log(String(exp)) // xx + 3x + 3x + 3 * 3
 
 exp = exp.simplify()
-console.log(exp.toString()) // x^2 + 6x + 9
+console.log(String(exp)) // x^2 + 6x + 9
 ```
 
 ### Equations
@@ -313,13 +309,13 @@ Build an equation by setting an expression equal to another expression or to an 
 const z = new Expression("z")
 
 const eq1 = new Equation(z.subtract(4).divide(9), z.add(6))
-console.log(eq1.toString()) // 1/9z - 4/9 = z + 6
+console.log(String(eq1)) // 1/9z - 4/9 = z + 6
 
 const eq2 = new Equation(z.add(4).multiply(9), 6)
-console.log(eq2.toString()) // 9z + 36 = 6
+console.log(String(eq2)) // 9z + 36 = 6
 
 const eq3 = new Equation(z.divide(2).multiply(7), new Fraction(1, 4))
-console.log(eq3.toString()) // 7/2z = 1/4
+console.log(String(eq3)) // 7/2z = 1/4
 ```
 
 #### Solve Linear Equations
@@ -333,11 +329,11 @@ const x1 = algebra.parse("1/5 * x + 2/15")
 const x2 = algebra.parse("1/7 * x + 4")
 
 const eq = new Equation(x1, x2)
-console.log(eq.toString()) // 1/5x + 2/15 = 1/7x + 4
+console.log(String(eq)) // 1/5x + 2/15 = 1/7x + 4
 
 const answer = eq.solveFor("x")
 
-console.log("x = " + answer.toString()) // x = 203/3
+console.log("x = " + String(answer)) // x = 203/3
 ```
 
 ##### Multiple Variables
@@ -350,13 +346,13 @@ const expr2 = algebra.parse("3 * y - 12/5")
 
 const eq = new Equation(expr1, expr2)
 
-console.log(eq.toString()) // 1/4x + 5/4 = 3y - 12/5
+console.log(String(eq)) // 1/4x + 5/4 = 3y - 12/5
 
 const xAnswer = eq.solveFor("x")
 const yAnswer = eq.solveFor("y")
 
-console.log("x = " + xAnswer.toString()) // x = 12y - 73/5
-console.log("y = " + yAnswer.toString()) // y = 1/12x + 73/60
+console.log("x = " + String(xAnswer)) // x = 12y - 73/5
+console.log("y = " + String(yAnswer)) // y = 1/12x + 73/60
 ```
 
 #### Solve Quadratic Equations
@@ -377,11 +373,11 @@ const n2 = algebra.parse("x - 3/4")
 
 const quad = new Equation(n1.multiply(n2), 0)
 
-console.log(quad.toString()) // x^2 + 17/4x - 15/4 = 0
+console.log(String(quad)) // x^2 + 17/4x - 15/4 = 0
 
 const answers = quad.solveFor("x")
 
-console.log("x = " + answers.toString()) // x = -5,3/4
+console.log("x = " + String(answers)) // x = -5,3/4
 ```
 
 #### Solve Cubic Equations
@@ -401,11 +397,11 @@ const n3 = algebra.parse("x + 4")
 
 const cubic = new Equation(n1.multiply(n2).multiply(n3), 0)
 
-console.log(cubic.toString()) // x^3 + 9x^2 + 26x + 24 = 0
+console.log(String(cubic)) // x^3 + 9x^2 + 26x + 24 = 0
 
 const answers = cubic.solveFor("x")
 
-console.log("x = " + answers.toString()) // x = -4,-3,-2
+console.log("x = " + String(answers)) // x = -4,-3,-2
 ```
 
 #### Solve Quartic Equations
@@ -424,14 +420,14 @@ expr = expr.add("y")
 
 const eq = new Equation(expr, 3)
 
-console.log(eq.toString()) // x^2 + x + y = 3
+console.log(String(eq)) // x^2 + x + y = 3
 
 const xAnswer = eq.solveFor("x")
 const yAnswer = eq.solveFor("y")
 
 console.log("x = " + xAnswer) // x = undefined
 
-console.log("y = " + yAnswer.toString()) // y = -x^2 - x + 3
+console.log("y = " + String(yAnswer)) // y = -x^2 - x + 3
 ```
 
 ### Parser
@@ -445,7 +441,7 @@ You must use the `*` operator between coefficients and variables.
 ```js
 const exp = new algebra.parse("2 * x^2 + 4 * x + 4")
 
-console.log(exp.toString()) // 2x^2 + 4x + 4
+console.log(String(exp)) // 2x^2 + 4x + 4
 ```
 
 You also must use the `*` operator between cross products; otherwise, they'll be interpreted as a single variable.
@@ -453,7 +449,7 @@ You also must use the `*` operator between cross products; otherwise, they'll be
 ```js
 const exp = algebra.parse("x * y + 4")
 
-console.log(exp.toString()) // xy + 4
+console.log(String(exp)) // xy + 4
 ```
 
 #### Parse Equations
@@ -461,11 +457,11 @@ console.log(exp.toString()) // xy + 4
 ```js
 const eq = algebra.parse("x^2 + 4 * x + 4 = 0")
 
-console.log(eq.toString()) // x^2 + 4x + 4 = 0
+console.log(String(eq)) // x^2 + 4x + 4 = 0
 
 const ans = eq.solveFor("x")
 
-console.log("x = " + ans.toString()) // x = -2
+console.log("x = " + String(ans)) // x = -2
 ```
 
 ## LaTeX
