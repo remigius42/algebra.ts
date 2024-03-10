@@ -3654,4 +3654,4 @@ function toTex(input) {
   }
 }
 
-export { Equation, Expression, Inequation, Parser, Term, Variable, parse, toTex };
+export { Equation, Expression, Fraction, Inequation, Parser, Term, Variable, parse, toTex };

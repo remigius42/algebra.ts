@@ -3662,6 +3662,7 @@
 
   exports.Equation = Equation;
   exports.Expression = Expression;
+  exports.Fraction = Fraction;
   exports.Inequation = Inequation;
   exports.Parser = Parser;
   exports.Term = Term;

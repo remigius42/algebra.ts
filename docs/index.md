@@ -475,7 +475,14 @@ Make things pretty with LaTeX. The `algebra` object has a `.toTex()` method for 
 <div id="myEquation"></div>
 <div id="mySolution"></div>
 
-<script>
+<script type="module">
+  import {
+    Equation,
+    Expression,
+    Fraction,
+    toTex
+  } from "./javascripts/algebra-0.2.8.esm.js"
+
   const a = new Expression("x").pow(2)
   const b = new Expression("x").multiply(new Fraction(5, 4))
   const c = new Fraction(-21, 4)
@@ -483,17 +490,19 @@ Make things pretty with LaTeX. The `algebra` object has a `.toTex()` method for 
   const expr = a.add(b).add(c)
 
   const quad = new Equation(expr, 0)
-  katex.render(algebra.toTex(quad), myEquation)
+  katex.render(toTex(quad), myEquation)
 
   const answers = quad.solveFor("x")
-  katex.render("x = " + algebra.toTex(answers), mySolution)
+  katex.render("x = " + toTex(answers), mySolution)
 </script>
 ```
 
 <div id="myEquation"></div>
 <div id="mySolution"></div>
 
-<script>
+<script type="module">
+import { Equation, Expression, Fraction, toTex } from "./javascripts/algebra-0.2.8.esm.js"
+
 const a = new Expression("x").pow(2);
 const b = new Expression("x").multiply(new Fraction(5, 4));
 const c = new Fraction(-21, 4);
@@ -501,10 +510,10 @@ const c = new Fraction(-21, 4);
 const expr = a.add(b).add(c);
 
 const quad = new Equation(expr, 0);
-katex.render(algebra.toTex(quad), myEquation);
+katex.render(toTex(quad), myEquation);
 
 const answers = quad.solveFor("x");
-katex.render("x = " + algebra.toTex(answers), mySolution);
+katex.render("x = " + toTex(answers), mySolution);
 </script>
 
 ## Greek Letters
@@ -517,12 +526,18 @@ Also supports Greek letters, obviously!
   <div id="expr2"></div>
 </div>
 
-<script>
+<script type="module">
+  import {
+    Expression,
+    Fraction,
+    toTex
+  } from "./javascripts/algebra-0.2.8.esm.js"
+
   const lambda = new Expression("lambda").add(3).divide(4)
   const Phi = new Expression("Phi").subtract(new Fraction(1, 5)).add(lambda)
 
-  katex.render(algebra.toTex(lambda), expr1)
-  katex.render(algebra.toTex(Phi), expr2)
+  katex.render(lambda.toTex(lambda), expr1)
+  katex.render(Phi.toTex(Phi), expr2)
 </script>
 ```
 
@@ -531,7 +546,9 @@ Also supports Greek letters, obviously!
     <div id="expr2"></div>
 </div>
 
-<script>
+<script type="module">
+import { Expression, Fraction } from "./javascripts/algebra-0.2.8.esm.js"
+
 const lambda = new Expression("lambda").add(3).divide(4);
 const Phi = new Expression("Phi").subtract(new Fraction(1, 5)).add(lambda);
 
