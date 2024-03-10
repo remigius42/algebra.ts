@@ -26,7 +26,7 @@ describe("parse", () => {
 })
 
 describe("toTex", () => {
-  it.each([
+  const libraryTypes = [
     {
       obj: new Equation(new Expression("x"), new Expression(42)),
       name: "Equation"
@@ -43,28 +43,35 @@ describe("toTex", () => {
       obj: new Fraction(1, 2),
       name: "Fraction"
     }
-  ])("should invoke 'toTex' on library type $name", ({ obj }) => {
-    const spy = jest.spyOn(obj, "toTex")
+  ]
 
-    toTex(obj)
+  it.each(libraryTypes)(
+    "should invoke 'toTex' on library type $name",
+    ({ obj }) => {
+      const spy = jest.spyOn(obj, "toTex")
 
-    expect(spy).toHaveBeenCalledTimes(1)
-    spy.mockRestore()
-  })
-
-  describe("when given an array", () => {
-    it("should invoke 'toTex' on Fractions", () => {
-      const someFraction = new Fraction(1, 2)
-      const spy = jest.spyOn(someFraction, "toTex")
-      const arrayWithFraction = [someFraction]
-
-      toTex(arrayWithFraction)
+      toTex(obj)
 
       expect(spy).toHaveBeenCalledTimes(1)
       spy.mockRestore()
-    })
+    }
+  )
 
-    it("should coerce to a string for elements which are not instances of Fraction", () => {
+  describe("when given an array", () => {
+    it.each(libraryTypes)(
+      "should invoke 'toTex' on library type $name",
+      ({ obj }) => {
+        const spy = jest.spyOn(obj, "toTex")
+        const arrayWithLibraryType = [obj]
+
+        toTex(arrayWithLibraryType)
+
+        expect(spy).toHaveBeenCalledTimes(1)
+        spy.mockRestore()
+      }
+    )
+
+    it("should coerce to a string for elements which are not instances of library types", () => {
       const someStringRepresentation = "someStringRepresentation"
       const toStringMock = jest.fn(() => someStringRepresentation)
       const someOtherObject = {

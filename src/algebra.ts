@@ -11,17 +11,12 @@ export function parse(input: string) {
 }
 
 export function toTex(input: unknown) {
-  if (
-    input instanceof Fraction ||
-    input instanceof Expression ||
-    input instanceof Equation ||
-    input instanceof Inequation
-  ) {
+  if (isExposedLibraryType(input)) {
     return input.toTex()
   } else if (input instanceof Array) {
     return input
       .map(e => {
-        if (e instanceof Fraction) {
+        if (isExposedLibraryType(e)) {
           return e.toTex()
         } else {
           return String(e)
@@ -31,4 +26,15 @@ export function toTex(input: unknown) {
   } else {
     return String(input)
   }
+}
+
+function isExposedLibraryType(
+  input: unknown
+): input is Fraction | Expression | Equation | Inequation {
+  return (
+    input instanceof Fraction ||
+    input instanceof Expression ||
+    input instanceof Equation ||
+    input instanceof Inequation
+  )
 }
