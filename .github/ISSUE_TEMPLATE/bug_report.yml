@@ -1,0 +1,44 @@
+# The relevant documentation can be found at
+# - https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository#creating-issue-forms
+# - https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema
+
+name: Bug Report
+description: File a bug report
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping to make this project better and for taking the
+        time to fill out this bug report!
+  - type: input
+    id: contact
+    attributes:
+      label: Contact Details
+      description: How can we get in touch with you if we need more info?
+      placeholder: email@example.com
+    validations:
+      required: false
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us, what did you expect to happen?
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+  - type: checkboxes
+    id: formalities
+    attributes:
+      label: Formalities
+      description: |
+        By submitting this issue
+
+        - you agree to follow the [Code of Conduct](https://github.com/remigius42/algebra.ts/CODE_OF_CONDUCT.md) of this project
+        - you confirm that you have had a look at the [existing issues](https://github.com/remigius42/algebra.ts/issues) and you are certain that this issue would not be a duplicate
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
+        - label: I confirm that I have looked at the already reported issues and I am sure that this issue would not be a duplicate
+          required: true
