@@ -3,9 +3,10 @@
 import babelParser from "@babel/eslint-parser"
 import eslint from "@eslint/js"
 import eslintConfigPrettier from "eslint-config-prettier"
-import tseslint from "typescript-eslint"
+import eslintJest from "eslint-plugin-jest"
 import { dirname } from "node:path"
 import { fileURLToPath } from "node:url"
+import tseslint from "typescript-eslint"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -34,6 +35,17 @@ export default tseslint.config(
     },
     linterOptions: {
       reportUnusedDisableDirectives: true
+    }
+  },
+  {
+    files: ["test/**"],
+    plugins: {
+      jest: eslintJest
+    },
+    rules: {
+      // you should turn the original rule off *only* for test files
+      "@typescript-eslint/unbound-method": "off",
+      "jest/unbound-method": "error"
     }
   },
   {

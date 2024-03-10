@@ -20,10 +20,8 @@ describe("parse", () => {
 
     expect(mockedParser).toHaveBeenCalledTimes(1)
     const mockParserInstance = mockedParser.mock.instances[0]
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    const mockParserParse = mockParserInstance.parse
-    expect(mockParserParse).toHaveBeenCalledTimes(1)
-    expect(mockParserParse).toHaveBeenCalledWith(someExpression)
+    expect(mockParserInstance.parse).toHaveBeenCalledTimes(1)
+    expect(mockParserInstance.parse).toHaveBeenCalledWith(someExpression)
   })
 })
 
