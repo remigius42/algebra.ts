@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<!-- spellchecker:words unsimplified -->
+<!-- spellchecker:words klipse, unsimplified -->
 
 <!-- h1 is provided by layout -->
 <!-- markdownlint-disable first-line-heading -->
@@ -32,8 +32,9 @@ const x = eq.solveFor("x")
 - [Contents](#contents)
 - [Usage](#usage)
   - [Right Now](#right-now)
-  - [In the Browser](#in-the-browser)
+  - [In your website](#in-your-website)
   - [In Node](#in-node)
+  - [In TypeScript](#in-typescript)
 - [Getting Started](#getting-started)
   - [Fractions](#fractions)
   - [Expressions](#expressions)
@@ -66,8 +67,12 @@ const x = eq.solveFor("x")
 
 ### Right Now
 
-You can follow along with the examples right now by executing the suggested keyboard shortcut for your browser and
-operating system. This will open the JavaScript Console in your browser.
+Most of the examples on this pages are interactive via [Klipse](https://github.com/viebel/klipse).
+
+The UMD version of `algebra.ts` is loaded within this page, therefore you can
+also follow along with the examples by executing the suggested keyboard shortcut
+for your browser and operating system. This will open the JavaScript Console in
+your browser.
 
 | Operating System | Browser | Keyboard Shortcut |
 | ---------------- | ------- | ----------------- |
@@ -76,13 +81,37 @@ operating system. This will open the JavaScript Console in your browser.
 | Windows          | Chrome  | Ctrl + Shift + J  |
 | Windows          | Firefox | Ctrl + Shift + K  |
 
-### In the Browser
+As pointed out in the [Quick Start section](#quick-start), the UMD version
+requires the prefix `algebra` to prevent collisions with other JavaScript code.
 
-Download [algebra-0.2.5.min.js](javascripts/algebra-0.2.5.min.js).
+### In your website
+
+To use `algebra.ts` directly in your website, you can download the ES Module
+(`algebra-x.y.z.esm.min.js`) or the UMD (`algebra-x.y.z.umd.min.js`) version
+from the [GitHub releases](https://github.com/remigius42/algebra.ts/releases).
+
+To integrate it into your website, for the ES Module you could use
 
 ```html
-<script src="algebra-0.2.5.min.js"></script>
+<script type="module">
+  import { Expression /* , ... */ } from "algebra-x.y.z.esm.min.js"
+
+  console.log(String(new Expression("x").add(42)))
+</script>
 ```
+
+for the UMD version
+
+```html
+<script src="algebra-x.y.z.umd.min.js"></script>
+<script>
+  console.log(String(new algebra.Expression("x").add(42)))
+</script>
+```
+
+Since [ES Modules don't pollute the global
+scope](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#other_differences_between_modules_and_standard_scripts),
+you might want to use ES Module version if possible.
 
 ### In Node
 
@@ -91,29 +120,24 @@ npm install algebra.ts
 ```
 
 ```js
-import { parse, toTex } from "algebra.ts"
+import {
+  parse,
+  toTex /* , ... */
+} from "algebra.ts/dist/algebra.ts-x.y.z.esm.js"
+```
+
+### In TypeScript
+
+You can import the necessary classes directly from `src`:
+
+```ts
+import { Equation, Expression /* , ... */ } from "algebra.ts"
 ```
 
 ## Getting Started
 
-The main objects available are Fraction, Expression, and Equation.
-
-```js
-import { Fraction, Expression, Equation } from "algebra.ts"
-```
-
-Note that if you are using `algebra.ts` via
-
-```html
-<script src="algebra-0.2.5.min.js"></script>
-```
-
-the script will be loaded via [UMD](https://github.com/umdjs/umd) and you have
-to use the prefix `algebra`, for example
-
-```js
-let frac = new algebra.Fraction(1, 2)
-```
+The main objects available are `Fraction`, `Expression`, `Equation` and
+`Inequation`.
 
 ### Fractions
 
@@ -534,5 +558,8 @@ const Phi = new Expression("Phi").subtract(new Fraction(1, 5)).add(lambda);
 katex.render(lambda.toTex(), expr1);
 katex.render(Phi.toTex(), expr2);
 </script>
+
+This example deliberately uses the ES Module version to contrast it with the UMD
+version examples.
 
 Check out the [list of Greek letters available](https://www.sharelatex.com/learn/List_of_Greek_letters_and_math_symbols#Greek_letters).

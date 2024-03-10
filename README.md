@@ -4,32 +4,39 @@
 
 ## Quick Start
 
-```js
-const expr = new Expression("x")
-expr = expr.subtract(3)
-expr = expr.add("x")
-console.log(String(expr)) // 2x - 3
+```html
+<script type="module">
+  import { Expression, Equation } from "algebra-x.y.z.esm.min.js"
 
-const eq = new Equation(expr, 4)
-console.log(String(eq)) // 2x - 3 = 4
+  const expr = new Expression("x")
+  expr = expr.subtract(3)
+  expr = expr.add("x")
+  console.log(String(expr)) // 2x - 3
 
-const x = eq.solveFor("x")
-console.log("x = " + String(x)) // x = 7/2
+  const eq = new Equation(expr, 4)
+  console.log(String(eq)) // 2x - 3 = 4
+
+  const x = eq.solveFor("x")
+  console.log("x = " + String(x)) // x = 7/2
+</script>
 ```
 
-[Read the full documentation at the project site](https://remigius42.github.io/algebra.ts/).
+Read the [full documentation](https://remigius42.github.io/algebra.ts/) at the
+project website.
 
-## Install
+## Installation
 
 ### Stable Release in Node.js
 
 ```sh
-npm install algebra.js
+npm install algebra.ts
 ```
 
 ### Stable Release in the Browser
 
-Download [algebra.min.js](http://algebra.js.org/javascripts/algebra-0.2.6.min.js).
+Download either the ES Module
+(`algebra-x.y.z.esm.min.js`) or the UMD (`algebra-x.y.z.umd.min.js`) version
+from the [GitHub releases](https://github.com/remigius42/algebra.ts/releases).
 
 ### Latest Development Release
 
@@ -41,19 +48,16 @@ cd algebra.ts
 #### In Node
 
 ```js
-var algebra = require("./algebra")
+import {
+  parse,
+  toTex /* , ... */
+} from "algebra.ts/dist/algebra.ts-x.y.z.esm.js"
 ```
 
 #### In the Browser
 
-The following will build `algebra.js` in the `build` directory.
+The following will build `algebra.ts` in the `dist` directory.
 
 ```sh
-npm run bundle
-```
-
-The following will build `algebra.min.js` in the `build` directory.
-
-```sh
-npm run minify
+npm run build
 ```
