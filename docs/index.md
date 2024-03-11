@@ -175,7 +175,6 @@ Add or subtract integers, fractions, variables, or other expressions to or from 
 
 ```eval-js
 let x = new algebra.Expression("x")
-
 x = x.add(3)
 console.log(String(x)) // x + 3
 
@@ -186,7 +185,6 @@ x = x.add("y")
 console.log(String(x)) // x + y + 8/3
 
 const otherExp = new algebra.Expression("x").add(6)
-
 x = x.add(otherExp)
 String(x) // 2x + y + 26/3
 ```
@@ -197,7 +195,6 @@ Keep in mind the distributive property when subtracting expressions.
 ```eval-js
 const expr1 = new algebra.Expression("a").add("b").add("c")
 const expr2 = new algebra.Expression("c").subtract("b")
-
 const expr3 = expr1.subtract(expr2)
 
 String(expr1) + " - (" + String(expr2) + ") = " + String(expr3) // a + b + c - (c - b) = a + 2b
@@ -216,7 +213,6 @@ let expr2 = new algebra.Expression("x")
 expr2 = expr2.multiply("y")
 expr2 = expr2.multiply(new algebra.Fraction(1, 3))
 expr2 = expr2.add(4)
-
 const expr3 = expr1.multiply(expr2)
 
 "(" + String(expr1) + ")(" + String(expr2) + ") = " + String(expr3) // (4x + 8)(1/3xy + 4) = 4/3x^2y + 8/3xy + 16x + 32
@@ -253,7 +249,6 @@ Raise expressions to integer powers.
 
 ```eval-js
 const exp = new algebra.Expression("x").add(2)
-
 const exp3 = exp.pow(3)
 
 "(" + String(exp) + ")^3 = " + String(exp3) // (x + 2)^3 = x^3 + 6x^2 + 12x + 8
@@ -275,7 +270,6 @@ console.log(String(expr)) // 2x^2 + y + 1/3
 
 const answer1 = expr.eval({ x: 2 })
 const answer2 = expr.eval({ x: 2, y: new algebra.Fraction(3, 4) })
-
 console.log(String(answer1)) // y + 25/3
 String(answer2) // 109/12
 ```
@@ -355,7 +349,6 @@ const eq = new algebra.Equation(x1, x2)
 console.log(String(eq)) // 1/5x + 2/15 = 1/7x + 4
 
 const answer = eq.solveFor("x")
-
 "x = " + String(answer) // x = 203/3
 ```
 
