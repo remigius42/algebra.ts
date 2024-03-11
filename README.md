@@ -71,6 +71,6 @@ this project. Get started by having a look at
 
 This project is powered by coffee, therefore I would appreciate if you could
 
-<a href="https://www.buymeacoffee.com/remigius" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+<a href="https://www.buymeacoffee.com/remigius" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="60" width="217" alt="Buy Me A Coffee" /></a>
 
 thank you!
