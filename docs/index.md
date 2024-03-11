@@ -54,7 +54,6 @@ const x = eq.solveFor("x")
       - [Multiple Variables](#multiple-variables)
     - [Solve Quadratic Equations](#solve-quadratic-equations)
     - [Solve Cubic Equations](#solve-cubic-equations)
-    - [Solve Quartic Equations](#solve-quartic-equations)
     - [Solve Anything Else](#solve-anything-else)
   - [Parser](#parser)
     - [Parse Expressions](#parse-expressions)
@@ -421,10 +420,6 @@ console.log(String(cubic)) // x^3 + 9x^2 + 26x + 24 = 0
 const answers = cubic.solveFor("x")
 "x = " + String(answers) // x = -4,-3,-2
 ```
-
-#### Solve Quartic Equations
-
-Coming soon.
 
 #### Solve Anything Else
 
