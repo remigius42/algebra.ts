@@ -436,7 +436,8 @@ console.log("x = " + xAnswer) // x = undefined
 
 ### Parser
 
-Use `algebra.parse` to parse expressions and equations from strings.
+To parse expressions, equations and inequations from strings, you can either use
+`algebra.parse` or `new algebra.Parser.parse()`.
 
 #### Parse Expressions
 
@@ -466,8 +467,9 @@ const ans = eq.solveFor("x")
 
 ## LaTeX
 
-Make things pretty with LaTeX. The `algebra` object has a `.toTex()` method for rendering LaTeX. Combining this with
-[KaTeX](https://github.com/Khan/KaTeX), for example, is easy.
+The `algebra` object has a `.toTex()` method for rendering LaTeX, which can be
+combined with libraries like [KaTeX](https://github.com/Khan/KaTeX) or
+[MathJax](https://docs.mathjax.org/en/latest/index.html).
 
 ### Example
 
@@ -510,7 +512,7 @@ katex.render("x = " + toTex(answers), mySolution);
 
 ## Greek Letters
 
-Also supports Greek letters, obviously!
+Greek letters are supported as well:
 
 ```html
 <div>
