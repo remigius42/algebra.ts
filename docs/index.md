@@ -140,12 +140,13 @@ The main objects available are `Fraction`, `Expression`, `Equation` and
 
 ### Fractions
 
-Add, subtract, multiply, and divide fractions by either integers or other fractions. Fractions are automatically
-reduced.
+Add, subtract, multiply, and divide fractions by either integers or other
+fractions. Fractions can be reduced manually via `.reduce()` and are
+automatically reduced by default when used in a mathematical operation.
 
 ```eval-js
-let frac = new algebra.Fraction(1, 2)
-console.log(String(frac)) // 1/2
+let frac = new algebra.Fraction(2, 4)
+console.log(String(frac.reduce())) // 1/2
 
 frac = frac.add(new algebra.Fraction(3, 4))
 console.log(String(frac)) // 5/4
