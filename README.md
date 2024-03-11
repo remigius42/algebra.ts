@@ -1,6 +1,6 @@
 # algebra.ts
 
-Copyright 2023 binary poetry gmbh
+Copyright 2024 binary poetry gmbh
 
 [![Licensed under MIT License](https://img.shields.io/github/license/remigius42/algebra.ts)](./LICENSE)
 [![Build status](https://github.com/remigius42/algebra.ts/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/remigius42/algebra.ts/actions/workflows/node.js.yml)
