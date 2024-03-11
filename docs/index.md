@@ -55,6 +55,7 @@ const x = eq.solveFor("x")
     - [Solve Quadratic Equations](#solve-quadratic-equations)
     - [Solve Cubic Equations](#solve-cubic-equations)
     - [Solve Anything Else](#solve-anything-else)
+  - [Inequations](#inequations)
   - [Parser](#parser)
     - [Parse Expressions](#parse-expressions)
     - [Parse Equations](#parse-equations)
@@ -432,6 +433,24 @@ const xAnswer = eq.solveFor("x")
 const yAnswer = eq.solveFor("y")
 console.log("x = " + xAnswer) // x = undefined
 "y = " + String(yAnswer) // y = -x^2 - x + 3
+```
+
+### Inequations
+
+`algebra.ts` is able to solve linear inequations if the inequation operator is
+one of the following:  
+$<, \le, >, \ge$  
+Note that $\ne$ is currently not supported, since that would require some
+refactoring of the parser.
+
+```eval-js
+const lhs = new algebra.Expression("x").multiply(-2)
+const rhs = new algebra.Expression(4)
+const inequation = new algebra.Inequation(lhs, rhs, "<=")
+console.log(String(inequation))
+
+const answer = inequation.solveFor("x")
+String(answer)
 ```
 
 ### Parser
