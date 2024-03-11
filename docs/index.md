@@ -30,6 +30,7 @@ const x = eq.solveFor("x")
 
 - [Quick Start](#quick-start)
 - [Contents](#contents)
+- [History](#history)
 - [Usage](#usage)
   - [Right Now](#right-now)
   - [In your website](#in-your-website)
@@ -63,6 +64,14 @@ const x = eq.solveFor("x")
 - [LaTeX](#latex)
   - [Example](#example)
 - [Greek Letters](#greek-letters)
+
+## History
+
+`algebra.ts` is a fork of
+[algebra.js](https://github.com/nicolewhite/algebra.js) created by [Nicole
+White](https://github.com/nicolewhite/) and you can find the original copyright
+and license file in
+[./LICENSE_algebra-js](https://github.com/remigius42/algebra.ts/blob/main/LICENSE_algebra-js).
 
 ## Usage
 
