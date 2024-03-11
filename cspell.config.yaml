@@ -12,6 +12,8 @@ ignorePaths:
   - "/.vscode/settings.json"
   - "/cspell.project-words.txt"
   - "/dist"
+  - "/docs/_site"
+  - "/docs/.sass-cache"
   - "/docs/javascripts/algebra-*.js"
   - "/docs/params.json"
   - "/docs/stylesheets/modern-normalize.css"
