@@ -1,95 +1,50 @@
 # Contributing
 
-## Dependencies
+Thank you for your interest in `algebra.ts`!
 
-- [git](https://git-scm.com/downloads)
-- [node](https://nodejs.org/download/)
+## Code of Conduct
 
-## Fork the Repository
+This project and everyone participating in it is governed by the
+[CONTRIBUTING.md Code of Conduct](CODE_OF_CONDUCT.md).
+By participating, you are expected to uphold this code.
 
-Fork the repository with the "Fork" button on GitHub.
+## Development environment setup
 
-![fork](http://i.imgur.com/fsJeKPy.png)
+The following sections list the prerequisites and the steps required to
+setup the development environment up until your first build and
+deployment.
 
-## Clone the Repository
+### Prerequisites
 
-Clone your fork.
+1. [Git](https://git-scm.com/downloads) for version control.
+2. [Node.js](https://nodejs.org/en/) (the expected version can be found
+   in [.nvmrc](.nvmrc)) and a package manager where `npm` is the
+   recommended option.  
+   While not strictly necessary, you might want to use a Node
+   environment manager like [nvm](https://github.com/nvm-sh/nvm), which
+   takes care of installing the required Node version based on `.nvmrc`
+   automatically.
+3. An IDE, [Visual Studio Code](https://code.visualstudio.com/) is the
+   preferred option since the recommended extensions have been
+   configured.
 
-```sh
-git clone https://github.com/yourusername/algebra.ts.git
-```
+### Setup instructions
 
-## Install Dependencies
+1. `git clone git@github.com:remigius42/algebra.ts` to clone the repository.
+2. `npm install` to install the dependencies.
+3. Install the recommended extensions in Visual Studio Code by opening
+   the repository and confirming the installation in the automatic
+   recommended extensions message.
+4. If you are using a GUI for Git, please make sure that the Git
+   configuration core.hooksPath is supported. Otherwise you might be
+   able to workaround this issue via
+   `rm -rf .git/hooks && ln -s ../.husky .git/hooks`
+   (see a related [Husky issue comment](https://github.com/typicode/husky/issues/875#issue-809587895)
+   for further details).
 
-```sh
-cd algebra.ts
-npm install
-```
+## Common development tasks
 
-This will create a `node_modules` directory in the current working directory.
-
-If you are using a GUI for Git, please make sure that the Git
-configuration `core.hooksPath` is supported.
-
-Otherwise you might be able to workaround this issue via
-`rm -rf .git/hooks && ln -s ../.husky .git/hooks`
-(see a related [Husky issue comment](https://github.com/typicode/husky/issues/875#issue-809587895)
-for further details).
-
-## Add Tests
-
-Tests are written in [Jasmine](http://jasmine.github.io/edge/introduction.html). The test files are located in the `test` directory. If your tests fit into one of the current test file categories, just go ahead and add them there. Otherwise, you can create a new test file. It has to end in `-spec.js`.
-
-## Run Tests
-
-```sh
-npm test
-```
-
-This will run the Jasmine tests and a lint check. Any errors from `npm test` should be addressed before making a pull request.
-
-## Contribute Code
-
-### New Features
-
-If you're adding something completely new, it's probably best if you first [create an issue](https://github.com/remigius42/algebra.ts/issues) to describe the feature you want to add so that it can be discussed.
-
-### Bug Fixes
-
-If you're just fixing a bug or making a patch change, no need to create an issue; just jump straight to the pull request.
-If the bug you're fixing closes an open issue, be sure to include either [in a commit](https://help.github.com/articles/closing-issues-via-commit-messages/) or in the pull request description which issue is being fixed.
-
-### Project Page
-
-The documentation for this project is maintained at <https://remigius42.github.io/algebra.ts/>. You can edit this page by checking out the `gh-pages` branch.
-
-```sh
-git checkout gh-pages
-```
-
-You can then edit the project page in `index.md`.
-
-## Commit Your Changes
-
-Commit your changes with a descriptive commit message. Ideally, include an example of what you fixed or added.
-[This](https://github.com/remigius42/algebra.ts/commit/3d9b1dbab5d984a270db536378f09519d5df5c8c) is a good example.
-
-```sh
-git commit
-```
-
-## Push Your Changes
-
-Push your changes to your fork.
-
-```sh
-git push
-```
-
-## Pull Request
-
-Go to your fork on GitHub. You'll see a "Pull Request" button.
-
-![pr](http://i.imgur.com/3QjkSMP.png)
-
-Write a description of what you did and submit!
+- `npm run build` to build the UMD and ES Module version both minified and not
+  minified
+- `npm test` to run the unit tests
+- `npm run lint` to run the linter
