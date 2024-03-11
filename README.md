@@ -3,6 +3,7 @@
 Copyright 2023 binary poetry gmbh
 
 [![Licensed under MIT License](https://img.shields.io/github/license/remigius42/algebra.ts)](./LICENSE)
+[![Build status](https://github.com/remigius42/algebra.ts/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/remigius42/algebra.ts/actions/workflows/node.js.yml)
 [![Coverage Status](https://coveralls.io/repos/remigius42/algebra.ts/badge.svg?branch=main)](https://coveralls.io/r/remigius42/algebra.ts?branch=main)
 
 `algebra.ts` lets you build, display and solve algebraic equations in TypeScript
