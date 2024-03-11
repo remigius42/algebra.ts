@@ -45,7 +45,8 @@ const x = eq.solveFor("x")
     - [Raise](#raise)
     - [Evaluate](#evaluate)
       - [Integers and Fractions](#integers-and-fractions)
-      - [Other Expressions](#other-expressions)
+      - [Expressions with Values or Expressions](#expressions-with-values-or-expressions)
+      - [Equations and Inequations](#equations-and-inequations)
     - [Simplification](#simplification)
   - [Equations](#equations)
     - [Build an Equation](#build-an-equation)
@@ -257,7 +258,10 @@ const exp3 = exp.pow(3)
 
 #### Evaluate
 
-Evaluate expressions by substituting in fractions, integers, or other expressions for variables. Evaluating an expression for only some of its variables returns an expression object. Evaluating an expression for all of its variables returns a fraction object.
+Evaluate expressions by substituting in fractions, integers, or other
+expressions for variables. Evaluating an expression for only some of its
+variables returns an expression object. Evaluating an expression for all of its
+variables returns a fraction object.
 
 ##### Integers and Fractions
 
@@ -275,15 +279,39 @@ console.log(String(answer1)) // y + 25/3
 String(answer2) // 109/12
 ```
 
-##### Other Expressions
+##### Expressions with Values or Expressions
 
 ```eval-js
 const expr = new algebra.Expression("x").add(2)
 console.log(String(expr)) // x + 2
 
+console.log(String(expr.eval({x: 4}))) // 6
+
 const sub = new algebra.Expression("y").add(4)
 const answer = expr.eval({ x: sub })
 String(answer) // y + 6
+```
+
+##### Equations and Inequations
+
+In addition to `eval`, `Equation` and `Inequation` both feature `evalToBoolean`,
+which will return true, if the `Equation` or `Inequation` is satisfied with the
+given values, `false` if its not and throw an `EvalError` if there are free
+variables left.
+
+```eval-js
+const lhs = new algebra.Expression("x").multiply(2)
+const rhs = new algebra.Expression(4)
+const equation = new algebra.Equation(lhs, rhs)
+console.log(String(equation)) // 2x = 4
+
+console.log(equation.evalToBoolean({ x: 2 })) // true
+console.log(equation.evalToBoolean({ x: 1 })) // false
+
+const inequation = new algebra.Inequation(lhs, rhs, "<")
+console.log(inequation.evalToBoolean({ x: 2 })) // false
+console.log(inequation.evalToBoolean({ x: 1 })) // true
+inequation.evalToBoolean({}) // EvalError
 ```
 
 #### Simplification
