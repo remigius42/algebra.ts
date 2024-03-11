@@ -143,7 +143,7 @@ export class Parser {
       Initializes the parser internals and the lexer.
       The input is then parsed according to the grammar described in the
       header comment. The parsing process constructs a abstract syntax tree
-      using the classes the algebra.js library provides
+      using the classes the algebra.ts library provides
   */
   parse(input: string) {
     //pass the input to the lexer
@@ -235,12 +235,12 @@ export class Parser {
     } else if (this.match("power")) {
       this.update()
       const powFactor = this.#parseFactor()
-      //WORKAROUND: algebra.js only allows integers and fractions for raising
+      //WORKAROUND: algebra.ts only allows integers and fractions for raising
       return this.#parseTermRest(factor.pow(parseInt(String(powFactor))))
     } else if (this.match("divide")) {
       this.update()
       const divFactor = this.#parseFactor()
-      //WORKAROUND: algebra.js only allows integers and fractions for division
+      //WORKAROUND: algebra.ts only allows integers and fractions for division
       return divFactor
         ? this.#parseTermRest(factor.divide(this.#convertToFraction(divFactor)))
         : undefined

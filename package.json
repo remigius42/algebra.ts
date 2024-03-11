@@ -63,8 +63,11 @@
     "math",
     "fractions",
     "equations",
+    "inequations",
     "expressions",
-    "latex"
+    "latex",
+    "solver",
+    "typescript"
   ],
   "author": "Andreas Remigius Schmidt",
   "contributors": [

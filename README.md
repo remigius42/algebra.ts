@@ -1,4 +1,4 @@
-# algebra.js
+# algebra.ts
 
 Copyright 2023 binary poetry gmbh
 

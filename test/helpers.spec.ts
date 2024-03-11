@@ -69,17 +69,17 @@ describe("round", () => {
 })
 
 describe("algebra.toTex", () => {
-  it("converts non-algebra.js objects to strings - string", () => {
+  it("converts non-algebra.ts objects to strings - string", () => {
     const x = "hello"
     expect(toTex(x)).toEqual(x.toString())
   })
 
-  it("converts non-algebra.js objects to strings - number", () => {
+  it("converts non-algebra.ts objects to strings - number", () => {
     const x = 3.5
     expect(toTex(x)).toEqual(x.toString())
   })
 
-  it("converts non-algebra.js objects to strings - boolean", () => {
+  it("converts non-algebra.ts objects to strings - boolean", () => {
     const x = true
     expect(toTex(x)).toEqual(x.toString())
   })
