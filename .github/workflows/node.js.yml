@@ -16,6 +16,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: "npm"
+          registry-url: "https://registry.npmjs.org"
       - name: Check for Git conflict markers
         run: git diff --check
       - name: Install NPM packages
@@ -50,6 +51,11 @@ jobs:
         with:
           name: algebra-${{ steps.package-version.outputs.current-version }}.ts
           path: "dist/algebra-${{ steps.package-version.outputs.current-version }}.*"
+      - name: Publish to NPM
+        if: ${{ github.ref_type == 'tag' }}
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Test summary
         if: always()
         uses: test-summary/action@v2.3
