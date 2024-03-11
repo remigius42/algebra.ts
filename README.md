@@ -1,6 +1,15 @@
 # algebra.js
 
+Copyright 2023 binary poetry gmbh
+
 [![Coverage Status](https://coveralls.io/repos/remigius42/algebra.ts/badge.svg?branch=main)](https://coveralls.io/r/remigius42/algebra.ts?branch=main)
+
+`algebra.ts` lets you build, display and solve algebraic equations in TypeScript
+and JavaScript.
+
+It's a fork of [algebra.js](https://github.com/nicolewhite/algebra.js) created
+by [Nicole White](https://github.com/nicolewhite/) and you can find the original
+copyright and license file in [LICENSE_algebra-js](./LICENSE_algebra-js).
 
 ## Quick Start
 
