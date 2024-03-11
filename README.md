@@ -15,6 +15,15 @@ copyright and license file in [LICENSE_algebra-js](./LICENSE_algebra-js).
 
 ## Quick Start
 
+This section gives a brief example on how to use the library. The library is
+assumed to be in the same directory as the HTML page containing the snippet.
+
+Please refer to the [full
+documentation](https://remigius42.github.io/algebra.ts/) for further information
+and live examples.
+
+### Using ES Modules
+
 ```html
 <script type="module">
   import { Expression, Equation } from "algebra-x.y.z.esm.min.js"
@@ -32,43 +41,27 @@ copyright and license file in [LICENSE_algebra-js](./LICENSE_algebra-js).
 </script>
 ```
 
-Read the [full documentation](https://remigius42.github.io/algebra.ts/) at the
-project website.
+### Using the UMD version
 
-## Installation
+```html
+<script src="algebra-x.y.z.umd.min.js"></script>
 
-### Stable Release in Node.js
+<script>
+  const expr = new algebra.Expression("x")
+  expr = expr.subtract(3)
+  expr = expr.add("x")
+  console.log(String(expr)) // 2x - 3
 
-```sh
-npm install algebra.ts
+  const eq = new algebra.Equation(expr, 4)
+  console.log(String(eq)) // 2x - 3 = 4
+
+  const x = eq.solveFor("x")
+  console.log("x = " + String(x)) // x = 7/2
+</script>
 ```
 
-### Stable Release in the Browser
+## Contributing
 
-Download either the ES Module
-(`algebra-x.y.z.esm.min.js`) or the UMD (`algebra-x.y.z.umd.min.js`) version
-from the [GitHub releases](https://github.com/remigius42/algebra.ts/releases).
-
-### Latest Development Release
-
-```sh
-git clone https://github.com/remigius42/algebra.ts.git
-cd algebra.ts
-```
-
-#### In Node
-
-```js
-import {
-  parse,
-  toTex /* , ... */
-} from "algebra.ts/dist/algebra.ts-x.y.z.esm.js"
-```
-
-#### In the Browser
-
-The following will build `algebra.ts` in the `dist` directory.
-
-```sh
-npm run build
-```
+Thanks for your interest in contributing! There are many ways to contribute to
+this project. Get started by having a look at
+[CONTRIBUTING.md](./CONTRIBUTING.md).
