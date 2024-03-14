@@ -31,3 +31,7 @@
 
 - `maxDegree` returns `0` for constants ([18a4737](https://github.com/remigius42/algebra.ts/commit/18a4737671a0a3ab545d896d78f4fd96498b2d5b))
 - `maxDegreeOfVariable` returns `0` for missing ([1f208f1](https://github.com/remigius42/algebra.ts/commit/1f208f1359fe930f9b81333beef4ae7045a2460f))
+
+## [0.3.1](https://github.com/remigius42/algebra.ts/compare/v0.3.0...v0.3.1) (2024-03-14)
+
+- Documentation improvements
