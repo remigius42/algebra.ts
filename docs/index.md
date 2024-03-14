@@ -182,7 +182,8 @@ let x = new algebra.Expression("x")
 
 #### Add / Subtract
 
-Add or subtract integers, fractions, variables, or other expressions to or from expressions.
+Add or subtract integers, fractions, variables, or other expressions to or from
+expressions. You can also query the variable names within an expression.
 
 ```eval-js
 let x = new algebra.Expression("x")
@@ -197,7 +198,9 @@ console.log(String(x)) // x + y + 8/3
 
 const otherExp = new algebra.Expression("x").add(6)
 x = x.add(otherExp)
-String(x) // 2x + y + 26/3
+console.log(String(x)) // 2x + y + 26/3
+
+x.variableNames // Array [ "x", "y" ]
 ```
 
 When adding / subtracting an expression to / from another expression, any like-terms will be combined.
@@ -392,7 +395,9 @@ const answer = eq.solveFor("x")
 
 ##### Multiple Variables
 
-If a linear equation has more than one variable, solving for a variable will return an expression.
+If a linear equation has more than one variable, solving for a variable will
+return an expression. Same as with [expressions](#add--subtract) you can query
+the variable names occurring within an equation.
 
 ```eval-js
 const expr1 = algebra.parse("1/4 * x + 5/4")
@@ -405,7 +410,9 @@ const xAnswer = eq.solveFor("x")
 const yAnswer = eq.solveFor("y")
 
 console.log("x = " + String(xAnswer)) // x = 12y - 73/5
-"y = " + String(yAnswer) // y = 1/12x + 73/60
+console.log("y = " + String(yAnswer)) // y = 1/12x + 73/60
+
+eq.variableNames // Array [ "x", "y" ]
 ```
 
 #### Solve Quadratic Equations
