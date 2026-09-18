@@ -8,7 +8,6 @@
     "build": "rollup --config rollup.config.js",
     "test": "jest --reporters=default",
     "test:ci": "jest --ci",
-    "coveralls": "npm test && cat ./coverage/lcov.info | npx coveralls && rm -rf ./coverage",
     "lint": "eslint --no-warn-ignored .",
     "version": "conventional-changelog --preset conventionalcommits --infile CHANGELOG.md --same-file --append && prettier --write CHANGELOG.md && git add CHANGELOG.md",
     "prepare": "husky"
@@ -40,7 +39,6 @@
     "c8": "^9.1.0",
     "conventional-changelog-cli": "^4.1.0",
     "core-js": "^3.36.0",
-    "coveralls": "^2.11.2",
     "cspell-cli": "^8.4.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",

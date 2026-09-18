@@ -1,4 +1,4 @@
-# spellchecker:ignore: aquasecurity, htmlproofer, junitresults, martinbeentjes, nvmrc, vuln
+# spellchecker:ignore: aquasecurity, coverallsapp, htmlproofer, junitresults, martinbeentjes, nvmrc, vuln
 
 name: "Node.js CI"
 on:
@@ -36,9 +36,9 @@ jobs:
       - name: Test (Jest)
         run: npm run test:ci
       - name: Coverage (Jest to Coveralls)
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: npm run coveralls
+        uses: coverallsapp/github-action@v2.3.8
+        with:
+          file: coverage/lcov.info
       - name: Build
         run: npm run build
       - name: get-npm-version
