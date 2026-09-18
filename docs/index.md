@@ -97,14 +97,14 @@ requires the prefix `algebra` to prevent collisions with other JavaScript code.
 ### In your website
 
 To use `algebra.ts` directly in your website, you can download the ES Module
-(`algebra-x.y.z.esm.min.js`) or the UMD (`algebra-x.y.z.umd.min.js`) version
+(`algebra.esm.min.js`) or the UMD (`algebra.umd.min.js`) version
 from the [GitHub releases](https://github.com/remigius42/algebra.ts/releases).
 
 To integrate it into your website, for the ES Module you could use
 
 ```html
 <script type="module">
-  import { Expression /* , ... */ } from "algebra-x.y.z.esm.min.js"
+  import { Expression /* , ... */ } from "algebra.esm.min.js"
 
   console.log(String(new Expression("x").add(42)))
 </script>
@@ -113,7 +113,7 @@ To integrate it into your website, for the ES Module you could use
 for the UMD version
 
 ```html
-<script src="algebra-x.y.z.umd.min.js"></script>
+<script src="algebra.umd.min.js"></script>
 <script>
   console.log(String(new algebra.Expression("x").add(42)))
 </script>
@@ -556,7 +556,7 @@ katex.render("x = " + algebra.toTex(answers), mySolution)
 <div id="mySolution"></div>
 
 <script type="module">
-import { Equation, Expression, Fraction, toTex } from "https://cdn.jsdelivr.net/npm/algebra.ts@0.3.0/dist/algebra-0.3.0.esm.min.js"
+import { Equation, Expression, Fraction, toTex } from "https://cdn.jsdelivr.net/npm/algebra.ts@0.4.0/dist/algebra.esm.min.js"
 
 const a = new Expression("x").pow(2);
 const b = new Expression("x").multiply(new Fraction(5, 4));
@@ -586,7 +586,7 @@ Greek letters are supported as well:
     Expression,
     Fraction,
     toTex
-  } from "https://cdn.jsdelivr.net/npm/algebra.ts@0.3.0/dist/algebra-0.3.0.esm.min.js"
+  } from "https://cdn.jsdelivr.net/npm/algebra.ts@0.4.0/dist/algebra.esm.min.js"
 
   const lambda = new Expression("lambda").add(3).divide(4)
   const Phi = new Expression("Phi").subtract(new Fraction(1, 5)).add(lambda)
@@ -602,7 +602,7 @@ Greek letters are supported as well:
 </div>
 
 <script type="module">
-import { Expression, Fraction } from "https://cdn.jsdelivr.net/npm/algebra.ts@0.3.0/dist/algebra-0.3.0.esm.min.js"
+import { Expression, Fraction } from "https://cdn.jsdelivr.net/npm/algebra.ts@0.4.0/dist/algebra.esm.min.js"
 
 const lambda = new Expression("lambda").add(3).divide(4);
 const Phi = new Expression("Phi").subtract(new Fraction(1, 5)).add(lambda);
