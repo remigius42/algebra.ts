@@ -275,6 +275,17 @@ describe("Term simplification", () => {
 })
 
 describe("Term evaluation", () => {
+  it("simplifies by default when simplify is omitted", () => {
+    const x = new Variable("x")
+    let t = new Term(x)
+    t = t.multiply(3)
+    t = t.multiply(5, false) // 5 * 3x
+
+    const e = t.eval({ x: 2 })
+
+    expect(e.toString()).toEqual("30")
+  })
+
   it("should work when there is one coefficient and simplify = false", () => {
     const x = new Variable("x")
     let t = new Term(x)

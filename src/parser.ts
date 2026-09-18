@@ -165,16 +165,16 @@ export class Parser {
         ["GREATER_THAN", ">"],
         ["GREATER_THAN_EQUALS", ">="]
       ])
+      /* istanbul ignore else */
       if (this.current_token && relations.has(this.current_token.value)) {
         const relation = relations.get(this.current_token.value)!
         this.update()
         const ex2 = this.#parseExpr()
         return new Inequation(ex1, ex2, relation)
-      } /* c8 ignore start */ else {
+      } else {
         throw new Error(
           `Should not be reached since the operator "${this.current_token?.value}" has been matched as inequation relational operator.`
         )
-        /* c8 ignore end */
       }
     } else if (this.match("epsilon")) {
       return ex1
@@ -299,6 +299,7 @@ export class Parser {
   // Converts a number token - integer or decimal - to an expression
   #parseNumber() {
     //Integer conversion
+    /* istanbul ignore else */
     if (this.current_token) {
       if (
         parseInt(this.current_token.value) ===
@@ -317,11 +318,10 @@ export class Parser {
         //to create a valid expression object
         return new Expression(float_op * factor).divide(factor)
       }
-    } /* c8 ignore start */ else {
+    } else {
       throw new Error(
         "Should not be reached since the current token has been matched as a number"
       )
-      /* c8 ignore end */
     }
   }
 }

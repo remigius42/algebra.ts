@@ -38,6 +38,14 @@ describe("Input validity", () => {
     }).toThrow(new Error("Missing operand"))
   })
 
+  it("returns undefined for a minus without an operand", () => {
+    expect(p.parse("-")).toBeUndefined()
+  })
+
+  it("returns undefined for a division without a divisor", () => {
+    expect(p.parse("x/")).toBeUndefined()
+  })
+
   it("should ignore newlines", () => {
     const input = "2+z \n = 5"
     const lhs = new Expression("z").add(2)
