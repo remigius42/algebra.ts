@@ -1,5 +1,8 @@
 # CHANGELOG
 
+<!-- every release section repeats headings like "Bug Fixes" -->
+<!-- markdownlint-disable no-duplicate-heading -->
+
 ## [0.2.7](https://github.com/remigius42/algebra.ts/compare/0.2.6...0.2.7) (2024-02-27)
 
 - Update dependencies
