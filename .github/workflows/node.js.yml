@@ -10,6 +10,7 @@ jobs:
     timeout-minutes: 10
     permissions:
       contents: write # required to create the GitHub release for version tags
+      id-token: write # required for trusted publishing to NPM via OIDC
     steps:
       - uses: actions/checkout@v7
         with:
