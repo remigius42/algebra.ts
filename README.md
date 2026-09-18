@@ -30,7 +30,7 @@ and live examples.
 
 ```html
 <script type="module">
-  import { Expression, Equation } from "algebra.esm.min.js"
+  import { Expression, Equation } from "./algebra.esm.min.js"
 
   const expr = new Expression("x")
   expr = expr.subtract(3)

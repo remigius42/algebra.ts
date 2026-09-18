@@ -104,7 +104,7 @@ To integrate it into your website, for the ES Module you could use
 
 ```html
 <script type="module">
-  import { Expression /* , ... */ } from "algebra.esm.min.js"
+  import { Expression /* , ... */ } from "./algebra.esm.min.js"
 
   console.log(String(new Expression("x").add(42)))
 </script>
