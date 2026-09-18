@@ -5,3 +5,4 @@ _site
 coverage
 /dist
 node_modules
+/TODO.md
