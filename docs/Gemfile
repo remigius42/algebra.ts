@@ -1,6 +1,9 @@
 source 'https://rubygems.org'
 
-gem "github-pages", "~> 231"
+gem "github-pages", "~> 232"
 gem "webrick", "~> 1.8" # required for Ruby >= 3.0, see https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/testing-your-github-pages-site-locally-with-jekyll?platform=mac#building-your-site-locally
 
 gem "html-proofer", "~> 5.0"
+# `html-proofer` 5.2.2 calls `JSON.parse` with positional options, which the `json`
+# gem dropped in version 3, breaking the `--typhoeus` option.
+gem "json", "~> 2.7"
