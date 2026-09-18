@@ -1,0 +1,40 @@
+# spellchecker:ignore: nvmrc
+
+name: "Deploy documentation"
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch: # to be able to redeploy without a commit
+permissions:
+  contents: read
+  pages: write
+  id-token: write # required by `actions/deploy-pages` to request the OIDC token
+concurrency:
+  group: "pages"
+  cancel-in-progress: false # let a running deployment finish instead of cancelling it
+jobs:
+  deploy:
+    name: deploy documentation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+          working-directory: docs
+      - name: Configure GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v6
+      - name: Generate documentation
+        working-directory: docs
+        run: bundle exec jekyll build --strict_front_matter --baseurl "${{ steps.pages.outputs.base_path }}"
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: docs/_site
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

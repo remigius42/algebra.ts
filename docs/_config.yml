@@ -1,17 +1,19 @@
 # spellchecker:ignore redcarpet
 
 plugins:
-  - jekyll-coffeescript
   - jekyll-default-layout
-  - jekyll-gist
-  - jekyll-github-metadata
   - jekyll-optional-front-matter
-  - jekyll-paginate
   - jekyll-readme-index
-  - jekyll-titles-from-headings
   - jekyll-relative-links
+  - jekyll-titles-from-headings
 title: algebra.ts
 description: Documentation of algebra.ts
 lang: en
 author: Andreas Remigius Schmidt
 email: remigius42-github.dcds7@aleeas.com
+
+# reproduce the Markdown configuration the `github-pages` gem applied
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
