@@ -1,4 +1,4 @@
-# spellchecker:ignore: aquasecurity, coverallsapp, htmlproofer, junitresults, martinbeentjes, nvmrc, trivyignores, vuln
+# spellchecker:ignore: aquasecurity, coverallsapp, htmlproofer, junitresults, martinbeentjes, misconfig, nvmrc, trivyignores, vuln
 
 name: "Node.js CI"
 on:
@@ -94,7 +94,7 @@ jobs:
         uses: aquasecurity/trivy-action@v0.36.0
         with:
           scan-type: fs
-          scanners: vuln,secret,config
+          scanners: vuln,secret,misconfig
           format: table
           exit-code: 1
           trivyignores: .trivyignore.yaml
