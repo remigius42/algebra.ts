@@ -20,7 +20,7 @@ This section gives a brief example on how to use the library. The library is
 assumed to be in the same directory as the HTML page containing the snippet.
 Alternatively you could load the library via a content delivery network (CDN),
 for example
-<https://cdn.jsdelivr.net/npm/algebra.ts@0.3.0/dist/algebra-0.3.0.umd.js>.
+<https://cdn.jsdelivr.net/npm/algebra.ts@0.4.1/dist/algebra.umd.js>.
 
 Please refer to the [full
 documentation](https://remigius42.github.io/algebra.ts/) for further information
@@ -30,7 +30,7 @@ and live examples.
 
 ```html
 <script type="module">
-  import { Expression, Equation } from "algebra-x.y.z.esm.min.js"
+  import { Expression, Equation } from "algebra.esm.min.js"
 
   const expr = new Expression("x")
   expr = expr.subtract(3)
@@ -48,7 +48,7 @@ and live examples.
 ### Using the UMD version
 
 ```html
-<script src="algebra-x.y.z.umd.min.js"></script>
+<script src="algebra.umd.min.js"></script>
 
 <script>
   const expr = new algebra.Expression("x")
