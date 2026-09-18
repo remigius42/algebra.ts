@@ -79,5 +79,8 @@
       "default": "./dist/algebra.esm.js"
     },
     "./package.json": "./package.json"
+  },
+  "overrides": {
+    "conventional-changelog-writer": "^9.2.1"
   }
 }
