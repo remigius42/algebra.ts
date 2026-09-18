@@ -53,3 +53,5 @@
 - make package resolvable as a dependency ([58ae59d](https://github.com/remigius42/algebra.ts/commit/58ae59da0fafe24ba2a56ec2e3b703b28508890a))
 
 ## [0.4.1](https://github.com/remigius42/algebra.ts/compare/v0.4.0...v0.4.1) (2026-09-18)
+
+## [0.4.2](https://github.com/remigius42/algebra.ts/compare/v0.4.1...v0.4.2) (2026-09-18)
