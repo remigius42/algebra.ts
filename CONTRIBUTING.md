@@ -65,7 +65,8 @@ pipeline before the tag is pushed.
    are therefore signalled by the minor version.
 3. `git push origin main` and wait for the pipeline to pass.
 4. `git push origin v<version>` to publish the release. The pipeline
-   attaches the build output to the tag and runs `npm publish`.
+   creates the GitHub release from the changelog entry of that version,
+   attaches the build output from `dist/` to it and runs `npm publish`.
 5. Update the version in the CDN links of [README.md](README.md),
    [docs/index.md](docs/index.md) and
    [docs/\_layouts/default.html](docs/_layouts/default.html) in a
