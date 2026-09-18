@@ -48,3 +48,32 @@ deployment.
   minified
 - `npm test` to run the unit tests
 - `npm run lint` to run the linter
+
+## Releasing
+
+The release is published by the build pipeline when a version tag is
+pushed, not from a local machine. Pushing the tag therefore _is_ the
+release, which is why the commit it points to should have passed the
+pipeline before the tag is pushed.
+
+1. Make sure that `main` is up to date and that its pipeline passed.
+2. `npm version <patch|minor|major>` to bump the version in
+   `package.json`, generate the changelog entry from the commit messages
+   since the last release, commit both and create the tag.  
+   Choose `minor` for a release which contains a `BREAKING CHANGE`
+   footer, since the version is still below `1.0.0` and breaking changes
+   are therefore signalled by the minor version.
+3. `git push origin main` and wait for the pipeline to pass.
+4. `git push origin v<version>` to publish the release. The pipeline
+   attaches the build output to the tag and runs `npm publish`.
+5. Update the version in the CDN links of [README.md](README.md),
+   [docs/index.md](docs/index.md) and
+   [docs/\_layouts/default.html](docs/_layouts/default.html) in a
+   separate commit.  
+   This has to happen after the release has been published, since the
+   documentation is deployed from `main` and the links would otherwise
+   refer to files which do not exist yet.
+
+Note that the changelog only lists the commit types which are relevant
+for users of the library, so maintenance commits such as `build` or `ci`
+do not show up in it.
