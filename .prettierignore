@@ -7,3 +7,6 @@ package-lock.json
 
 # GitHub Pages scripts
 /docs/javascripts
+
+# vendored third party CSS reset, also excluded in `cspell.config.yaml`
+/docs/stylesheets/modern-normalize.css
