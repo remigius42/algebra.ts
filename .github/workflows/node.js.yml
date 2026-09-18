@@ -1,4 +1,4 @@
-# spellchecker:ignore: aquasecurity, coverallsapp, htmlproofer, junitresults, martinbeentjes, misconfig, nvmrc, vuln
+# spellchecker:ignore: aquasecurity, coverallsapp, htmlproofer, junitresults, misconfig, nvmrc, softprops, vuln
 
 name: "Node.js CI"
 on:
@@ -8,6 +8,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      contents: write # required to create the GitHub release for version tags
     steps:
       - uses: actions/checkout@v7
         with:
@@ -41,16 +43,24 @@ jobs:
           file: coverage/lcov.info
       - name: Build
         run: npm run build
-      - name: get-npm-version
+      - name: Extract the changelog entry of this release
         if: ${{ github.ref_type == 'tag' }}
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@v1.3.1
-      - name: Upload build artifact for Git tags
+        id: release-notes
+        # `conventional-changelog` appends, so the entry of this release is the
+        # last section of the changelog.
+        run: |
+          {
+            echo "notes<<END_OF_RELEASE_NOTES"
+            awk '/^## \[/ { capture = 1; notes = ""; next } capture { notes = notes $0 "\n" } END { printf "%s", notes }' CHANGELOG.md
+            echo "END_OF_RELEASE_NOTES"
+          } >> "$GITHUB_OUTPUT"
+      - name: Create the GitHub release for Git tags
         if: ${{ github.ref_type == 'tag' }}
-        uses: actions/upload-artifact@v7
+        uses: softprops/action-gh-release@v3.0.3
         with:
-          name: algebra-${{ steps.package-version.outputs.current-version }}.ts
-          path: "dist/algebra.*"
+          body: ${{ steps.release-notes.outputs.notes }}
+          files: dist/algebra.*.js
+          fail_on_unmatched_files: true
       - name: Publish to NPM
         if: ${{ github.ref_type == 'tag' }}
         run: npm publish
