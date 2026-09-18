@@ -32,7 +32,7 @@ and live examples.
 <script type="module">
   import { Expression, Equation } from "./algebra.esm.min.js"
 
-  const expr = new Expression("x")
+  let expr = new Expression("x")
   expr = expr.subtract(3)
   expr = expr.add("x")
   console.log(String(expr)) // 2x - 3
@@ -51,7 +51,7 @@ and live examples.
 <script src="algebra.umd.min.js"></script>
 
 <script>
-  const expr = new algebra.Expression("x")
+  let expr = new algebra.Expression("x")
   expr = expr.subtract(3)
   expr = expr.add("x")
   console.log(String(expr)) // 2x - 3
