@@ -16,7 +16,6 @@ ignorePaths:
   - "/docs/_site"
   - "/docs/.jekyll-cache"
   - "/docs/.sass-cache"
-  - "/docs/javascripts/algebra-*.js"
   - "/docs/params.json"
   - "/docs/stylesheets/modern-normalize.css"
   - "/docs/stylesheets/pygment_trac.css" # spellchecker:ignore pygment_trac
