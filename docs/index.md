@@ -130,15 +130,13 @@ npm install algebra.ts
 ```
 
 ```js
-import {
-  parse,
-  toTex /* , ... */
-} from "algebra.ts/dist/algebra.ts-x.y.z.esm.js"
+import { parse, toTex /* , ... */ } from "algebra.ts"
 ```
 
 ### In TypeScript
 
-You can import the necessary classes directly from `src`:
+The package ships type declarations, so you can import the necessary classes
+directly:
 
 ```ts
 import { Equation, Expression /* , ... */ } from "algebra.ts"
@@ -558,7 +556,7 @@ katex.render("x = " + algebra.toTex(answers), mySolution)
 <div id="mySolution"></div>
 
 <script type="module">
-import { Equation, Expression, Fraction, toTex } from "./javascripts/algebra-0.2.8.esm.js"
+import { Equation, Expression, Fraction, toTex } from "https://cdn.jsdelivr.net/npm/algebra.ts@0.3.0/dist/algebra-0.3.0.esm.min.js"
 
 const a = new Expression("x").pow(2);
 const b = new Expression("x").multiply(new Fraction(5, 4));
@@ -588,7 +586,7 @@ Greek letters are supported as well:
     Expression,
     Fraction,
     toTex
-  } from "./javascripts/algebra-0.2.8.esm.js"
+  } from "https://cdn.jsdelivr.net/npm/algebra.ts@0.3.0/dist/algebra-0.3.0.esm.min.js"
 
   const lambda = new Expression("lambda").add(3).divide(4)
   const Phi = new Expression("Phi").subtract(new Fraction(1, 5)).add(lambda)
@@ -604,7 +602,7 @@ Greek letters are supported as well:
 </div>
 
 <script type="module">
-import { Expression, Fraction } from "./javascripts/algebra-0.2.8.esm.js"
+import { Expression, Fraction } from "https://cdn.jsdelivr.net/npm/algebra.ts@0.3.0/dist/algebra-0.3.0.esm.min.js"
 
 const lambda = new Expression("lambda").add(3).divide(4);
 const Phi = new Expression("Phi").subtract(new Fraction(1, 5)).add(lambda);
