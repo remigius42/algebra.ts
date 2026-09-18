@@ -47,7 +47,8 @@ jobs:
         if: ${{ github.ref_type == 'tag' }}
         id: release-notes
         # `conventional-changelog` appends, so the entry of this release is the
-        # last section of the changelog.
+        # last section of the changelog. It is empty for a release which only
+        # contains commit types the changelog hides, such as `docs` or `ci`.
         run: |
           {
             echo "notes<<END_OF_RELEASE_NOTES"
@@ -59,6 +60,9 @@ jobs:
         uses: softprops/action-gh-release@v3.0.3
         with:
           body: ${{ steps.release-notes.outputs.notes }}
+          # fall back to the commit list so that a release whose changelog
+          # entry is empty does not end up without any notes at all
+          generate_release_notes: ${{ steps.release-notes.outputs.notes == '' }}
           files: dist/algebra.*.js
           fail_on_unmatched_files: true
       - name: Publish to NPM
