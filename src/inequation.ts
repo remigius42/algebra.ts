@@ -106,12 +106,11 @@ export class Inequation extends Equation {
   }
 
   toTex() {
-    let relationTexString = ""
-    if (this.isInclusive) {
-      relationTexString = this.isLessThan ? "\\le" : "\\ge"
-    } else {
-      relationTexString = this.#relationToString()
-    }
+    const relationTexString = this.isInclusive
+      ? this.isLessThan
+        ? "\\le"
+        : "\\ge"
+      : this.#relationToString()
     return `${this.lhs.toTex()} ${relationTexString} ${this.rhs.toTex()}`
   }
 

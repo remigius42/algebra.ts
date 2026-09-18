@@ -1,6 +1,5 @@
 /* spellchecker:ignore lintstagedrc, tseslint */
 
-import babelParser from "@babel/eslint-parser"
 import eslint from "@eslint/js"
 import eslintConfigPrettier from "eslint-config-prettier"
 import eslintJest from "eslint-plugin-jest"
@@ -50,16 +49,7 @@ export default tseslint.config(
   },
   {
     files: ["rollup.config.js"],
-    ...tseslint.configs.disableTypeChecked,
-    languageOptions: {
-      parser: babelParser,
-      parserOptions: {
-        requireConfigFile: false,
-        babelOptions: {
-          plugins: ["@babel/plugin-syntax-import-assertions"]
-        }
-      }
-    }
+    ...tseslint.configs.disableTypeChecked
   },
   {
     files: ["**/*.js", ".lintstagedrc.js"],

@@ -28,6 +28,9 @@ export class Expression {
     } else {
       throw new TypeError(
         "Invalid Argument (" +
+          // the argument is `unknown` by design and its default stringification
+          // is part of the error message asserted by the tests
+          // eslint-disable-next-line @typescript-eslint/no-base-to-string
           String(variable) +
           "): Argument must be of type String, Integer, Fraction or Term."
       )
@@ -543,6 +546,9 @@ export class Term {
     } else {
       throw new TypeError(
         "Invalid Argument (" +
+          // the argument is `unknown` by design and its default stringification
+          // is part of the error message asserted by the tests
+          // eslint-disable-next-line @typescript-eslint/no-base-to-string
           String(variable) +
           "): Term initializer must be of type Variable."
       )
