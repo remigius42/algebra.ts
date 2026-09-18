@@ -50,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: algebra-${{ steps.package-version.outputs.current-version }}.ts
-          path: "dist/algebra-${{ steps.package-version.outputs.current-version }}.*"
+          path: "dist/algebra.*"
       - name: Publish to NPM
         if: ${{ github.ref_type == 'tag' }}
         run: npm publish

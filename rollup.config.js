@@ -1,18 +1,20 @@
+/* spellchecker:ignore nodenext */
+
 import { babel } from "@rollup/plugin-babel"
 import commonjs from "@rollup/plugin-commonjs"
 import { nodeResolve } from "@rollup/plugin-node-resolve"
 import terser from "@rollup/plugin-terser"
 import typescript from "@rollup/plugin-typescript"
-import pkg from "./package.json" with { type: "json" }
+import { dts } from "rollup-plugin-dts"
 
 const formats = ["esm", "umd"]
 const compact = [false, true]
 
-export default compact.flatMap(compact =>
+const bundles = compact.flatMap(compact =>
   formats.map(format => ({
     input: "index.ts",
     output: {
-      file: `dist/algebra-${pkg.version}.${format}${compact ? ".min" : ""}.js`,
+      file: `dist/algebra.${format}${compact ? ".min" : ""}.js`,
       name: "algebra",
       format
     },
@@ -29,3 +31,14 @@ export default compact.flatMap(compact =>
     ]
   }))
 )
+
+/* Bundle the type declarations into a single file so that consumers using
+   `moduleResolution: node16`/`nodenext` don't require file extensions in the
+   relative imports of the declarations. */
+const types = {
+  input: "index.ts",
+  output: { file: "dist/algebra.d.ts", format: "es" },
+  plugins: [dts()]
+}
+
+export default [...bundles, types]

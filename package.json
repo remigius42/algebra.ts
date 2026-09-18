@@ -2,7 +2,6 @@
   "name": "algebra.ts",
   "version": "0.3.1",
   "description": "Build, display, and solve algebraic equations.",
-  "main": "algebra.ts",
   "type": "module",
   "scripts": {
     "build": "rollup --config rollup.config.js",
@@ -17,8 +16,6 @@
     "url": "https://github.com/remigius42/algebra.ts.git"
   },
   "files": [
-    "index.ts",
-    "src/",
     "dist/"
   ],
   "devDependencies": {
@@ -49,6 +46,7 @@
     "markdownlint-cli2": "^0.23.2",
     "prettier": "3.9.8",
     "rollup": "^4.63.3",
+    "rollup-plugin-dts": "^6.5.1",
     "ts-jest": "^29.4.12",
     "tslib": "^2.8.1",
     "typescript": "^5.9.3",
@@ -73,5 +71,13 @@
   "bugs": {
     "url": "https://github.com/remigius42/algebra.ts/issues"
   },
-  "homepage": "https://remigius42.github.io/algebra.ts/"
+  "homepage": "https://remigius42.github.io/algebra.ts/",
+  "types": "./dist/algebra.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/algebra.d.ts",
+      "default": "./dist/algebra.esm.js"
+    },
+    "./package.json": "./package.json"
+  }
 }
