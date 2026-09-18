@@ -421,7 +421,7 @@ describe("Solving a cubic equation", () => {
     expect(String(answers)).toEqual("2,3,4")
   })
 
-  it("rounds of roots when there are three real positive roots with values within 10E15 to next integer", () => {
+  it("rounds off three real positive roots which are within ROOT_PRECISION of the next integer", () => {
     const n1 = new Expression("x").subtract(new Fraction(2 * 10e15 + 1, 10e15)) // x - 2 + 10e-15
     const n2 = new Expression("x").subtract(new Fraction(3 * 10e15 + 1, 10e15)) // x - 3 + 10e-15
     const n3 = new Expression("x").subtract(new Fraction(4 * 10e15 + 1, 10e15)) // x - 4 + 10e-15
@@ -432,20 +432,20 @@ describe("Solving a cubic equation", () => {
     expect(String(answers)).toEqual("2,3,4")
   })
 
-  it("does not round of roots when there are three real positive roots with values > 10E15 to next integer", () => {
-    const n1 = new Expression("x").subtract(new Fraction(2 * 10e14 + 2, 10e14)) // x - 2 + 2*10e-14
-    const n2 = new Expression("x").subtract(new Fraction(3 * 10e14 + 2, 10e14)) // x - 3 + 2*10e-14
-    const n3 = new Expression("x").subtract(new Fraction(4 * 10e14 + 3, 10e14)) // x - 4 + 3*10e-14
+  it("does not round off three real positive roots which are further than ROOT_PRECISION from the next integer", () => {
+    const n1 = new Expression("x").subtract(new Fraction(2 * 1e12 + 1, 1e12)) // x - 2 - 1e-12
+    const n2 = new Expression("x").subtract(new Fraction(3 * 1e12 + 1, 1e12)) // x - 3 - 1e-12
+    const n3 = new Expression("x").subtract(new Fraction(4 * 1e12 + 1, 1e12)) // x - 4 - 1e-12
     const cubic = new Equation(n1.multiply(n2).multiply(n3), 0)
 
     const answers = cubic.solveFor("x")
 
     expect(String(answers)).toEqual(
-      "2.0000000000000107,2.999999999999981,4.000000000000015"
+      "2.0000000000010023,3.000000000000996,4.000000000001002"
     )
   })
 
-  it("rounds of roots when there are three real negative roots with values within 10E15 to next integer", () => {
+  it("rounds off three real negative roots which are within ROOT_PRECISION of the next integer", () => {
     const n1 = new Expression("x").add(new Fraction(2 * 10e15 + 1, 10e15)) // x + 2 + 10e-15
     const n2 = new Expression("x").add(new Fraction(3 * 10e15 + 1, 10e15)) // x + 3 + 10e-15
     const n3 = new Expression("x").add(new Fraction(4 * 10e15 + 1, 10e15)) // x + 4 + 10e-15
@@ -456,16 +456,16 @@ describe("Solving a cubic equation", () => {
     expect(String(answers)).toEqual("-4,-3,-2")
   })
 
-  it("does not round of roots when there are three real negative roots with values > 10E15 to next integer", () => {
-    const n1 = new Expression("x").add(new Fraction(2 * 10e14 + 2, 10e14)) // x + 2 + 2*10e-14
-    const n2 = new Expression("x").add(new Fraction(3 * 10e14 + 2, 10e14)) // x + 3 + 2*10e-14
-    const n3 = new Expression("x").add(new Fraction(4 * 10e14 + 3, 10e14)) // x + 4 + 3*10e-14
+  it("does not round off three real negative roots which are further than ROOT_PRECISION from the next integer", () => {
+    const n1 = new Expression("x").add(new Fraction(2 * 1e12 + 1, 1e12)) // x + 2 + 1e-12
+    const n2 = new Expression("x").add(new Fraction(3 * 1e12 + 1, 1e12)) // x + 3 + 1e-12
+    const n3 = new Expression("x").add(new Fraction(4 * 1e12 + 1, 1e12)) // x + 4 + 1e-12
     const cubic = new Equation(n1.multiply(n2).multiply(n3), 0)
 
     const answers = cubic.solveFor("x")
 
     expect(String(answers)).toEqual(
-      "-4.000000000000015,-2.9999999999999813,-2.0000000000000107"
+      "-4.000000000001002,-3.0000000000009956,-2.0000000000010023"
     )
   })
 
