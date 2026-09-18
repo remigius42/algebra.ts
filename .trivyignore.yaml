@@ -1,0 +1,18 @@
+# spellchecker:ignore trivyignore, rubyzip
+
+vulnerabilities:
+  - id: CVE-2026-85396
+    paths:
+      - docs/Gemfile.lock
+    statement: >-
+      `rubyzip` is a transitive dependency of `jekyll-remote-theme`, which the
+      `github-pages` gem pins to a version requiring `rubyzip < 3.0`, while the
+      fix is only available in 3.4.0. It can therefore not be resolved as long
+      as the documentation is built with the `github-pages` gem.
+
+      The vulnerable code is also not reachable: `rubyzip` is only used by
+      `jekyll-remote-theme` to unpack a downloaded theme, and `docs/_config.yml`
+      neither enables that plugin nor sets a `remote_theme`. The gems are
+      additionally only used to build the documentation, never at runtime, and
+      they only process files from this repository.
+    expired_at: 2027-03-31
