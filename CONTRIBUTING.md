@@ -1,3 +1,5 @@
+<!-- spellchecker:words npmjs -->
+
 # Contributing
 
 Thank you for your interest in `algebra.ts`!
@@ -57,23 +59,29 @@ release, which is why the commit it points to should have passed the
 pipeline before the tag is pushed.
 
 1. Make sure that `main` is up to date and that its pipeline passed.
-2. `npm version <patch|minor|major>` to bump the version in
+2. Update the version in the CDN link of [README.md](README.md) to the
+   version you are about to release, in a separate commit.  
+   This has to happen _before_ the version bump: `npm` always packs
+   `README.md` into the tarball and renders it on the package page, and
+   the README of a published version can never be changed afterwards.
+   Pointing at a version which is published moments later is therefore
+   the only way to get a correct README onto npmjs.com.
+3. `npm version <patch|minor|major>` to bump the version in
    `package.json`, generate the changelog entry from the commit messages
    since the last release, commit both and create the tag.  
    Choose `minor` for a release which contains a `BREAKING CHANGE`
    footer, since the version is still below `1.0.0` and breaking changes
    are therefore signalled by the minor version.
-3. `git push origin main` and wait for the pipeline to pass.
-4. `git push origin v<version>` to publish the release. The pipeline
+4. `git push origin main` and wait for the pipeline to pass.
+5. `git push origin v<version>` to publish the release. The pipeline
    creates the GitHub release from the changelog entry of that version,
    attaches the build output from `dist/` to it and runs `npm publish`.
-5. Update the version in the CDN links of [README.md](README.md),
-   [docs/index.md](docs/index.md) and
-   [docs/\_layouts/default.html](docs/_layouts/default.html) in a
+6. Update the version in the CDN links of [docs/index.md](docs/index.md)
+   and [docs/\_layouts/default.html](docs/_layouts/default.html) in a
    separate commit.  
-   This has to happen after the release has been published, since the
-   documentation is deployed from `main` and the links would otherwise
-   refer to files which do not exist yet.
+   This has to happen _after_ the release has been published, since the
+   documentation is deployed from `main` and the interactive examples
+   would otherwise load files which do not exist yet.
 
 Note that the changelog only lists the commit types which are relevant
 for users of the library, so maintenance commits such as `build` or `ci`
