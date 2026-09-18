@@ -38,3 +38,16 @@
 ## [0.3.1](https://github.com/remigius42/algebra.ts/compare/v0.3.0...v0.3.1) (2024-03-14)
 
 - Documentation improvements
+
+## [0.4.0](https://github.com/remigius42/algebra.ts/compare/v0.3.1...v0.4.0) (2026-09-18)
+
+### ⚠ BREAKING CHANGES
+
+- The build artifacts in `dist/` no longer contain the version in
+  their file name and the `exports` map prevents deep imports into the package.
+  Consumers importing `algebra.ts/dist/algebra-<version>.esm.js` have to import
+  `algebra.ts` instead.
+
+### Bug Fixes
+
+- make package resolvable as a dependency ([58ae59d](https://github.com/remigius42/algebra.ts/commit/58ae59da0fafe24ba2a56ec2e3b703b28508890a))
