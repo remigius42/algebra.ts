@@ -391,6 +391,14 @@ describe("Fraction exponentiation", () => {
     expect(squareFrac.numer).toEqual(1)
     expect(squareFrac.denom).toEqual(4)
   })
+
+  it("should return the reduced fraction when n is neither >= 0 nor < 0", () => {
+    const frac = new Fraction(2, 4) // 2/4
+
+    const answer = frac.pow(NaN)
+
+    expect(answer.equalTo(new Fraction(1, 2))).toBe(true)
+  })
 })
 
 describe("Checking if the square root of a fraction is rational", () => {
