@@ -1,6 +1,6 @@
 {
   "name": "algebra.ts",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Build, display, and solve algebraic equations.",
   "type": "module",
   "scripts": {
