@@ -120,7 +120,7 @@ for the UMD version
 ```
 
 Since [ES Modules don't pollute the global
-scope](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#other_differences_between_modules_and_standard_scripts),
+scope](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#other_differences_between_modules_and_classic_scripts),
 you might want to use ES Module version if possible.
 
 ### In Node
