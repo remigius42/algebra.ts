@@ -183,7 +183,7 @@ describe("Operators", () => {
     expect(p.parse(input)).toEqual(dividend.divide(new Expression("a")))
   })
 
-  it.each(["x/y", "x/y + 3/y", "x/(5y)"])(
+  it.each(["x/y", "x/y + 3/y", "x/(5y)", "x^2/y^3"])(
     "should parse back what is printed for %s",
     input => {
       expect(String(p.parse(input))).toEqual(input)
@@ -196,6 +196,11 @@ describe("Operators", () => {
     const input = "1/(x*y)"
 
     expect(p.parse(input)?.toString({ implicit: true })).toEqual(input)
+  })
+
+  it("should apply ^ to the divisor rather than to the quotient", () => {
+    const input = "x/2^3"
+    expect(p.parse(input)).toEqual(new Expression("x").divide(8))
   })
 
   it("should parse ^ correctly", () => {

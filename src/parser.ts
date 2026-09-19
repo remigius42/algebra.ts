@@ -241,7 +241,9 @@ export class Parser {
       this.update()
       const divFactor = this.#parseFactor()
       return divFactor
-        ? this.#parseTermRest(factor.divide(this.#toDivisor(divFactor)))
+        ? this.#parseTermRest(
+            factor.divide(this.#toDivisor(this.#parsePowerRest(divFactor)))
+          )
         : undefined
     } else if (this.match("epsilon")) {
       return factor
@@ -253,6 +255,22 @@ export class Parser {
       } else {
         return factor.multiply(this.#parseTermRest(mulFactor2))
       }
+    }
+  }
+
+  /**
+   * Raise a divisor before it is divided by, since `^` binds stronger than
+   * `/`. Applying it afterwards like the other operators do would raise the
+   * quotient instead, turning `x/2^3` into `(x/2)^3`.
+   */
+  #parsePowerRest(factor: Expression): Expression {
+    if (this.match("power")) {
+      this.update()
+      const powFactor = this.#parseFactor()
+      //WORKAROUND: algebra.ts only allows integers and fractions for raising
+      return this.#parsePowerRest(factor.pow(parseInt(String(powFactor))))
+    } else {
+      return factor
     }
   }
 
