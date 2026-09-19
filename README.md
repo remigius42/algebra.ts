@@ -30,7 +30,7 @@ This section gives a brief example on how to use the library. The library is
 assumed to be in the same directory as the HTML page containing the snippet.
 Alternatively you could load the library via a content delivery network (CDN),
 for example
-<https://cdn.jsdelivr.net/npm/algebra.ts@0.4.2/dist/algebra.umd.js>.
+<https://cdn.jsdelivr.net/npm/algebra.ts@0.5.0/dist/algebra.umd.js>.
 
 Please refer to the [full
 documentation](https://remigius42.github.io/algebra.ts/) for further information
