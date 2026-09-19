@@ -6,6 +6,7 @@ Copyright 2024 binary poetry gmbh
 [![Build status](https://github.com/remigius42/algebra.ts/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/remigius42/algebra.ts/actions/workflows/node.js.yml)
 ![Current version](https://img.shields.io/github/package-json/v/remigius42/algebra.ts)
 [![Coverage Status](https://coveralls.io/repos/remigius42/algebra.ts/badge.svg?branch=main)](https://coveralls.io/r/remigius42/algebra.ts?branch=main)
+[![Bundle size](https://img.shields.io/bundlejs/size/algebra.ts)](https://bundlejs.com/?q=algebra.ts)
 
 `algebra.ts` lets you build, display and solve algebraic equations in TypeScript
 and JavaScript.
@@ -16,9 +17,9 @@ and JavaScript.
 arithmetic, expressions in one or more variables, linear, quadratic and cubic
 equations, and linear inequations. Answers stay exact, so solving `2x - 3 = 4`
 gives you `7/2` rather than `3.5`, and everything can be rendered as LaTeX. The
-library has no runtime dependencies and the minified ES Module is about 58 KB,
-which makes it a good fit for the browser and for embedding in teaching
-material.
+library has no runtime dependencies and ships a single minified ES Module, which
+makes it a good fit for the browser and for embedding in teaching material. The
+badge above carries the current bundle size.
 
 It is deliberately not a computer algebra system. There is no calculus, no
 matrices, no trigonometric simplification, no LaTeX input and no command line
