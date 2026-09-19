@@ -30,6 +30,7 @@ const x = eq.solveFor("x")
 
 - [Quick Start](#quick-start)
 - [Contents](#contents)
+- [Scope](#scope)
 - [History](#history)
 - [Usage](#usage)
   - [Right Now](#right-now)
@@ -65,6 +66,26 @@ const x = eq.solveFor("x")
 - [LaTeX](#latex)
   - [Example](#example)
 - [Greek Letters](#greek-letters)
+
+## Scope
+
+`algebra.ts` covers the algebra you would otherwise do by hand: exact fraction
+arithmetic, expressions in one or more variables, linear, quadratic and cubic
+equations, and linear inequations. Answers stay exact, so solving `2x - 3 = 4`
+gives you `7/2` rather than `3.5`, and everything can be rendered as
+[LaTeX](#latex). The library has no runtime dependencies and the minified ES
+Module is about 58 KB, which makes it a good fit for the browser and for
+embedding in teaching material.
+
+It is deliberately not a computer algebra system. There is no calculus, no
+matrices, no trigonometric simplification, no LaTeX input and no command line
+interface. If you need any of those, have a look at the [Cortex Compute
+Engine](https://github.com/cortex-js/compute-engine), which covers far more
+ground and also ships a command line interface:
+
+```sh
+npx @cortex-js/compute-engine -e 'Solve(2x - 3 = 4, x)'
+```
 
 ## History
 
