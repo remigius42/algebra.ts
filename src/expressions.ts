@@ -785,8 +785,7 @@ export class Term {
     }
     str = this.variables.reduce(function (p, c) {
       if (implicit && !!p) {
-        const vStr = c.toString()
-        return vStr ? p + "*" + vStr : p
+        return p + "*" + c.toString()
       } else return p.concat(c.toString())
     }, str)
     str = str.substring(0, 3) === " * " ? str.substring(3, str.length) : str
