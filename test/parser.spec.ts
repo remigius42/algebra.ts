@@ -14,7 +14,7 @@ describe("Input validity", () => {
       p.parse(input)
     }).toThrow(
       new Error(
-        "Invalid Argument (x - 3): Divisor must be of type Integer or Fraction."
+        "Invalid Argument ((1)/(x - 3)): Only monomial expressions can be divided."
       )
     )
   })
@@ -168,6 +168,19 @@ describe("Operators", () => {
     const input = "x/5/3"
     const lhs = new Expression("x").divide(5).divide(3)
     expect(p.parse(input)).toEqual(lhs)
+  })
+
+  it("should parse / with a monomial divisor correctly", () => {
+    const input = "x/y"
+    expect(p.parse(input)).toEqual(
+      new Expression("x").divide(new Expression("y"))
+    )
+  })
+
+  it("should parse / with a multinomial dividend correctly", () => {
+    const input = "(c - b)/a"
+    const dividend = new Expression("c").subtract(new Expression("b"))
+    expect(p.parse(input)).toEqual(dividend.divide(new Expression("a")))
   })
 
   it("should parse ^ correctly", () => {

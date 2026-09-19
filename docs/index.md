@@ -233,11 +233,17 @@ const expr3 = expr1.multiply(expr2)
 
 #### Divide
 
-Divide expressions by either integers or fractions.
+Divide expressions by integers, fractions or monomial expressions. Dividing by
+a monomial results in negative degrees.
 
 ```eval-js
 const x = new algebra.Expression("x").divide(2).divide(new algebra.Fraction(1, 5))
 String(x) // 5/2x
+```
+
+```eval-js
+const exp = new algebra.Expression("x").add(3).divide(new algebra.Expression("y"))
+String(exp) // xy^-1 + 3y^-1
 ```
 
 #### Summation
@@ -534,6 +540,14 @@ You also must use the `*` operator between cross products; otherwise, they'll be
 ```eval-js
 const exp = algebra.parse("x * y + 4")
 String(exp) // xy + 4
+```
+
+Divisors may be numbers or monomials, matching what
+[expression division](#divide) supports.
+
+```eval-js
+const exp = algebra.parse("(c - b)/a")
+String(exp) // ca^-1 - ba^-1
 ```
 
 #### Parse Equations

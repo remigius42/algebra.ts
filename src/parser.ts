@@ -240,9 +240,8 @@ export class Parser {
     } else if (this.match("divide")) {
       this.update()
       const divFactor = this.#parseFactor()
-      //WORKAROUND: algebra.ts only allows integers and fractions for division
       return divFactor
-        ? this.#parseTermRest(factor.divide(this.#convertToFraction(divFactor)))
+        ? this.#parseTermRest(factor.divide(this.#toDivisor(divFactor)))
         : undefined
     } else if (this.match("epsilon")) {
       return factor
@@ -258,15 +257,13 @@ export class Parser {
   }
 
   /**
-   * Is used to convert expressions to fractions, as dividing by expressions is not possible
+   * Expressions without terms are converted to fractions, since only those
+   * support division without simplification. Expressions with terms are
+   * passed on as is, which restricts them to monomials.
    **/
-  #convertToFraction(expression: Expression) {
+  #toDivisor(expression: Expression) {
     if (expression.terms.length > 0) {
-      throw new TypeError(
-        "Invalid Argument (" +
-          expression.toString() +
-          "): Divisor must be of type Integer or Fraction."
-      )
+      return expression
     } else {
       const c = expression.constants[0]
       return new Fraction(c.numer, c.denom)
