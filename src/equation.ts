@@ -1,7 +1,6 @@
-import { Expression, Term } from "./expressions"
+import { Expression } from "./expressions"
 import { Fraction } from "./fraction"
 import { isInt } from "./helpers"
-import { Variable } from "./variable"
 
 const ROOT_PRECISION = 10e-15
 
@@ -43,6 +42,16 @@ export class Equation {
     return new Equation(this.lhs.copy(), this.rhs.copy())
   }
 
+  /**
+   * Solve the equation for the given variable.
+   *
+   * If the variable only occurs at degree 1 and its coefficient is a monomial
+   * in other variables, like `a` in `ax + b = c`, the solution is expressed
+   * using that coefficient, for example `ca^-1 - ba^-1`. Since the coefficient
+   * is symbolic, such a solution assumes that the coefficient is non-zero.
+   * This assumption can only be checked once the solution is evaluated, where
+   * a coefficient of zero results in a "Divide By Zero" error.
+   */
   solveFor(variable: string, returnEquation = false) {
     if (!this.lhs.hasVariable(variable) && !this.rhs.hasVariable(variable)) {
       throw new TypeError(
@@ -156,16 +165,18 @@ export class Equation {
   }
 
   #variableCanBeIsolated(variable: string) {
-    return (
-      this.maxDegreeOfVariable(variable) === 1 &&
-      this.#noCrossProductsWithVariable(variable)
-    )
-  }
+    if (this.maxDegreeOfVariable(variable) !== 1) {
+      return false
+    }
 
-  #noCrossProductsWithVariable(variable: string) {
-    return (
-      this.lhs.noCrossProductsWithVariable(variable) &&
-      this.rhs.noCrossProductsWithVariable(variable)
+    // All terms containing the variable have to combine into a single term,
+    // otherwise the variable can't be factored out.
+    const termsWithVariable = this.lhs.terms
+      .concat(this.rhs.terms)
+      .filter(term => term.hasVariable(variable))
+
+    return termsWithVariable.every(term =>
+      term.canBeCombinedWith(termsWithVariable[0])
     )
   }
 
@@ -180,14 +191,13 @@ export class Equation {
   }
 
   #solveLinearEquationWithSeparableVariable(variable: string) {
-    const solvingFor = new Term(new Variable(variable))
     let newLhs = new Expression()
     let newRhs = new Expression()
 
     for (let i = 0; i < this.rhs.terms.length; i++) {
       const term = this.rhs.terms[i]
 
-      if (term.canBeCombinedWith(solvingFor)) {
+      if (term.hasVariable(variable)) {
         newLhs = newLhs.subtract(term)
       } else {
         newRhs = newRhs.add(term)
@@ -197,7 +207,7 @@ export class Equation {
     for (let i = 0; i < this.lhs.terms.length; i++) {
       const term = this.lhs.terms[i]
 
-      if (term.canBeCombinedWith(solvingFor)) {
+      if (term.hasVariable(variable)) {
         newLhs = newLhs.add(term)
       } else {
         newRhs = newRhs.subtract(term)
@@ -215,7 +225,16 @@ export class Equation {
       }
     }
 
-    newRhs = this.divideRhsByCoefficient(newRhs, newLhs.terms[0].coefficient())
+    const coefficient = newLhs.terms[0].copy()
+    coefficient.variables = coefficient.variables.filter(
+      v => v.variable !== variable
+    )
+
+    if (coefficient.variables.length === 0) {
+      newRhs = this.divideRhsByCoefficient(newRhs, coefficient.coefficient())
+    } else {
+      newRhs = newRhs.divide(new Expression(coefficient))
+    }
 
     if (newRhs.terms.length === 0) {
       return newRhs.constant().reduce()

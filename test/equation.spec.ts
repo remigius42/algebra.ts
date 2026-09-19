@@ -302,11 +302,94 @@ it("should return equation with solveFor and flag set", () => {
   expect(answer).toEqual(new Equation(new Expression("x"), 1))
 })
 
-describe("Solving for variables that can't be isolated", () => {
-  it("should return undefined if the variable is a cross product with other vars", () => {
-    const expr = new Expression("x").multiply("y")
-    const eq = new Equation(expr, 2) // xy = 2
+describe("Solving for a variable with a symbolic coefficient", () => {
+  it("should solve a linear equation with a symbolic coefficient", () => {
+    const lhs = new Expression("a").multiply("x").add("b")
+    const eq = new Equation(lhs, new Expression("c")) // ax + b = c
+
     const answer = eq.solveFor("x")
+
+    expect(String(answer)).toEqual("ca^-1 - ba^-1")
+  })
+
+  it("should solve a cross product for one of its variables", () => {
+    const eq = new Equation(new Expression("x").multiply("y"), 2) // xy = 2
+
+    const answer = eq.solveFor("x")
+
+    expect(String(answer)).toEqual("2y^-1")
+  })
+
+  it("should keep other variables in the solution", () => {
+    const lhs = new Expression("a")
+      .multiply("x")
+      .add(new Expression("b").multiply("y"))
+    const eq = new Equation(lhs, new Expression("c")) // ax + by = c
+
+    const answer = eq.solveFor("x")
+
+    expect(String(answer)).toEqual("-bya^-1 + ca^-1")
+  })
+
+  it("should divide by the numeric factor of the coefficient as well", () => {
+    const lhs = new Expression("a").multiply("x").multiply(2)
+    const eq = new Equation(lhs, 4) // 2ax = 4
+
+    const answer = eq.solveFor("x")
+
+    expect(String(answer)).toEqual("2a^-1")
+  })
+
+  it("should evaluate the solution with a non-zero coefficient", () => {
+    const eq = new Equation(
+      new Expression("a").multiply("x"),
+      new Expression("b")
+    ) // ax = b
+    const answer = eq.solveFor("x") as Expression // ba^-1
+
+    expect(String(answer.eval({ a: 2, b: 6 }))).toEqual("3")
+  })
+
+  it("should throw when evaluating the solution with a coefficient of zero", () => {
+    const eq = new Equation(
+      new Expression("a").multiply("x"),
+      new Expression("b")
+    ) // ax = b
+    const answer = eq.solveFor("x") as Expression // ba^-1
+
+    expect(() => {
+      answer.eval({ a: 0 })
+    }).toThrow(new EvalError("Divide By Zero"))
+  })
+
+  it("should print the solution to TeX properly", () => {
+    const lhs = new Expression("a").multiply("x").add("b")
+    const eq = new Equation(lhs, new Expression("c")) // ax + b = c
+
+    const answer = eq.solveFor("x", true) as Equation
+
+    expect(answer.toTex()).toEqual("x = ca^{-1} - ba^{-1}")
+  })
+})
+
+describe("Solving for variables that can't be isolated", () => {
+  it("should return undefined if the coefficient would be a polynomial", () => {
+    const expr = new Expression("x").multiply("y").add("y")
+    const eq = new Equation(expr, new Expression("z")) // xy + y = z
+
+    const answer = eq.solveFor("y")
+
+    expect(answer).toBeUndefined()
+  })
+
+  it("should return undefined for a quadratic equation with symbolic coefficients", () => {
+    let expr = new Expression("a").multiply(new Expression("x").pow(2))
+    expr = expr.add(new Expression("b").multiply("x"))
+    expr = expr.add("c")
+    const eq = new Equation(expr, 0) // ax^2 + bx + c = 0
+
+    const answer = eq.solveFor("x")
+
     expect(answer).toBeUndefined()
   })
 

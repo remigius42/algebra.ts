@@ -108,6 +108,18 @@ describe("solving inequations", () => {
     expect(inequation.toString()).toEqual("x < 4y + 2")
   })
 
+  it("should throw for symbolic coefficients since their sign is unknown", () => {
+    const inequation = new Inequation(
+      new Expression("a").multiply("x"),
+      new Expression("b"),
+      "<"
+    ) // ax < b
+
+    expect(() => inequation.solveFor("x")).toThrow(
+      new EvalError("Only linear inequations are supported.")
+    )
+  })
+
   it("should throw for non-linear inequations", () => {
     const inequation = new Inequation(
       new Expression("x").pow(2).multiply(-2),

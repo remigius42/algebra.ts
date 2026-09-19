@@ -393,16 +393,10 @@ describe("Expression division", () => {
     )
   })
 
-  it("should not allow division of a multinomial numerator", () => {
+  it("should allow division of a multinomial numerator by a monomial", () => {
     const multi = new Expression("x").add(3)
 
-    expect(() => {
-      multi.divide(x)
-    }).toThrow(
-      new TypeError(
-        "Invalid Argument ((x + 3)/(x)): Only monomial expressions can be divided."
-      )
-    )
+    expect(multi.divide(y).toString()).toEqual("xy^-1 + 3y^-1")
   })
 
   it("should not allow division with an equation as denominator", () => {

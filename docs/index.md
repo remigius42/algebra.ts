@@ -54,6 +54,7 @@ const x = eq.solveFor("x")
     - [Solve Linear Equations](#solve-linear-equations)
       - [One Variable](#one-variable)
       - [Multiple Variables](#multiple-variables)
+      - [Symbolic Coefficients](#symbolic-coefficients)
     - [Solve Quadratic Equations](#solve-quadratic-equations)
     - [Solve Cubic Equations](#solve-cubic-equations)
     - [Solve Anything Else](#solve-anything-else)
@@ -411,6 +412,25 @@ console.log("x = " + String(xAnswer)) // x = 12y - 73/5
 console.log("y = " + String(yAnswer)) // y = 1/12x + 73/60
 
 eq.variableNames // Array [ "x", "y" ]
+```
+
+##### Symbolic Coefficients
+
+If the variable being solved for only occurs at degree 1 and its coefficient is
+a monomial in other variables, the solution is expressed using that
+coefficient.
+
+Note that such a solution assumes that the symbolic coefficient is non-zero,
+which cannot be checked while solving. Evaluating the solution with a
+coefficient of zero results in a "Divide By Zero" error.
+
+```eval-js
+const lhs = new algebra.Expression("a").multiply("x").add("b")
+const eq = new algebra.Equation(lhs, new algebra.Expression("c"))
+console.log(String(eq)) // ax + b = c
+
+const answer = eq.solveFor("x")
+"x = " + String(answer) // x = ca^-1 - ba^-1
 ```
 
 #### Solve Quadratic Equations

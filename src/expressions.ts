@@ -207,45 +207,22 @@ export class Expression {
       return copy
     } else if (a instanceof Expression) {
       //Simplify both expressions
-      let num = this.copy().simplify()
+      const num = this.copy().simplify()
       const denom = a.copy().simplify()
 
-      //Total amount of terms and constants
-      const numTotal = num.terms.length + num.constants.length
-      const denomTotal = denom.terms.length + denom.constants.length
-
-      //Check if both terms are monomial
-      if (numTotal === 1 && denomTotal === 1) {
-        //Divide coefficients
-        const numCoef = num.terms[0].coefficients[0]
-        const denomCoef = denom.terms[0].coefficients[0]
-
-        //The expressions have just been simplified - only one coefficient per term
-        num.terms[0].coefficients[0] = numCoef.divide(denomCoef, simplify)
-        denom.terms[0].coefficients[0] = new Fraction(1, 1)
-
-        //Cancel variables
-        for (let i = 0; i < num.terms[0].variables.length; i++) {
-          const numVar = num.terms[0].variables[i]
-          for (let j = 0; j < denom.terms[0].variables.length; j++) {
-            const denomVar = denom.terms[0].variables[j]
-            //Check for equal variables
-            if (numVar.variable === denomVar.variable) {
-              //Use the rule for division of powers
-              num.terms[0].variables[i].degree = numVar.degree - denomVar.degree
-              denom.terms[0].variables[j].degree = 0
-            }
-          }
+      //Only a monomial denominator is supported
+      if (denom.terms.length === 1 && denom.constants.length === 0) {
+        //Polynomial numerator over a monomial denominator: multiply the
+        //numerator by the inverted denominator.
+        const inverse = denom.terms[0]
+        inverse.coefficients = [
+          new Fraction(1, 1).divide(inverse.coefficient(), simplify)
+        ]
+        for (let i = 0; i < inverse.variables.length; i++) {
+          inverse.variables[i].degree *= -1
         }
 
-        //Invert all degrees of remaining variables
-        for (let i = 0; i < denom.terms[0].variables.length; i++) {
-          denom.terms[0].variables[i].degree *= -1
-        }
-        //Multiply the inverted variables to the numerator
-        num = num.multiply(denom, simplify)
-
-        return num
+        return num.multiply(denom, simplify)
       } else {
         throw new TypeError(
           "Invalid Argument ((" +
@@ -705,7 +682,7 @@ export class Term {
         } else if (sub instanceof Fraction) {
           ev = new Expression(sub.pow(thisVar.degree))
         } else if (isInt(sub)) {
-          ev = new Expression(Math.pow(sub, thisVar.degree))
+          ev = new Expression(new Fraction(sub, 1).pow(thisVar.degree))
         } else {
           throw new TypeError(
             "Invalid Argument (" +
