@@ -352,6 +352,37 @@ describe("Term printing to TeX", () => {
     )
   })
 
+  it("prints a negative degree as a fraction", () => {
+    const x = new Variable("x")
+    const y = new Variable("y")
+    y.degree = -1
+    let t = new Term(x)
+
+    t = t.multiply(new Term(y)) // x*y^-1
+
+    expect(t.toTex()).toEqual("\\frac{x}{y}")
+  })
+
+  it("prints 1 as the numerator if there is nothing else", () => {
+    const x = new Variable("x")
+    x.degree = -1
+
+    const t = new Term(x) // x^-1
+
+    expect(t.toTex()).toEqual("\\frac{1}{x}")
+  })
+
+  it("prints the denominator of the coefficient as a divisor as well", () => {
+    const x = new Variable("x")
+    const y = new Variable("y")
+    y.degree = -1
+    let t = new Term(x)
+
+    t = t.multiply(new Term(y)).multiply(new Fraction(2, 5)) // 2/5x*y^-1
+
+    expect(t.toTex()).toEqual("\\frac{2x}{5y}")
+  })
+
   it("prints the absolute value when the term is negative - integer", () => {
     const x = new Variable("x")
     const t = new Term(x)
@@ -376,6 +407,62 @@ describe("Term printing to to string", () => {
     t = t.multiply(new Term(y)) // x*y
 
     expect(t.toString()).toEqual("xy")
+  })
+
+  it("should print a negative degree as a denominator", () => {
+    const x = new Variable("x")
+    const y = new Variable("y")
+    y.degree = -1
+    let t = new Term(x)
+
+    t = t.multiply(new Term(y)) // x*y^-1
+
+    expect(t.toString()).toEqual("x/y")
+  })
+
+  it("should print the denominator of the coefficient as a divisor as well", () => {
+    const x = new Variable("x")
+    const y = new Variable("y")
+    y.degree = -1
+    let t = new Term(x)
+
+    t = t.multiply(new Term(y)).multiply(new Fraction(1, 5)) // 1/5x*y^-1
+
+    expect(t.toString()).toEqual("x/(5y)")
+  })
+
+  it("should print 1 as the numerator if there is nothing else", () => {
+    const x = new Variable("x")
+    x.degree = -1
+
+    const t = new Term(x) // x^-1
+
+    expect(t.toString()).toEqual("1/x")
+  })
+
+  it("should parenthesize a denominator with several factors", () => {
+    const x = new Variable("x")
+    x.degree = -1
+    const y = new Variable("y")
+    y.degree = -2
+    let t = new Term(x)
+
+    t = t.multiply(new Term(y)) // x^-1*y^-2
+
+    expect(t.toString()).toEqual("1/(xy^2)")
+  })
+
+  it("implicit should add * within the numerator and the denominator", () => {
+    const x = new Variable("x")
+    const y = new Variable("y")
+    y.degree = -1
+    const z = new Variable("z")
+    z.degree = -1
+    let t = new Term(x)
+
+    t = t.multiply(new Term(y)).multiply(new Term(z)).multiply(2) // 2x*y^-1*z^-1
+
+    expect(t.toString({ implicit: true })).toEqual("2*x/(y*z)")
   })
 
   it("implicit should add * between variables", () => {

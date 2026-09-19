@@ -234,7 +234,7 @@ const expr3 = expr1.multiply(expr2)
 #### Divide
 
 Divide expressions by integers, fractions or monomial expressions. Dividing by
-a monomial results in negative degrees.
+a monomial results in negative degrees, which are printed as a denominator.
 
 ```eval-js
 const x = new algebra.Expression("x").divide(2).divide(new algebra.Fraction(1, 5))
@@ -243,7 +243,7 @@ String(x) // 5/2x
 
 ```eval-js
 const exp = new algebra.Expression("x").add(3).divide(new algebra.Expression("y"))
-String(exp) // xy^-1 + 3y^-1
+String(exp) // x/y + 3/y
 ```
 
 #### Summation
@@ -436,7 +436,7 @@ const eq = new algebra.Equation(lhs, new algebra.Expression("c"))
 console.log(String(eq)) // ax + b = c
 
 const answer = eq.solveFor("x")
-"x = " + String(answer) // x = ca^-1 - ba^-1
+"x = " + String(answer) // x = c/a - b/a
 ```
 
 #### Solve Quadratic Equations
@@ -547,7 +547,7 @@ Divisors may be numbers or monomials, matching what
 
 ```eval-js
 const exp = algebra.parse("(c - b)/a")
-String(exp) // ca^-1 - ba^-1
+String(exp) // c/a - b/a
 ```
 
 #### Parse Equations

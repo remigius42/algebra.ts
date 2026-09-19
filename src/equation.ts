@@ -47,7 +47,7 @@ export class Equation {
    *
    * If the variable only occurs at degree 1 and its coefficient is a monomial
    * in other variables, like `a` in `ax + b = c`, the solution is expressed
-   * using that coefficient, for example `ca^-1 - ba^-1`. Since the coefficient
+   * using that coefficient, for example `c/a - b/a`. Since the coefficient
    * is symbolic, such a solution assumes that the coefficient is non-zero.
    * This assumption can only be checked once the solution is evaluated, where
    * a coefficient of zero results in a "Divide By Zero" error.

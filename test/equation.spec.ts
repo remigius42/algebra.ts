@@ -309,7 +309,7 @@ describe("Solving for a variable with a symbolic coefficient", () => {
 
     const answer = eq.solveFor("x")
 
-    expect(String(answer)).toEqual("ca^-1 - ba^-1")
+    expect(String(answer)).toEqual("c/a - b/a")
   })
 
   it("should solve a cross product for one of its variables", () => {
@@ -317,7 +317,7 @@ describe("Solving for a variable with a symbolic coefficient", () => {
 
     const answer = eq.solveFor("x")
 
-    expect(String(answer)).toEqual("2y^-1")
+    expect(String(answer)).toEqual("2/y")
   })
 
   it("should keep other variables in the solution", () => {
@@ -328,7 +328,7 @@ describe("Solving for a variable with a symbolic coefficient", () => {
 
     const answer = eq.solveFor("x")
 
-    expect(String(answer)).toEqual("-bya^-1 + ca^-1")
+    expect(String(answer)).toEqual("-by/a + c/a")
   })
 
   it("should divide by the numeric factor of the coefficient as well", () => {
@@ -337,7 +337,7 @@ describe("Solving for a variable with a symbolic coefficient", () => {
 
     const answer = eq.solveFor("x")
 
-    expect(String(answer)).toEqual("2a^-1")
+    expect(String(answer)).toEqual("2/a")
   })
 
   it("should evaluate the solution with a non-zero coefficient", () => {
@@ -368,7 +368,7 @@ describe("Solving for a variable with a symbolic coefficient", () => {
 
     const answer = eq.solveFor("x", true) as Equation
 
-    expect(answer.toTex()).toEqual("x = ca^{-1} - ba^{-1}")
+    expect(answer.toTex()).toEqual("x = \\frac{c}{a} - \\frac{b}{a}")
   })
 })
 

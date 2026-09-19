@@ -769,6 +769,10 @@ export class Term {
     const implicit = options && options.implicit
     let str = ""
 
+    if (this.#hasNegativeDegree()) {
+      return this.#toQuotientString(implicit)
+    }
+
     for (let i = 0; i < this.coefficients.length; i++) {
       const coef = this.coefficients[i]
 
@@ -788,10 +792,71 @@ export class Term {
     return str
   }
 
+  #hasNegativeDegree() {
+    return this.variables.some(v => v.degree < 0)
+  }
+
+  /**
+   * Split the term into the factors of a quotient, so `xy^-1` becomes the
+   * numerator `x` over the denominator `y`. The denominator of the
+   * coefficient is a divisor as well and therefore joins the latter.
+   */
+  #quotientParts(variableToString: (variable: Variable) => string) {
+    const coefficient = this.coefficient().abs()
+
+    const numerator = this.variables
+      .filter(v => v.degree > 0)
+      .map(variableToString)
+    if (coefficient.numer !== 1) {
+      numerator.unshift(String(coefficient.numer))
+    }
+
+    const denominator = this.variables
+      .filter(v => v.degree < 0)
+      .map(v => {
+        const positive = v.copy()
+        positive.degree *= -1
+        return variableToString(positive)
+      })
+    if (coefficient.denom !== 1) {
+      denominator.unshift(String(coefficient.denom))
+    }
+
+    return { numerator, denominator }
+  }
+
+  #toQuotientString(implicit: boolean) {
+    const separator = implicit ? "*" : ""
+    const { numerator, denominator } = this.#quotientParts(v => v.toString())
+
+    const divisor =
+      denominator.length > 1
+        ? "(" + denominator.join(separator) + ")"
+        : denominator.join(separator)
+
+    return (numerator.join(separator) || "1") + "/" + divisor
+  }
+
+  #toQuotientTex() {
+    const { numerator, denominator } = this.#quotientParts(v => v.toTex())
+
+    return (
+      "\\frac{" +
+      (numerator.join("") || "1") +
+      "}{" +
+      denominator.join("") +
+      "}"
+    )
+  }
+
   toTex(dict = { multiplication: "cdot" }) {
     const op = " \\" + dict.multiplication + " "
 
     let str = ""
+
+    if (this.#hasNegativeDegree()) {
+      return this.#toQuotientTex()
+    }
 
     for (let i = 0; i < this.coefficients.length; i++) {
       const coef = this.coefficients[i]

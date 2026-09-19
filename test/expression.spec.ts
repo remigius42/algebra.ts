@@ -378,7 +378,7 @@ describe("Expression division", () => {
   })
 
   it("should allow dividing monomial expressions", () => {
-    expect(x.divide(y).toString()).toEqual("xy^-1")
+    expect(x.divide(y).toString()).toEqual("x/y")
   })
 
   it("should not allow division of a multinomial denominator", () => {
@@ -396,7 +396,7 @@ describe("Expression division", () => {
   it("should allow division of a multinomial numerator by a monomial", () => {
     const multi = new Expression("x").add(3)
 
-    expect(multi.divide(y).toString()).toEqual("xy^-1 + 3y^-1")
+    expect(multi.divide(y).toString()).toEqual("x/y + 3/y")
   })
 
   it("should not allow division with an equation as denominator", () => {
@@ -437,7 +437,7 @@ describe("Expression division", () => {
 
     const answer = numerator.divide(denominator)
 
-    expect(answer.toString()).toEqual("x^-1")
+    expect(answer.toString()).toEqual("1/x")
   })
 })
 

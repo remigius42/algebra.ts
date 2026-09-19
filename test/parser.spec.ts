@@ -183,6 +183,21 @@ describe("Operators", () => {
     expect(p.parse(input)).toEqual(dividend.divide(new Expression("a")))
   })
 
+  it.each(["x/y", "x/y + 3/y", "x/(5y)"])(
+    "should parse back what is printed for %s",
+    input => {
+      expect(String(p.parse(input))).toEqual(input)
+    }
+  )
+
+  it("should parse back a printed denominator with several variables", () => {
+    // adjacent variables are lexed as a single variable, so only the implicit
+    // form can be parsed back
+    const input = "1/(x*y)"
+
+    expect(p.parse(input)?.toString({ implicit: true })).toEqual(input)
+  })
+
   it("should parse ^ correctly", () => {
     const input = "x^2 = 16"
     const lhs = new Expression("x").pow(2)
