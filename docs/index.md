@@ -611,7 +611,7 @@ katex.render("x = " + algebra.toTex(answers), mySolution)
 <div id="mySolution"></div>
 
 <script type="module">
-import { Equation, Expression, Fraction, toTex } from "https://cdn.jsdelivr.net/npm/algebra.ts@0.4.2/dist/algebra.esm.min.js"
+import { Equation, Expression, Fraction, toTex } from "https://cdn.jsdelivr.net/npm/algebra.ts@0.5.0/dist/algebra.esm.min.js"
 
 const a = new Expression("x").pow(2);
 const b = new Expression("x").multiply(new Fraction(5, 4));
@@ -641,7 +641,7 @@ Greek letters are supported as well:
     Expression,
     Fraction,
     toTex
-  } from "https://cdn.jsdelivr.net/npm/algebra.ts@0.4.2/dist/algebra.esm.min.js"
+  } from "https://cdn.jsdelivr.net/npm/algebra.ts@0.5.0/dist/algebra.esm.min.js"
 
   const lambda = new Expression("lambda").add(3).divide(4)
   const Phi = new Expression("Phi").subtract(new Fraction(1, 5)).add(lambda)
@@ -657,7 +657,7 @@ Greek letters are supported as well:
 </div>
 
 <script type="module">
-import { Expression, Fraction } from "https://cdn.jsdelivr.net/npm/algebra.ts@0.4.2/dist/algebra.esm.min.js"
+import { Expression, Fraction } from "https://cdn.jsdelivr.net/npm/algebra.ts@0.5.0/dist/algebra.esm.min.js"
 
 const lambda = new Expression("lambda").add(3).divide(4);
 const Phi = new Expression("Phi").subtract(new Fraction(1, 5)).add(lambda);
