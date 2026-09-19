@@ -331,6 +331,26 @@ describe("Solving for a variable with a symbolic coefficient", () => {
     expect(String(answer)).toEqual("-by/a + c/a")
   })
 
+  it("should cancel a coefficient matching the constant to 1", () => {
+    const eq = new Equation(
+      new Expression("a").multiply("x"),
+      new Expression("a")
+    ) // ax = a
+
+    const answer = eq.solveFor("x")
+
+    expect(String(answer)).toEqual("1")
+  })
+
+  it("should cancel a coefficient matching the constant to -1", () => {
+    const lhs = new Expression("a").multiply("x").add(new Expression("a"))
+    const eq = new Equation(lhs, 0) // ax + a = 0
+
+    const answer = eq.solveFor("x")
+
+    expect(String(answer)).toEqual("-1")
+  })
+
   it("should divide by the numeric factor of the coefficient as well", () => {
     const lhs = new Expression("a").multiply("x").multiply(2)
     const eq = new Equation(lhs, 4) // 2ax = 4

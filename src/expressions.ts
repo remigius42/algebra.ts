@@ -571,6 +571,9 @@ export class Term {
     const newVars: Array<Variable> = []
 
     for (const v in uniqueVars) {
+      if (uniqueVars[v] === 0) {
+        continue // a variable cancelled out, so it is a factor of 1
+      }
       const newVar = new Variable(v)
       newVar.degree = uniqueVars[v]
       newVars.push(newVar)
