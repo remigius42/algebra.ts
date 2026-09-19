@@ -55,3 +55,16 @@
 ## [0.4.1](https://github.com/remigius42/algebra.ts/compare/v0.4.0...v0.4.1) (2026-09-18)
 
 ## [0.4.2](https://github.com/remigius42/algebra.ts/compare/v0.4.1...v0.4.2) (2026-09-18)
+
+## [0.5.0](https://github.com/remigius42/algebra.ts/compare/v0.4.2...v0.5.0) (2026-09-19)
+
+### Features
+
+- accept monomial divisors in the parser ([a183e9a](https://github.com/remigius42/algebra.ts/commit/a183e9aeee1317f00707ff78b8e16b3f0b6e5e1d))
+- print negative degrees as denominators ([b97cb95](https://github.com/remigius42/algebra.ts/commit/b97cb950f56b42b93d9b8cc30a17014996021ff9))
+- support symbolic coefficients in solveFor ([792e33d](https://github.com/remigius42/algebra.ts/commit/792e33dea4feb2094390538bf496038f7f9519bd))
+
+### Bug Fixes
+
+- drop variables which cancelled out ([2129054](https://github.com/remigius42/algebra.ts/commit/212905453bd14e68545200ea2e20c62d28987ccf))
+- raise the divisor instead of the quotient ([5f80a8d](https://github.com/remigius42/algebra.ts/commit/5f80a8df71aab18317eccc682b164143871acb45))
